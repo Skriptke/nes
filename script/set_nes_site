@@ -32,8 +32,8 @@ my $from_exam  = '';
 my $to_exam    = '';
 my $php_wrap   = '';
 my $htm_wrap   = '';
-my $file_exits = ' already exists, please response:'."\n".'  q = quit, s = skip, r = rename. [q/s/r]:'; 
-my $conf_exits = ' already exists, please response:'."\n".'  q = quit, s = skip, r = rename , a = append, c = create sample. [q/s/r/a/c]:'; 
+my $file_exits = ' already exists, please:'."\n".'  q = quit, s = skip, r = rename. [q/s/r]:'; 
+my $conf_exits = ' already exists, please:'."\n".'  q = quit, s = skip, r = rename , a = append, c = create sample. [q/s/r/a/c]:'; 
                               
 GetOptions(
   'iprefix=s'   => \$iprefix,
@@ -107,6 +107,8 @@ sub act {
   rename($nesdir,$nesdir.'.old.'.time)                
     if $response =~ /^r/i;
   mkdir $nesdir || die "can not be created $nesdir\n" 
+    if $response !~ /^s/i;
+  chmod 0755, $nesdir
     if $response !~ /^s/i;
                                    
   foreach my $file ( @link_files ) {
