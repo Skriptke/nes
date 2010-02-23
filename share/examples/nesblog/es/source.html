@@ -1,0 +1,48 @@
+{: NES 0.4 ('none') :}
+{: #
+    ----------------------------------------------------------------------------
+    
+        NES 0.4 beta by - Skriptke
+        Copyright 2009 - 2010 Enrique F. Castañón
+        Licensed under the GNU GPL.
+        http://sourceforge.net/projects/nes/
+        
+        Sample to use Nes;
+        
+        Utility to browse the source code
+        
+    ----------------------------------------------------------------------------
+:}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <title>Show source: {: * q_show_source :}{: ~ ( ! * q_show_source ) {: * env_PATH_INFO :} :} - Sample to use Nes;</title>
+</head>
+<body>
+    <div id="content"> 
+        {: include ./header.html :}
+        <div id="intro">
+            <p align=center>
+            <small>Este sitio ha sido creado con Nes, puedes navegar por el código fuente para ver como se hizo.</small>
+            </p>
+        </div> 
+        <div>
+        {: #
+             q_show_source es el parámetro del método GET '?show_source='
+             Si no esta definido utilizamos 'env_PATH_INFO' para obtener el archivo
+        :}
+        <p>Examinando código fuente de: {: * q_show_source :}{: ~ ( ! * q_show_source ) {: * env_PATH_INFO :} :} </p>
+        <div id="source">
+        <pre>
+{: include ('./show_source.html','{: * q_show_source :}{: ~ ( ! * q_show_source ) {: * env_PATH_INFO :} :}') :}
+        </pre>
+        </div>
+        <br />  
+        </div>
+        {: include ./footer.html :}
+    </div>
+</body>
+</html>

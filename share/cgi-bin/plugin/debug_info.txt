@@ -1,0 +1,27 @@
+<pre>
+Template.....: [{: $ object :}]
+Parent.......: [{: $ parent :}]
+Top container: [{: $ top_container_obj :}]
+Container....: [{: $ container_obj :}]
+Content......: [{: $ content_obj :}]
+Type.........: [{: $ type :}]
+Interactions.: [{: $ interactions :}]
+Scripts......: [{: $ scripts :}]
+Unknown tags.: [{: $ unknown_tags :}]
+Out..........: [{: $ out :}]
+{: ~ ( $ top_template ) 
+URL..........: [{: $ url :}]
+Template.....: [{: $ object :}]
+Headers......: [{: $ headers :}]
+Cookies......: [{: $ cookies :}]
+GET..........: [{: $ GET :}]
+POST.........: [{: $ POST :}]
+{: @ (cfg) 
+{: @$ cfg.key :} = [{: @$ cfg.value :}] :}
+{: @ (env_nes) 
+{: @$ env_nes.key :} = [{: @$ env_nes.value :}] :}
+{: @ (env_cgi) 
+{: @$ env_cgi.key :} = [{: @$ env_cgi.value :}] :}
+:}
+</pre>
+

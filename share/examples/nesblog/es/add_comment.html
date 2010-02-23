@@ -1,0 +1,49 @@
+{: NES 0.4 ('../scripts/add_comment.cgi') :}
+{: #
+    ----------------------------------------------------------------------------
+    
+        NES 0.4 beta by - Skriptke
+        Copyright 2009 - 2010 Enrique F. Castañón
+        Licensed under the GNU GPL.
+        http://sourceforge.net/projects/nes/
+        
+        Sample to use Nes;
+        
+    ----------------------------------------------------------------------------
+:}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <title>Add Comment - Sample to use Nes;</title>
+</head>
+<body>
+    <div id="content"> 
+        {: include ./header.html :} {: # incluimos header.html que contiene el menú y la cabecera :}
+        {: include ./intro.html  :} {: # incluimos intro.html que contiene la introducción :}
+        <div id="left">
+            <div id="comment">
+            <b><center>Añadir un comentario a: "<a href="./?item={: $ item_name :}">{: $ item_name :}</a>"</center></b>
+            </div>  
+            <div id="comment">
+            {: include ./form_comment.html  :}
+            </div>   
+            <br><br>
+            <div id="comment">
+            <p align="center"><small>El formulario requiere cookies y javascript.</small></p>
+            </div>               
+        </div>   
+        <div id="right">
+            {: include ./popular.html :} {: # incluimos popular.html con los artículos más destacados :}
+            <br /><br />
+            {: include ./latest.html :}  {: # incluimos latest.html con los últimos articulos publicados :}
+            <br /><br />
+            {: include ./latest_comments.nsql :}  {: # incluimos latest.html con los últimos comentarios :}
+        </div>
+        {: include ./footer.html :} {: # incluimos footer.html con el pie de página :}
+    </div>
+</body>
+</html>
+

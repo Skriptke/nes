@@ -1,0 +1,29 @@
+{: NES 0.8 ('./session.pl') :}
+{: #
+    ----------------------------------------------------------------------------
+    
+        NES 0.8 beta by - Skriptke
+        Copyright 2009 - 2010 Enrique F. Castañón
+        Licensed under the GNU GPL.
+        http://nes.sourceforge.net/
+        
+        session.nhtml
+        
+        {: include ( '{: * cfg_obj_top_dir :}/session.nhtml',
+                     action,  {: # default: get | create | del :}
+                     user,    {: # if get action: user :}
+                     expire   {: # if get action: expire :}
+                   )
+        :}
+    
+        Expire format:
+    
+          suffix: s: seconds, m: minutes h: hours d: days, M: months, y: years
+          30s = 30 seconds
+          12h = 12 hours
+          2y  = 2 years
+          ...
+       
+    ----------------------------------------------------------------------------
+:}
+{: $ user :}

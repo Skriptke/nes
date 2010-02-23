@@ -1,0 +1,23 @@
+{: NES 0.8 ('./go_language.pl') :}
+{: #
+    ----------------------------------------------------------------------------
+    
+        NES 0.8 beta by - Skriptke
+        Copyright 2009 - 2010 Enrique F. Castañón
+        Licensed under the GNU GPL.
+        http://sourceforge.net/projects/nes/
+        
+        go_language  
+        
+        {: include ('{: * cfg_obj_top_dir :}/go_language.nhtml', 
+                    'es_ES: http//example.com/es_ES',
+                    'es:    http//example.com/es_generic',
+                    'en_US: http//example.com/en_US',
+                    ...
+                    ':      http//example.com/default'
+                    )
+        :}
+        
+    ----------------------------------------------------------------------------
+:}
+{: # none :}   

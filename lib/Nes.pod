@@ -1,0 +1,488 @@
+
+=head1 NAME
+
+nes - A template system for the Web
+
+=head1 SYNOPSIS
+
+    use Nes;
+    my $nes = Nes::Singleton->new('template.nhtml');
+
+    my $nes_tags = {};
+    $nes_tags->{'var_hello'} = 'Hello World!';
+
+    $nes->out(%$nes_tag);
+
+=head1 DESCRIPTION
+
+A system for separating Perl executable code and the representation of the data 
+generated in HTML using Tags are replaced with variables created in Perl.
+
+=head2 Sample a Nes Perl script
+
+    use Nes;
+    my = Nes::Singleton:Singleton->new('template.nhtml');
+
+    my $nes_tags = {};
+    $nes_tags->{'var_hello'} = 'Hello World!';
+
+    $nes->out(%$nes_tag);  
+
+=head2 Sample a Nes template
+
+    {: NES 1.0 ('hello.cgi') :}
+    <html>
+      <head>
+        <title>Nes Hello World</title>
+      </head>
+      <body>
+        <b>{: $ var_hello :}</b>
+      </body>
+    </html>
+
+=head1 CONFIGURATION
+
+=head2 Nes templates .htaccess configuration
+
+    AddHandler perl-nes .nhtml
+    AddHandler perl-nes .nhtm
+    
+    # change for NES directory installation
+    Action perl-nes /cgi-bin/nes/dispatch.cgi
+    
+    <FilesMatch \.(nsql|nes.cfg)$>
+      order deny,allow
+      deny from all
+    </FilesMatch>
+
+=head2 .nes.cfg
+
+Setting.cgi is loaded configuration Nes. It is recommended not to change their 
+values and do it in the file .nes.cfg. Especially private_key value that is used
+to encrypt data, if not changed the script to launch a warning each time you run Nes.
+
+The .nes.cfg is placed in the directory where you installed your files nhtml, 
+overwrites Setting.cgi and plugins cfg.
+
+Nes look for this file in the directory and will run up nhtml directory to the 
+root directory of the Web to read .nes.cfg
+
+=head1 Singleton class
+
+Is a singleton type object, return the new object or instance of this if is 
+created previously.
+
+    use Nes;
+  = Nes::Singleton Nes::Singleton->new('template.nhtml'); # returns a new instan= Nes::Singletonnes = Nes::Singleton->new('other.nhtml');    # returns same i= Nes::Singleton    $nes = Nes::Singleton->new();                 # returns same instance
+
+Only require parameter if Nes is executed by CGI.
+
+    http://example.con/perl.cgi
+    
+The parameter is ignored if executed Nes by template.
+
+    http://example.con/template.nhtml
+
+The CGI method only is provided for debug.
+
+Singleton provides a single method: out. In the parameter we pass a copy of an 
+associative array (%$hash) with the data we want to replace in the template.
+
+    my $nes_tags = {};
+    $nes_tags->{'hello'} = 'Hello World!';
+    $nes->out(%$nes_tag);
+
+    ...
+
+    my %nes_tags;
+    $nes_tags{'hello'} = 'Hello World!';
+    $nes->out(%nes_tag);
+
+=head1 Syntax Nes
+
+=head2 Blocks
+
+Nes instructions consist of blocks enclosed in braces, the keys to open and 
+close a block are respectively:
+
+    {: and :}
+
+=head2 Tags    
+    
+The Tags are the word or symbol that precedes the keys to open the block. 
+Similar to the HTML Tags. The Tag Nes syntax is:
+
+    {: TAG (parameters) [HTML] :}
+
+Tags can be:
+
+    #       Comment
+    $       Variable
+    *       Environment variable
+    ~       Expression
+    sql     SQL SELECT
+    @       Data table
+    @$      Field in a data table
+    include include a file
+    NES     Nes
+    &       Plugin
+
+=head2 Syntax
+
+It allows abbreviated as follows:
+
+    {: $ ( 'variable' ) :}
+    {: $ ( variable ) :}
+    {: $ variable :}
+    {: $variable :}
+
+The four forms have the same meaning.
+
+Parentheses are not required provided there are no spaces between the parameters:
+
+    {: ~ $ variable <p> HTML code </p> :}                   <- * unnecessary 
+    {: ~ ($ variable1 == $ variable2) <p> HTML code </p> :} <- * required 
+
+Use quotation marks and commas in the parameters:
+
+    {: include ('file.nhtml','The \'Title\'','one, two and three') :} 
+
+All Tags except NES may occupy several lines:
+
+    {: #
+        If variable returns true 
+        you see "HTML code"
+    :}
+    {: ~ ( $ variable ) 
+            <p>HTML code</p>
+    :}
+
+=head1 TAGS
+
+=head2 # Comment
+
+    {: # comment :}
+
+Block is removed and not displayed in the HTML output.
+
+=head2 $ Variable
+
+    {: $ variable :}
+
+The block is replaced by the value of "variable" that must have been previously 
+defined in our Perl script, of not being the block is replaced by an empty string.
+
+=head2 * Environment variable
+
+    {: * environment_variable :}
+
+The block is replaced by the value of environment_variable which is an 
+environment variable Nes.
+
+=head2 ~ Expression
+
+    {: ~ (expression) HTML :}
+
+The block is replaced by "HTML" if expression is true. Expression can be any 
+valid Perl expression, including Perl regular expressions, the variable can only
+be a $ variable, environment *, or a literal:
+
+    {: ~ ( $ variable =~ /hello/ ) <p>variable greets us</p> :}
+    {: ~ ( * variable ) <p>variable is defined</p> :}
+    {: ~ ( ! * variable ) <p>variable is not defined</p> :}
+
+The expressions that result in the assignment of a variable, return true or 
+false but the assignment has no effect:
+
+    {: ~ ( $ variable = 1 ) <p>value does not change</p> :}
+
+=head2 @  Data table
+
+    {: @ (table) HTML :}
+
+The block is replaced and is repeated by "HTML" as many times as records have 
+Table. We refer to each field in each record with:    
+
+    {: @$ table.field :}
+
+Table must be defined in our Perl script as an array of hashes reference.
+
+Sample:
+
+    <table border="1">
+    {: @ user
+      <tr>
+        <td> {: @$ user.name  :} </td>
+        <td> {: @$ user.email :} </td>
+      </tr>
+    :}
+    </table>    
+
+=head2 @$ Field
+
+    {: @$ table.field :}
+
+Where "field" is the name of the field in the table. {: @$ table.field :} is a 
+property of {: @ (table) HTML :} or {: sql (SQL SELECT) HTML :}
+
+=head2 sql SQL SELECT
+
+    {: sql (SQL SELECT) HTML :}
+
+The block is replaced and is repeated by "HTML" for each record returned by the
+query. The operation is similar to Tag @. The SQL statement must begin with SELECT.
+
+It reads the configuration (.nes.cfg) the following variables to access the database:
+
+    DB_base    = base_name
+    DB_user    = user
+    DB_pass    = password
+    DB_driver  = mysql      
+    DB_host    = localhost 
+    DB_port    = 3306      
+
+Sample:
+
+    <table border="1">
+    {: sql (
+              'SELECT * FROM `table` 
+                        WHERE 1 
+                        LIMIT 5;'
+           )
+      <tr>
+        <td> {: @$ table.name  :} </td>
+        <td> {: @$ table.email :} </td>
+      </tr>
+    :}
+    </table>
+
+=head2 include Include a file
+
+    {: include ('file') :}
+
+The block is replaced by the file "file", file can be a nhtml, nsql, html, php, 
+sh, text, perl, etc..
+
+=head2 NES Nes
+
+    {: NES ver ('file') :}
+
+It is similar to a line of files unix shell (#!/usr/bin/...) indicating that 
+script must be run.
+
+In the absence of this line is treated as HTML file (type text/html) without 
+replacing any of Tags. If you do not need any Perl script but you want the file 
+to be treated as replacement Tag Nes:
+
+    {: NES 1.0 ('') :}
+
+Or explicitly stating 'none' to avoid any suggestion that this is an error or oversight:
+
+    {: NES 1.0 ('none') :}
+
+For clarity we recommend this:
+
+    {: NES 1.0 none :}
+
+=head2 & Plugin
+
+    {: & tag (param...) :}
+
+Reserved for use by plugins.
+
+=head1 Nes Object
+
+Nes Objects are bits of code, NES, HTML, JavaScript, Perl... or a mixture. Any script can become an object Nes, so it is not necessary to rewrite the code. 
+
+We call an object with include: 
+
+    {: include ( '{: * cfg_obj_top_dir :}/object.nhtml', 
+                  [ parameter list ]
+               ) 
+    :}
+
+The objects may reside in any directory. A simple example is the object 
+location.nhtml that redirects to another page: 
+
+    {: include ( '{: * cfg_obj_top_dir :}/location.nhtml', 
+                 'http://example.com/page.nhtml',
+                 '301 Moved Permanently'
+               ) 
+    :}
+
+Nes Objects offers many opportunities for code reuse. Nes The idea is to have a 
+huge library of objects, so you only have to write code for individual cases, 
+disposing of objects commonly used for the login, sessions, etc.. work to 
+create a Web with Nes will virtually mount templates and Web design.|
+
+=head2 Create Object
+
+With Nes can not create objects, you can invoke/include objects in your 
+templates, but the object must be created in Perl, HTML, JavaScript, etc.. Or a 
+mixture of all with a template Nes or not.
+
+As an example we have encapsulated part of LWP in an Nes Object:
+
+    {: include ('{: * cfg_obj_top_dir :}/lwp.nhtml',
+               URL,
+               extrac,  {: # default: content      |
+                                      status       |
+                                      Content-Type |
+                                      title        |
+                                      head         |
+                                      body         |
+                                      star:-:end   | 
+                                      :-:star:-:end:-:
+                         :}
+               method,   {: # default: GET | POST :}
+               query,    {: # query: 'name=Jose&email=jose@sample.com' :}
+               charset,  {: # default: no change | ISO | UTF-8 :}
+               useragent {: # default: Nes/0.8  :}
+               email     {: # user agent email. default: $ENV{'SERVER_ADMIN'} :}
+             ) 
+    :}
+    
+    extrac:
+    <tag>:-:</tag>       Return tag content without tags: '<tag></tag>'
+    :-:<tag>:-:</tag>:-: Return tag content and include tags: '<tag></tag>'
+    
+    Defined:
+    {: $ status :}        # Status response
+    {: $ request :}       # request send
+    {: $ Content-Type :}  # Content type
+    {: $ content :}       # All HTML content
+    {: $ title :}         # Title Tag content
+    {: $ head :}          # Head Tag content
+    {: $ body :}          # Body Tag content
+    {: $ extrac :}        # extrac return value
+
+To test our object we have created a page test_page.html of which we can 
+extract the "Title" as follows:
+
+    {:  include ('{: * cfg_obj_top_dir :}/lwp.nhtml',
+                 'http://nes.sourceforge.net/miniblog/es/test_page.html',
+                 title
+                ) 
+    :}
+
+Out:
+
+    Test Page - Sample to use Nes;
+
+We created our object so we can directly call the Perl script without the 
+template nhtml:
+
+    {:  include ('{: * cfg_obj_top_dir :}/lwp.pl',
+                 'http://nes.sourceforge.net/miniblog/es/test_page.html',
+                 title
+                ) 
+    :}
+
+Out:
+
+    Test Page - Sample to use Nes;
+
+We may also create a new template for this Perl script. lwp.pl defines the 
+following Nes Tags:
+
+    {: $ status :}        # Status response
+    {: $ request :}       # request send
+    {: $ Content-Type :}  # Content type
+    {: $ content :}       # All HTML content
+    {: $ title :}         # Title Tag content
+    {: $ head :}          # Head Tag content
+    {: $ body :}          # Body Tag content
+    {: $ extrac :}        # extrac return value
+
+Then to create a small one-page report:
+
+    {: NES 1.0 ('./lwp.pl') :}
+    Status:<br>
+    {: $ status :}<br>
+    Title:<br>
+    {: $ title :}<br>
+    Content type:<br>
+    {: $ Content-Type :}<br>
+    Head:<br>
+    {: $ head :}<br>
+    Extrac:<br>
+    {: $ extrac,yes_html :}
+
+Name as lwp_custom.nhtml, store it in the obj directory, and finally we can 
+invoke like this:
+
+    {: include ('{: * cfg_obj_top_dir :}/lwp_custom.nhtml',
+                'http://nes.sourceforge.net/es/test_page.html'
+                'title'
+               ) 
+    :} 
+
+Out:
+
+    Status:
+    200 OK 
+    Title:
+    Test Page - Sample to use Nes;
+    Content type:
+    text/html
+    Head:
+    <meta http-equiv="content-type" content="text/html;charset=ISO-8859-1" /> 
+    <title>Test Page - Sample to use Nes;</title>
+    Extrac:
+    Test Page - Sample to use Nes;
+
+=head1 BUGS
+
+
+
+=head1 TODO
+
+
+
+=head1 AUTHOR
+
+Enrique F. Castañón <skriptke@yahoo.es>    
+
+=head1 VERSION
+
+Version 1.0 Febrero 2010
+
+=head1 COPYRIGHT
+
+Copyright (c) Enrique F. Castañón. All rights reserved.
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it
+and/or modify it under the same terms and conditions as
+GNU Public License (GPL).
+
+This means that you can, at your option, redistribute it and/or modify it under
+either the terms the GNU Public License (GPL), or under the Perl Artistic License.
+
+See http://dev.perl.org/licenses/
+
+=head1 DISCLAIMER
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS
+OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Use of this software in any way or in any form, source or binary,
+is not allowed in any country which prohibits disclaimers of any
+implied warranties of merchantability or fitness for a particular
+purpose or any disclaimers of a similar nature.
+
+IN NO EVENT SHALL I BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT,
+SPECIAL, INCIDENTAL,  OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+USE OF THIS SOFTWARE AND ITS DOCUMENTATION (INCLUDING, BUT NOT
+LIMITED TO, LOST PROFITS) EVEN IF I HAVE BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE
+
+=head1 SEE ALSO
+
+
+
+=cut
+
