@@ -21,7 +21,7 @@ generated in HTML using Tags are replaced with variables created in Perl.
 =head2 Sample a Nes Perl script
 
     use Nes;
-    my = Nes::Singleton:Singleton->new('template.nhtml');
+    my = Nes::Singleton->new('template.nhtml');
 
     my $nes_tags = {};
     $nes_tags->{'var_hello'} = 'Hello World!';
@@ -72,8 +72,9 @@ root directory of the Web to read .nes.cfg
 Is a singleton type object, return the new object or instance of this if is 
 created previously.
 
-    use Nes;
-  = Nes::Singleton Nes::Singleton->new('template.nhtml'); # returns a new instan= Nes::Singletonnes = Nes::Singleton->new('other.nhtml');    # returns same i= Nes::Singleton    $nes = Nes::Singleton->new();                 # returns same instance
+    Nes::Singleton->new('template.nhtml'); # returns a new instance
+    Nes::Singleton->new('other.nhtml');    # returns same instance
+    Nes::Singleton->new();                 # returns same instance
 
 Only require parameter if Nes is executed by CGI.
 

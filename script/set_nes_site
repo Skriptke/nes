@@ -32,8 +32,8 @@ my $from_exam  = '';
 my $to_exam    = '';
 my $php_wrap   = '';
 my $htm_wrap   = '';
-my $file_exits = ' already exists, please:'."\n".'  q = quit, s = skip, r = rename. [q/s/r]:'; 
-my $conf_exits = ' already exists, please:'."\n".'  q = quit, s = skip, r = rename , a = append, c = create sample. [q/s/r/a/c]:'; 
+my $file_exits = ' already exists, please:'."\n".'q=quit, s=skip, r=rename. [q/s/r]:'; 
+my $conf_exits = ' already exists, please:'."\n".'q=quit, s=skip, r=rename , a=append, c=create sample. [q/s/r/a/c]:'; 
                               
 GetOptions(
   'iprefix=s'   => \$iprefix,
