@@ -11,9 +11,9 @@ Repository:
 
 INSTALLATION
     
-Require the modules:
+Requires the modules:
 
-  Require:
+  Mandatory:
     Crypt::CBC
     Crypt::Blowfish
     IO::String
@@ -42,7 +42,7 @@ To install this module, run the following commands:
 
 CONFIGURATION
 
-Nes require configuration of you cgi-bin and .htaccess for 
+Nes requires configuration of you cgi-bin and .htaccess for 
 directory of the Nes templates.
 
 To active and configure Nes use utility: set_nes_site
@@ -74,6 +74,8 @@ TEST YOU INSTALATION
   Install hello world and test examples in directory test_nes:
     set_nes_site --from_exam=hello_nes --to_exam=/full-path-to/root-www/test_nes
     
+  * Change /full-path-to... for you particular path
+    
   Test:
     http://yousite/test_nes/hello.nhtml
       You must see "Hello World!" in this page
@@ -88,22 +90,21 @@ SUPPORT AND DOCUMENTATION
 After installing, you can find documentation for this module with the
 perldoc command.
 
-    perldoc Nes
+  perldoc Nes
 
 You can also look for information at:
 
-    RT, CPAN's request tracker
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Nes
+  RT, CPAN's request tracker
+    http://rt.cpan.org/NoAuth/Bugs.html?Dist=Nes
 
-    AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/Nes
+  AnnoCPAN, Annotated CPAN documentation
+    http://annocpan.org/dist/Nes
 
-    CPAN Ratings
-        http://cpanratings.perl.org/d/Nes
+  CPAN Ratings
+    http://cpanratings.perl.org/d/Nes
 
-    Search CPAN
-        http://search.cpan.org/dist/Nes
-
+  Search CPAN
+    http://search.cpan.org/dist/Nes
 
 COPYRIGHT AND LICENCE
 
@@ -130,4 +131,5 @@ any disclaimers of a similar nature.
 IN NO EVENT SHALL I BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL,
 INCIDENTAL,  OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THIS 
 SOFTWARE AND ITS DOCUMENTATION (INCLUDING, BUT NOT LIMITED TO, LOST 
-PROFITS) EVEN IF I HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAG
+PROFITS) EVEN IF I HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAG.
+
