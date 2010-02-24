@@ -188,7 +188,7 @@ Action perl-nes /cgi-bin/nes/dispatch.cgi
   }   
   
   my $target = $dir_cfg.$file_htaccess;
-  $target = $dir_cfg.$file_htaccess.'.'.time.'.nes' if $response =~ /^c/i;
+  $target = $dir_cfg.$file_htaccess.'.'.time if $response =~ /^c/i;
   if ( $response !~ /^s/i ) {
     open(my $fh,'>>',$target) || die "can not open $target\n";
     print $fh $configuration;
