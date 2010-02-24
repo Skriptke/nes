@@ -41,8 +41,8 @@ share/examples/nesblog/en/intro.html
 share/examples/nesblog/en/article_index.html
 share/examples/nesblog/en/latest_comments.nsql
 share/examples/nesblog/en/show_source.html
-share/examples/nesblog/en/items/Hello World.html
-share/examples/nesblog/en/items/Principios de Nes.html
+'share/examples/nesblog/en/items/Hello World.html'
+'share/examples/nesblog/en/items/Principios de Nes.html'
 share/examples/nesblog/en/index.html
 share/examples/nesblog/en/latest.html
 share/examples/nesblog/en/source.html
@@ -58,38 +58,38 @@ share/examples/nesblog/es/intro.html
 share/examples/nesblog/es/article_index.html
 share/examples/nesblog/es/latest_comments.nsql
 share/examples/nesblog/es/show_source.html
-share/examples/nesblog/es/items/Logo de nes.html
-share/examples/nesblog/es/items/Tag ~ (expresión).html
+'share/examples/nesblog/es/items/Logo de nes.html'
+'share/examples/nesblog/es/items/Tag ~ (expresión).html'
 share/examples/nesblog/es/items/Colabora.html
-share/examples/nesblog/es/items/Test Captcha.html
-share/examples/nesblog/es/items/Sintaxis de Nes.html
-share/examples/nesblog/es/items/Tag NES ver (file).html
+'share/examples/nesblog/es/items/Test Captcha.html'
+'share/examples/nesblog/es/items/Sintaxis de Nes.html'
+'share/examples/nesblog/es/items/Tag NES ver (file).html'
 share/examples/nesblog/es/items/Seguridad.html
-share/examples/nesblog/es/items/Hello World.html
-share/examples/nesblog/es/items/Tag * (environment_variable).html
-share/examples/nesblog/es/items/Tag include (file).html
-share/examples/nesblog/es/items/Nes Tags.html
+'share/examples/nesblog/es/items/Hello World.html'
+'share/examples/nesblog/es/items/Tag * (environment_variable).html'
+'share/examples/nesblog/es/items/Tag include (file).html'
+'share/examples/nesblog/es/items/Nes Tags.html'
 share/examples/nesblog/es/items/Sesiones.html
-share/examples/nesblog/es/items/Cabeceras HTTP.html
-share/examples/nesblog/es/items/Test Forms.html
-share/examples/nesblog/es/items/Formularios seguros.html
-share/examples/nesblog/es/items/La clase Singleton.html
-share/examples/nesblog/es/items/Nes como  Wrapper.html
-share/examples/nesblog/es/items/Plugin Captcha.html
-share/examples/nesblog/es/items/Archivo de configuración Nes.html
-share/examples/nesblog/es/items/Tag $ (variable).html
-share/examples/nesblog/es/items/Paradigma Nes.html
+'share/examples/nesblog/es/items/Cabeceras HTTP.html'
+'share/examples/nesblog/es/items/Test Forms.html'
+'share/examples/nesblog/es/items/Formularios seguros.html'
+'share/examples/nesblog/es/items/La clase Singleton.html'
+'share/examples/nesblog/es/items/Nes como  Wrapper.html'
+'share/examples/nesblog/es/items/Plugin Captcha.html'
+'share/examples/nesblog/es/items/Archivo de configuración Nes.html'
+'share/examples/nesblog/es/items/Tag $ (variable).html'
+'share/examples/nesblog/es/items/Paradigma Nes.html'
 share/examples/nesblog/es/items/mod_perl.html
 share/examples/nesblog/es/items/Objetos.html
-share/examples/nesblog/es/items/Nes 0.8.html
-share/examples/nesblog/es/items/Nes 0.9.html
-share/examples/nesblog/es/items/Tag comentario.html
-share/examples/nesblog/es/items/Principios de Nes.html
-share/examples/nesblog/es/items/Tag sql (SQL SELECT).html
-share/examples/nesblog/es/items/Tag @ (table).html
-share/examples/nesblog/es/items/Incluir PHP y otros.html
+'share/examples/nesblog/es/items/Nes 0.8.html'
+'share/examples/nesblog/es/items/Nes 0.9.html'
+'share/examples/nesblog/es/items/Tag comentario.html'
+'share/examples/nesblog/es/items/Principios de Nes.html'
+'share/examples/nesblog/es/items/Tag sql (SQL SELECT).html'
+'share/examples/nesblog/es/items/Tag @ (table).html'
+'share/examples/nesblog/es/items/Incluir PHP y otros.html'
 share/examples/nesblog/es/items/Plugins.html
-share/examples/nesblog/es/items/Plugin Forms.html
+'share/examples/nesblog/es/items/Plugin Forms.html'
 share/examples/nesblog/es/index.html
 share/examples/nesblog/es/latest.html
 share/examples/nesblog/es/source.html
