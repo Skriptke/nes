@@ -1010,7 +1010,7 @@ use Nes::Singleton;
     # default content type
     $self->{'Content-type'} = "Content-type: text/html";
     $self->{'HTTP-status'}  = "200 Ok";
-    $self->{'X-Powered-By'} = "NES/$VERSION";
+    $self->{'X-Powered-By'} = "Nes/$VERSION";
     
     return $self;
   }

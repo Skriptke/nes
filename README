@@ -30,7 +30,8 @@ Require the modules:
     DBD:: ...
     
   For set_nes_site script utility:
-    File::ShareDir    
+    File::ShareDir
+    File::Copy::Recursive
     
 To install this module, run the following commands:
 

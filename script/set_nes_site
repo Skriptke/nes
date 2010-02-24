@@ -70,7 +70,7 @@ sub exa {
   
   push(@INC,$iprefix) if $iprefix;
   use Nes;
-  my $sharedir = File::ShareDir::module_dir('Nes');
+  my $sharedir = File::ShareDir::dist_dir('Nes');
   $sharedir .= '/examples/';
   
   die "$from_exam not exists\n" if ! -e $sharedir.$from_exam;
@@ -96,7 +96,7 @@ sub act {
 
   push(@INC,$iprefix) if $iprefix;
   use Nes;
-  my $sharedir   = File::ShareDir::module_dir('Nes').'/cgi-bin';
+  my $sharedir   = File::ShareDir::dist_dir('Nes').'/cgi-bin';
   my $nesdir     = $cgi_dir.'/nes';  
   my @link_files = ( '/plugin', '/obj' );
   my @copy_files = ( '/dispatch.cgi', '/.htaccess' );    
@@ -204,7 +204,7 @@ sub exam_list {
   
   push(@INC,$iprefix) if $iprefix;
   use Nes;
-  my $sharedir = File::ShareDir::module_dir('Nes');
+  my $sharedir = File::ShareDir::dist_dir('Nes');
   $sharedir .= '/examples';
   
   opendir( my $dir, $sharedir );
