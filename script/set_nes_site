@@ -24,9 +24,13 @@ use strict;
 use File::ShareDir;
 use Getopt::Long;
 
+my $this_script = $0;
+$this_script =~ s/.*\///;
+
 my $cgi_dir    = '';
 my $iprefix    = '';
 my $dir_cfg    = '';
+my $use_copy   = '';
 my $from_exam  = '';
 my $to_exam    = '';
 my $php_wrap   = '';
@@ -39,6 +43,7 @@ usage() if ! @ARGV;
 GetOptions(
   'iprefix=s'   => \$iprefix,
   'cgi_dir=s'   => \$cgi_dir,
+  'use_copy!'   => \$use_copy,   
   'dir_cfg=s'   => \$dir_cfg,
   'php_wrap!'   => \$php_wrap,
   'wrap_html!'  => \$htm_wrap,    
@@ -98,6 +103,12 @@ sub act {
   my $nesdir     = $cgi_dir.'/nes';  
   my @link_files = ( '/plugin', '/obj' );
   my @copy_files = ( '/dispatch.cgi', '/.htaccess' );    
+  
+  # Some Linux distributions are problems with symbolic in cgi-bin
+  if ( $use_copy ) {
+    push(@copy_files,@link_files);
+    @link_files = ();
+  }
 
   my $response = '';
   $response = ask($nesdir.$file_exits)                
@@ -125,11 +136,19 @@ sub act {
       if -e $nesdir.$file;
     rename($nesdir.$file,$nesdir.$file.'.old.'.time) 
       if $response =~ /^r/i;
-    use File::Copy;
-    copy($sharedir.$file,$nesdir.$file) || die "can not be created $nesdir$file\n" 
-      if $response !~ /^s/i;
-    chmod 0755, $nesdir.$file
-      if $response !~ /^s/i && $file =~ /\.cgi$/;
+    if ( -d $sharedir.$file ) {
+      use File::Copy::Recursive qw(dircopy);
+      dircopy($sharedir.$file,$nesdir.$file) || die "can not be created $nesdir$file\n"
+        if $response !~ /^s/i;
+      chmod 0755, $nesdir.$file
+        if $response !~ /^s/i;
+    } else {
+      use File::Copy;
+      copy($sharedir.$file,$nesdir.$file) || die "can not be created $nesdir$file\n" 
+        if $response !~ /^s/i;
+      chmod 0755, $nesdir.$file
+        if $response !~ /^s/i && $file =~ /\.cgi$/;
+    }
       
     # add use lib for install Nes locally
     if ( $file =~ /dispatch.cgi$/ && $iprefix && $response !~ /^s/i ) {
@@ -215,7 +234,7 @@ sub exam_list {
   my @files = readdir($dir);
   closedir($dir);
   
-  print "\n  List of examples that can be intalled:\n";
+  print "\n  List of examples and utilities that can be intalled:\n\n";
   foreach my $exam ( @files ) {
     print "    $exam\n" if $exam !~ /\./;
   }
@@ -293,7 +312,7 @@ sub ask {
 sub version {
   
   print << "EOF";
-$0 for Nes version: $VERSION
+$this_script for Nes version: $VERSION
 EOF
   
   exit;
@@ -304,40 +323,41 @@ sub usage {
   print << "EOF";
 Usage:
 
-$0 OPTIONS
+$this_script OPTIONS
 
   OPTIONS:
   
     --cgi_dir   : Active Nes in --cgi_dir=/full-path-to/cgi-bin 
+    -u          : Use copy instead of link for Nes lib in active
     --modperl   : *** unimplemented *** add mod_perl support in active
     --iprefix   : full-path-to Nes.pm dir if you used prefix in installation 
     --dir_cfg   : Configure Nes for --dir_cfg=/full-path-to/root-www/dir
-    --php_wrap  : Add PHP Wrapper in configure
-    --wrap_html : Add HTML Wrapper in configure
+    -p          : Add PHP Wrapper in configure
+    -w          : Add HTML Wrapper in configure
     --from_exam : Install example name --from_exam=name
     --to_exam   : Example destination --to_exam=/full-path-to/root-www/example
-    -l          : Get list of examples, ignore all other options       
+    -l          : Get list of examples and utilities, ignore all other options       
     -h          : Show this help, ignore all other options
     -v          : Show version, ignore all other options
 
 Examples:
 
   Active Nes in /usr/lib/cgi-bin:
-    $0 --cgi_dir=/usr/lib/cgi-bin
+    $this_script --cgi_dir=/usr/lib/cgi-bin
     
   Configure Nes for directory /var/www/myweb:
-    $0 --dir_cfg=/var/www/myweb
+    $this_script --dir_cfg=/var/www/myweb
     
   Configure Nes for all site:
-    $0 --dir_cfg=/var/www  
+    $this_script --dir_cfg=/var/www  
         
   Install hello world and test examples in /var/www/test_nes:
-    $0 --from_exam=hello_nes --to_exam=/var/www/test_nes
+    $this_script --from_exam=hello_nes --to_exam=/var/www/test_nes
     
 If you install Nes locally add --iprefix in cgi_dir and from_exam options:
 
   Active Nes in /usr/lib/cgi-bin and install Nes in /home/USER/share/perl/5.10
-    $0 --cgi_dir=/usr/lib/cgi-bin --iprefix=/home/USER/share/perl/5.10
+    $this_script --cgi_dir=/usr/lib/cgi-bin --iprefix=/home/USER/share/perl/5.10
     
 EOF
 

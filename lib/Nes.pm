@@ -11,7 +11,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.00_02
+#  Version 1.00_03
 #
 #  Nes.pm
 #
@@ -21,7 +21,7 @@ use strict;
 #use warnings;
 #no warnings 'uninitialized';
 
-our $VERSION          = '1.00_02';
+our $VERSION          = '1.00_03';
 our $CRLF             = "\015\012";
 our $MAX_INTERACTIONS = 500;
 our $MOD_PERL         = $ENV{'MOD_PERL'} || 0;
