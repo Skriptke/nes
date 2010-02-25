@@ -19,6 +19,9 @@ recommends   'DBI'                   => '1.601';
 recommends   'DBD::mysql'            => '4.006';
 recommends   'DBD::Pg'               => '2.5.0';
 
+no_index     'directory' => 'share';
+#no_index      package    => 'DB';
+
 install_script 'set_nes_site';
 install_share  'share';
   

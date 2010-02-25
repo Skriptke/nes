@@ -12,15 +12,14 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.00_01
+#  Version 1.00_02
 #
 #  set_nes_site
 #
 # -----------------------------------------------------------------------------
 
-our $VERSION = '1.00_01';
+our $VERSION = '1.00_02';
 
-use Nes;
 use strict;
 use File::ShareDir;
 use Getopt::Long;
@@ -34,6 +33,8 @@ my $php_wrap   = '';
 my $htm_wrap   = '';
 my $file_exits = ' already exists, please:'."\n".'q=quit, s=skip, r=rename. [q/s/r]:'; 
 my $conf_exits = ' already exists, please:'."\n".'q=quit, s=skip, r=rename , a=append, c=create sample. [q/s/r/a/c]:'; 
+
+usage() if ! @ARGV;
                               
 GetOptions(
   'iprefix=s'   => \$iprefix,
@@ -48,9 +49,6 @@ GetOptions(
   'version'     => \&version,
   'help'        => \&usage,
 ) or usage();
-
-# *** unimplemented ***
-usage() if $iprefix;
 
 $cgi_dir =~ s/\/$//;
 $dir_cfg =~ s/\/$//;
@@ -69,7 +67,7 @@ sub exa {
   print "Installing example $from_exam in $to_exam:\n";
   
   push(@INC,$iprefix) if $iprefix;
-  use Nes;
+  require Nes;
   my $sharedir = File::ShareDir::dist_dir('Nes');
   $sharedir .= '/examples/';
   
@@ -95,7 +93,7 @@ sub act {
   print "Activating Nes in $cgi_dir:\n";
 
   push(@INC,$iprefix) if $iprefix;
-  use Nes;
+  require Nes;
   my $sharedir   = File::ShareDir::dist_dir('Nes').'/cgi-bin';
   my $nesdir     = $cgi_dir.'/nes';  
   my @link_files = ( '/plugin', '/obj' );
@@ -132,7 +130,13 @@ sub act {
       if $response !~ /^s/i;
     chmod 0755, $nesdir.$file
       if $response !~ /^s/i && $file =~ /\.cgi$/;
-  } 
+      
+    # add use lib for install Nes locally
+    if ( $file =~ /dispatch.cgi$/ && $iprefix && $response !~ /^s/i ) {
+      local_nes_lib($nesdir.'/dispatch.cgi');
+      chmod 0755, $nesdir.'/dispatch.cgi';
+    }
+  }
   
   print "Activated Nes in $cgi_dir Ok\n";
   return;
@@ -203,7 +207,7 @@ Action perl-nes /cgi-bin/nes/dispatch.cgi
 sub exam_list {
   
   push(@INC,$iprefix) if $iprefix;
-  use Nes;
+  require Nes;
   my $sharedir = File::ShareDir::dist_dir('Nes');
   $sharedir .= '/examples';
   
@@ -252,6 +256,25 @@ sub check_param {
   
 }
 
+sub local_nes_lib {
+  my $dispatch = shift;
+  my $use_lib  = "use lib '$iprefix';\nuse Nes;";
+  my $file     = '';
+  my $fh;
+
+  open(my $fh_r,'<',$dispatch) || die "can not be created $dispatch";
+  {
+    local $/ = undef;
+    $file = <$fh_r>;
+  }
+  close $fh_r;
+  $file =~ s/(\n\s*)use Nes;/$1$use_lib/s;
+  open(my $fh_w,'>',$dispatch) || die "can not be created $dispatch";
+  print $fh_w $file;
+  close $fh_w;
+
+}
+
 sub ask {
   my $question = shift;
   my $options  = $question;
@@ -287,7 +310,7 @@ $0 OPTIONS
   
     --cgi_dir   : Active Nes in --cgi_dir=/full-path-to/cgi-bin 
     --modperl   : *** unimplemented *** add mod_perl support in active
-    --iprefix   : *** unimplemented *** If you used prefix in installation
+    --iprefix   : full-path-to Nes.pm dir if you used prefix in installation 
     --dir_cfg   : Configure Nes for --dir_cfg=/full-path-to/root-www/dir
     --php_wrap  : Add PHP Wrapper in configure
     --wrap_html : Add HTML Wrapper in configure
@@ -310,6 +333,11 @@ Examples:
         
   Install hello world and test examples in /var/www/test_nes:
     $0 --from_exam=hello_nes --to_exam=/var/www/test_nes
+    
+If you install Nes locally add --iprefix in cgi_dir and from_exam options:
+
+  Active Nes in /usr/lib/cgi-bin and install Nes in /home/USER/share/perl/5.10
+    $0 --cgi_dir=/usr/lib/cgi-bin --iprefix=/home/USER/share/perl/5.10
     
 EOF
 

@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-nes - A template system for the Web
+Nes - A template system for the Web
 
 =head1 SYNOPSIS
 

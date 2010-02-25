@@ -12,7 +12,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.00_01
+#  Version 1.00_02
 #
 #  dispatch.cgi
 #
