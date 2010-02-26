@@ -363,7 +363,7 @@ location.nhtml that redirects to another page:
 Nes Objects offers many opportunities for code reuse. Nes The idea is to have a 
 huge library of objects, so you only have to write code for individual cases, 
 disposing of objects commonly used for the login, sessions, etc.. work to 
-create a Web with Nes will virtually mount templates and Web design.|
+create a Web with Nes will virtually mount templates and Web design.
 
 =head2 Create Object
 
