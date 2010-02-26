@@ -27,6 +27,4 @@
 
   $nes->out(%$nes_tags);
 
-
 1;
-
