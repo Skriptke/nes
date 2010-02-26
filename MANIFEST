@@ -41,6 +41,7 @@ share/examples/nesblog/en/intro.html
 share/examples/nesblog/en/article_index.html
 share/examples/nesblog/en/latest_comments.nsql
 share/examples/nesblog/en/show_source.html
+share/examples/nesblog/en/items/Help.html
 'share/examples/nesblog/en/items/Hello World.html'
 'share/examples/nesblog/en/items/Principios de Nes.html'
 share/examples/nesblog/en/index.html
@@ -94,6 +95,7 @@ share/examples/nesblog/es/index.html
 share/examples/nesblog/es/latest.html
 share/examples/nesblog/es/source.html
 share/examples/nesblog/es/add_comment.html
+share/examples/nesblog/es/.nes.cfg
 share/examples/nesblog/tables.sql
 share/examples/nesblog/images/nes.png
 share/examples/nesblog/images/site.gif

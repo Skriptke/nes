@@ -18,17 +18,17 @@ Nes - A powerful template system for HTML and the Web.
 A system for separating Perl executable code and the representation of the data 
 generated in HTML using Tags are replaced with variables created in Perl.
 
-=head2 Sample a Nes Perl script
+=head2 Nes Perl script Sample
 
     use Nes;
     my = Nes::Singleton->new('template.nhtml');
-
+    
     my $nes_tags = {};
     $nes_tags->{'var_hello'} = 'Hello World!';
-
+    
     $nes->out(%$nes_tag);  
 
-=head2 Sample a Nes template
+=head2 Nes template Sample
 
     {: NES 1.0 ('hello.cgi') :}
     <html>
@@ -40,14 +40,63 @@ generated in HTML using Tags are replaced with variables created in Perl.
       </body>
     </html>
 
+=head2 More samples
+
+Sample to use Nes; L<http://nes.sourceforge.net/>
+
+Repository L<http://github.com/Skriptke/nes>
+
 =head1 CONFIGURATION
+
+Nes requires configuration of you cgi-bin and .htaccess for 
+directory of the Nes templates.
+
+To active and configure Nes use utility: set_nes_site
+
+=head2 Configured as root
+
+Active Nes in /usr/lib/cgi-bin:
+
+    set_nes_site --cgi_dir=/usr/lib/cgi-bin
+
+Configure Nes for directory /var/www/myweb:
+
+    set_nes_site --dir_cfg=/var/www/myweb
+
+Configure Nes for all site:
+
+    set_nes_site --dir_cfg=/var/www  
+
+Install hello world and test examples in /var/www/test_nes:
+
+    set_nes_site --from_exam=hello_nes --to_exam=/var/www/test_nes
+
+More help:
+
+    set_nes_site --help
+
+* Change /usr/lib/cgi-bin and /var/www for you particular path
+
+=head2 Configured locally
+
+For configured Nes locally find you path to Nes.pm and add in 
+iprefix in cgi_dir and from_exam options.
+
+Active Nes in /usr/lib/cgi-bin:
+
+    set_nes_site --cgi_dir=/usr/lib/cgi-bin --iprefix=/home/USER/path-to-Nes
+
+More help:
+
+    set_nes_site --help    
+
+* Change /usr/lib/cgi-bin and /home/USER/path-to-Nes for you particular path
 
 =head2 Nes templates .htaccess configuration
 
     AddHandler perl-nes .nhtml
     AddHandler perl-nes .nhtm
     
-    # change for NES directory installation
     Action perl-nes /cgi-bin/nes/dispatch.cgi
     
     <FilesMatch \.(nsql|nes.cfg)$>
@@ -79,7 +128,7 @@ created previously.
 Only require parameter if Nes is executed by CGI.
 
     http://example.con/perl.cgi
-    
+
 The parameter is ignored if executed Nes by template.
 
     http://example.con/template.nhtml
@@ -92,9 +141,9 @@ associative array (%$hash) with the data we want to replace in the template.
     my $nes_tags = {};
     $nes_tags->{'hello'} = 'Hello World!';
     $nes->out(%$nes_tag);
-
-    ...
-
+    
+    ./.
+    
     my %nes_tags;
     $nes_tags{'hello'} = 'Hello World!';
     $nes->out(%nes_tag);
@@ -109,13 +158,13 @@ close a block are respectively:
     {: and :}
 
 =head2 Tags    
-    
+
 The Tags are the word or symbol that precedes the keys to open the block. 
 Similar to the HTML Tags. The Tag Nes syntax is:
 
     {: TAG (parameters) [HTML] :}
 
-Tags can be:
+TAG can be:
 
     #       Comment
     $       Variable
@@ -483,6 +532,7 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
+L<Template::Toolkit>, L<HTML::Template>, L<HTML::Mason>
 
 
 =cut

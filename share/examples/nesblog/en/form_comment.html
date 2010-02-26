@@ -1,15 +1,18 @@
-{: NES 0.8 ('{: * cfg_plugin_top_dir :}/forms_captcha.pl','../scripts/form_comment.cgi') :}
+{: NES 1.0 ('{: * cfg_plugin_top_dir :}/forms_captcha.pl','../scripts/form_comment.cgi') :}
 {: #
-    ----------------------------------------------------------------------------
+  -----------------------------------------------------------------------------
     
-        NES 0.8 beta by - Skriptke
-        Copyright 2009 - 2010 Enrique F. Castañón
-        Licensed under the GNU GPL.
-        http://sourceforge.net/projects/nes/
+  Nes 1.00 by Skriptke
+  Copyright 2009 - 2010 Enrique F. Castañón
+  Licensed under the GNU GPL.
+
+  Sample:
+  http://nes.sourceforge.net/
+
+  Repository:
+  http://github.com/Skriptke/nes
         
-        Sample to use Nes;
-        
-    ----------------------------------------------------------------------------
+  -----------------------------------------------------------------------------
 :}
 
 {: ~ ( ! * q_error_forms ) 
@@ -39,7 +42,7 @@
                       <tr>
                         <td width="100%" align="center">
                         <p>
-                        <b>Para continuar teclea el código de seguridad:</b>
+                        <b>To continue type in the security code:</b>
                         </p>
                         </td>
                       </tr>
@@ -55,10 +58,10 @@
                       </tr>
                       <tr>
                         <td width="100%" align="center">
-                        <input name="enviar" type="submit" value="Enviar" />
+                        <input name="enviar" type="submit" value="Send" />
                          {: ~ *nes_captcha_plugin_captcha1_error_fatal
                             <p align="center">
-                            <b>* Código de seguridad incorrecto</b>
+                            <b>* Incorrect security code</b>
                             </p>
                         :}
                         </td>
@@ -70,9 +73,9 @@
                 {: ~ ( * nes_captcha_plugin_captcha1_error_fatal == 3 )
                     <center>
                     <br>
-                    Demasiados intentos,<br> por favor espera unos minutos antes de volver a intentarlo
+                    Too many,<br> please wait a few minutes before trying again
                     <br>
-                    <br> El formulario ya no es válido: <a href="./add_comment.html?item={: $ item :}">Volver</a>
+                    <br> The form is no longer valid: <a href="./add_comment.html?item={: $ item :}">Back</a>
                     <br>
                     </center>
                 :}
@@ -93,14 +96,14 @@
             :}      
             <p align="center">
                 <br>
-                <b>Nombre:</b> <input name="{: & obfuscated nombre :}" type="text"  size="12" value="{: * q_nombre :}"/> &nbsp;&nbsp;&nbsp;
-                <b>email:</b> <input name="{: & obfuscated email :}" type="text"  size="12" value="{: * q_email :}"/> Opcional
+                <b>Name:</b> <input name="{: & obfuscated nombre :}" type="text"  size="12" value="{: * q_nombre :}"/> &nbsp;&nbsp;&nbsp;
+                <b>email:</b> <input name="{: & obfuscated email :}" type="text"  size="12" value="{: * q_email :}"/> Optional
                 <br>
                 <br>
-                <b>Comentario:</b> <br>
+                <b>Comment:</b> <br>
                 <textarea name="{: & obfuscated comentario :}" cols="60" rows="9">{:* q_comentario :}</textarea><br />
                 <input type="hidden" name="item"  value="{: $ item :}" />
-                <input name="enviar" type="submit" value="Enviar" />
+                <input name="enviar" type="submit" value="Send" />
                 <br>
             </p>
          </form>
@@ -109,7 +112,7 @@
     {: ~ ( $firma_ok )
     <p align="center">
         <br>
-        <big>Tu comentario ha sido publicado <a href="./?item={: * q_item :}&nocahe={: * q_nombre :}#comments">Volver</a></big>
+        <big>Your comment has been published <a href="./?item={: * q_item :}&nocahe={: * q_nombre :}#comments">Back</a></big>
         </p>
         <br>
         <br>
@@ -118,7 +121,7 @@
 {: ~ ( * q_error_forms  )
         <p>
         <center>
-        <big><b>Se ha producido un error</b><br><br> Este formulario requiere cookies y javascript habilitado.<br>
+        <big><b>There was an error</b><br><br> This form requires cookies and javascript enabled.<br>
         <br>
         {: ~ (* q_error_forms == 1) La Cookie ha expirado o no existe :}
         {: ~ (* q_error_forms == 2) Error en expiración de Cookie:}

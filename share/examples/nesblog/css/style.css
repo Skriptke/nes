@@ -21,7 +21,7 @@ p  { margin: 5px 0 15px; line-height: 1.6em; }
 #mi li { list-style-type: inherit; list-style-position: inside; }
 #top { float: right; margin: 38px 0 30px 0;}
 	#top li { list-style: none; display: inline; }
-	#top li a { float: left; padding: 6px 20px; margin: 3px 2px 0 0; color: #ccc; }
+	#top li a { float: left; padding: 6px 10px; margin: 3px 2px 0 0; color: #ccc; }
 	#top li a.current { color: #fff; background: #A82A15; }
 	#top li a:hover { background: #808080; color: #fff; }
 #lang { font: .8em Verdana,Geneva,'Bitstream Vera Sans','DejaVu Sans',sans-serif; margin: 5px 5px 5px 5px;}

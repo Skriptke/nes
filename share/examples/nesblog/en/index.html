@@ -1,18 +1,26 @@
-{: NES 0.9 ('../scripts/index.cgi') :}
+{: NES 1.0 ('../scripts/index.cgi') :}
 {: #
-    ----------------------------------------------------------------------------
+  -----------------------------------------------------------------------------
     
-        NES 0.9 beta by - Skriptke
-        Copyright 2009 - 2010 Enrique F. Castañón
-        Licensed under the GNU GPL.
-        http://sourceforge.net/projects/nes/
-        
-        Sample to use Nes;
+  Nes 1.00 by Skriptke
+  Copyright 2009 - 2010 Enrique F. Castañón
+  Licensed under the GNU GPL.
+
+  Sample:
+  http://nes.sourceforge.net/
+
+  Repository:
+  http://github.com/Skriptke/nes
+  
+  CPAN:
+  http://search.cpan.org/perldoc?Nes
+  
+  Sample to use Nes;
      
-        Para este ejemplo se ha modificado una plantilla HTML de 
-        Luka Cvrk (www.solucija.com)
+  For this example we have modified an HTML template by: 
+  Luka Cvrk (www.solucija.com)  
         
-    ----------------------------------------------------------------------------
+  -----------------------------------------------------------------------------
 :}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -40,12 +48,12 @@
             <br />
             <a name="comments" id="comments"></a>
             <div id="comment">
-            <b><center><a href="./add_comment.html?item={: * q_item :}">Comentarios:</a></center></b>
+            <b><center><a href="./add_comment.html?item={: * q_item :}">Comments:</a></center></b>
             </div>  
             <br>
             {: include ./comments.nsql :}
             <div id="comment">
-            <b><center><a href="./add_comment.html?item={: * q_item :}">Añadir un comentario</a></center></b>
+            <b><center><a href="./add_comment.html?item={: * q_item :}">Add Comment</a></center></b>
             </div>  
             <br>        
         </div>  

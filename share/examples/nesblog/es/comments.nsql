@@ -1,26 +1,29 @@
-{: NES 0.4 ('../scripts/comments.cgi') :}
+{: NES 1.0 ('../scripts/comments.cgi') :}
 {: #
-    --------------------------------------------------------------------
-    
-        NES 0.4 beta by - Skriptke
-        Copyright 2009 - 2010 Enrique F. Castañón
-        Licensed under the GNU GPL.
-        http://sourceforge.net/projects/nes/
-        
-        Sample to use Nes;
+  --------------------------------------------------------------------
 
-         nsql file:
-         
-         param_1:  database name
-         param_2:  user
-         param_3:  user password
-         param_4:  driver, ej.: mysql
-         param_5:  host, ej.: localhost
-         param_6:  port, ej.: 3306
+  Nes 1.00 by Skriptke
+  Copyright 2009 - 2010 Enrique F. Castañón
+  Licensed under the GNU GPL.
+
+  Sample:
+  http://nes.sourceforge.net/
+
+  Repository:
+  http://github.com/Skriptke/nes
+
+     nsql file:
+     
+     param_1:  database name
+     param_2:  user
+     param_3:  user password
+     param_4:  driver, ej.: mysql
+     param_5:  host, ej.: localhost
+     param_6:  port, ej.: 3306
+    
+     Por defecto se leen de la configuración .nes.cfg
         
-         Por defecto se leen de la configuración .nes.cfg
-        
-     -------------------------------------------------------------------
+  -------------------------------------------------------------------
 :}
             {: sql (
                       'SELECT * FROM `comments` 

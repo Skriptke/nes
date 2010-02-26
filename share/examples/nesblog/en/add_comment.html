@@ -1,15 +1,18 @@
-{: NES 0.4 ('../scripts/add_comment.cgi') :}
+{: NES 1.0 ('../scripts/add_comment.cgi') :}
 {: #
-    ----------------------------------------------------------------------------
+  -----------------------------------------------------------------------------
     
-        NES 0.4 beta by - Skriptke
-        Copyright 2009 - 2010 Enrique F. Castañón
-        Licensed under the GNU GPL.
-        http://sourceforge.net/projects/nes/
+  Nes 1.00 by Skriptke
+  Copyright 2009 - 2010 Enrique F. Castañón
+  Licensed under the GNU GPL.
+
+  Sample:
+  http://nes.sourceforge.net/
+
+  Repository:
+  http://github.com/Skriptke/nes
         
-        Sample to use Nes;
-        
-    ----------------------------------------------------------------------------
+  -----------------------------------------------------------------------------
 :}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -25,14 +28,14 @@
         {: include ./intro.html  :} {: # incluimos intro.html que contiene la introducción :}
         <div id="left">
             <div id="comment">
-            <b><center>Añadir un comentario a: "<a href="./?item={: $ item_name :}">{: $ item_name :}</a>"</center></b>
+            <b><center>Add a comment to: "<a href="./?item={: $ item_name :}">{: $ item_name :}</a>"</center></b>
             </div>  
             <div id="comment">
             {: include ./form_comment.html  :}
             </div>   
             <br><br>
             <div id="comment">
-            <p align="center"><small>El formulario requiere cookies y javascript.</small></p>
+            <p align="center"><small>Requieres cookies and javascript.</small></p>
             </div>               
         </div>   
         <div id="right">

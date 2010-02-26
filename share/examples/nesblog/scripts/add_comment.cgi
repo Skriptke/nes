@@ -1,19 +1,25 @@
 #!/usr/bin/perl
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
-#  NES by - Skriptke
+#  Nes by Skriptke
 #  Copyright 2009 - 2010 Enrique F. Castañón
 #  Licensed under the GNU GPL.
-#  http://sourceforge.net/projects/nes/
 #
-#  Version 0.9 pre
+#  Sample:
+#  http://nes.sourceforge.net/
+#
+#  Repository:
+#  http://github.com/Skriptke/nes
+#
+#  CPAN:
+#  http://search.cpan.org/perldoc?Nes
+# 
+#  Version 1.00
 #
 #  add_comment.cgi
 #
-#  Muestra el formulario para añadir comentarios
-#
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 use Nes;
 
