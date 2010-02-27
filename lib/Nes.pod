@@ -15,8 +15,13 @@ Nes - A powerful template system for HTML and the Web.
 
 =head1 DESCRIPTION
 
-A system for separating Perl executable code and the representation of the data 
-generated in HTML using Tags are replaced with variables created in Perl.
+Nes (No Embedded Source) a system for separating Perl executable code and 
+the representation of the data generated in HTML using Tags are replaced 
+with variables created in Perl.
+
+Nes can do for you?
+With Nes can do the same or more than any other template system, only 
+much faster and easier. The time is the most valuable resource. 
 
 =head2 Some Nes features
 
@@ -36,7 +41,7 @@ for creating secure forms, Forms and Captcha.
 =item Objects
 
 Object-oriented paradigm which enables you to reuse your code or use 
-third-party libraries. Objects are the main feature that makes Nes and 
+third-party libraries. Objects are the main feature that makes Nes 
 different from other systems. 
 
 =item HTML oriented
@@ -407,10 +412,7 @@ Nes Objects are bits of code, NES, HTML, JavaScript, Perl... or a mixture. Any s
 
 We call an object with include: 
 
-    {: include ( '{: * cfg_obj_top_dir :}/object.nhtml', 
-                  [ parameter list ]
-               ) 
-    :}
+    {: include ( 'object.nhtml', [ parameter list ] ) :}
 
 The objects may reside in any directory. A simple example is the object 
 location.nhtml that redirects to another page: 
