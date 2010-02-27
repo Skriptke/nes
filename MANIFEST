@@ -41,6 +41,7 @@ share/examples/nesblog/en/intro.html
 share/examples/nesblog/en/article_index.html
 share/examples/nesblog/en/latest_comments.nsql
 share/examples/nesblog/en/show_source.html
+share/examples/nesblog/en/items/Nes-1.00.html
 share/examples/nesblog/en/items/Help.html
 'share/examples/nesblog/en/items/Hello World.html'
 'share/examples/nesblog/en/items/Principios de Nes.html'
@@ -59,6 +60,7 @@ share/examples/nesblog/es/intro.html
 share/examples/nesblog/es/article_index.html
 share/examples/nesblog/es/latest_comments.nsql
 share/examples/nesblog/es/show_source.html
+share/examples/nesblog/es/items/Nes-1.00.html
 'share/examples/nesblog/es/items/Logo de nes.html'
 'share/examples/nesblog/es/items/Tag ~ (expresión).html'
 share/examples/nesblog/es/items/Colabora.html
@@ -82,8 +84,6 @@ share/examples/nesblog/es/items/Sesiones.html
 'share/examples/nesblog/es/items/Paradigma Nes.html'
 share/examples/nesblog/es/items/mod_perl.html
 share/examples/nesblog/es/items/Objetos.html
-'share/examples/nesblog/es/items/Nes 0.8.html'
-'share/examples/nesblog/es/items/Nes 0.9.html'
 'share/examples/nesblog/es/items/Tag comentario.html'
 'share/examples/nesblog/es/items/Principios de Nes.html'
 'share/examples/nesblog/es/items/Tag sql (SQL SELECT).html'

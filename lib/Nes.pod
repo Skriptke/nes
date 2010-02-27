@@ -18,14 +18,75 @@ Nes - A powerful template system for HTML and the Web.
 A system for separating Perl executable code and the representation of the data 
 generated in HTML using Tags are replaced with variables created in Perl.
 
+=head2 Some Nes features
+
+=over 2
+
+=item Simplicity
+
+Nes has only ten Tags to include in the HTML, and a single object with a 
+single method to instantiate in Perl. You can start working with Nes in 
+hours, not weeks or months as in other systems.
+
+=item Security
+
+Transparent management of code injection and cross-site scripting. Plugins 
+for creating secure forms, Forms and Captcha.
+
+=item Objects
+
+Object-oriented paradigm which enables you to reuse your code or use 
+third-party libraries. Objects are the main feature that makes Nes and 
+different from other systems. 
+
+=item HTML oriented
+
+Nes is oriented at HTML and not the Perl code. Nes exported very few Perl 
+functions, also to simplify, Nes Objects may also contain HTML, Javascript, 
+CSS, Ajax, etc.. even PHP, or trail mix.
+
+=item Wrapper
+
+Full support of PHP Wrapper. Nes as Wrapper can use to add functionality 
+to other types as HTML, or PHP to exchange information. 
+
+=item ModPerl
+
+Support for mod_perl.
+
+=item Sessions
+
+Creating and managing user sessions.
+
+=item Plugins
+
+You can add functionality using plugins to Nes, you can create your own or 
+use by third parties. 
+
+=item PHP and other
+
+Insert parts of PHP code in Nes only have to type a tag, Nes allow the 
+inclusion in your script templates in other languages other than Perl 
+without writing a single line of Perl code. Moreover, most of them 
+can contain Tags Nes. 
+
+=item SQL
+
+You can insert SQL SELECT statements in your templates directly.
+
+=item .nes.cfg configuration files
+
+Nes provides configuration files to the style .htaccess you can also use
+for your script. 
+
+=back
+
 =head2 Nes Perl script Sample
 
     use Nes;
     my = Nes::Singleton->new('template.nhtml');
-    
     my $nes_tags = {};
     $nes_tags->{'var_hello'} = 'Hello World!';
-    
     $nes->out(%$nes_tag);  
 
 =head2 Nes template Sample
