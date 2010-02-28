@@ -722,7 +722,7 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Template::Toolkit>, L<HTML::Template>, L<HTML::Mason>, L<HCKit::Template> 
+L<Template::Toolkit>, L<HTML::Template>, L<HTML::Mason>, L<HCKit::Template>, 
 L<Catalyst>, L<CGI::Framework>, L<CGI::Application>, 
 L<CGI::Application::Framework>, L<mod_perl>
 
