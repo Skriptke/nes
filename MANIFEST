@@ -46,7 +46,7 @@ share/examples/nesblog/en/items/Help.html
 'share/examples/nesblog/en/items/Hello World.html'
 share/examples/nesblog/en/items/Beginning.html
 share/examples/nesblog/en/items/Installation.html
-'hare/examples/nesblog/en/items/Nes configuration file.html'
+'share/examples/nesblog/en/items/Nes configuration file.html'
 share/examples/nesblog/en/index.html
 share/examples/nesblog/en/latest.html
 share/examples/nesblog/en/source.html
