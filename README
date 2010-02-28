@@ -5,12 +5,6 @@ Nes:
 
   A powerful template system for the Web in Perl.
 
-Sample to use Nes;
-  http://nes.sourceforge.net/
-
-Repository:
-  http://github.com/Skriptke/nes
-
 INSTALLATION
     
 Requires the modules:
@@ -137,6 +131,12 @@ You can also look for information at:
 
   Search CPAN
     http://search.cpan.org/dist/Nes
+    
+  Sample to use Nes;
+     http://nes.sourceforge.net/
+
+  Repository
+    http://github.com/Skriptke/nes    
 
 COPYRIGHT AND LICENCE
 

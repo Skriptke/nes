@@ -2,8 +2,11 @@
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón
+#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
 #  Licensed under the GNU GPL.
+#
+#  CPAN:
+#  http://search.cpan.org/dist/Nes/
 #
 #  Sample:
 #  http://nes.sourceforge.net/
@@ -11,7 +14,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.00_05
+#  Version 1.00
 #
 #  Nes.pm
 #
@@ -23,7 +26,7 @@ use strict;
 # cgi environment no defined in command line
 no warnings 'uninitialized';
 
-our $VERSION          = '1.00_05';
+our $VERSION          = '1.00';
 our $CRLF             = "\015\012";
 our $MAX_INTERACTIONS = 500;
 our $MOD_PERL         = $ENV{'MOD_PERL'} || 0;

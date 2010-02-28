@@ -2,9 +2,12 @@
 
 # -----------------------------------------------------------------------------
 #
-#  NES by Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón
+#  Nes by Skriptke
+#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
 #  Licensed under the GNU GPL.
+#
+#  CPAN:
+#  http://search.cpan.org/dist/Nes/
 #
 #  Sample:
 #  http://nes.sourceforge.net/
@@ -12,7 +15,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.00_01
+#  Version 1.00
 #
 #  DB.pm
 #
