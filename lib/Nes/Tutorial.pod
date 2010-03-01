@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-Nes::Tutorial - Step by step Nes tutorial.
+Nes::Tutorial - Step by Step Nes Tutorial.
 
 =head1 Install Nes
     

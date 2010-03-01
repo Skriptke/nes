@@ -815,9 +815,9 @@ Format:
 
 =head2 Nes Tags
 
-If we make a variable 'yes_no' will not get run code that contains the
+If we make a variable 'yes_nes' will not get run code that contains the
 variable. For safety, you can not execute code from a Nes variable. 
-The effect of 'no_nes' is that the tags are visible, and 'yes_no' 
+The effect of 'no_nes' is that the tags are visible, and 'yes_nes' 
 is disappearing.
 
 =head2 .nes.cfg
