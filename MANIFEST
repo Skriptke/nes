@@ -7,6 +7,7 @@ script/set_nes_site
 lib/Nes.pod
 lib/Nes.pm
 lib/Nes/Singleton.pm
+lib/Nes/Singleton.pod
 lib/Nes/Setting.pm
 lib/Nes/Minimal.pm
 lib/Nes/DB.pm

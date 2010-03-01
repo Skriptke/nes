@@ -308,8 +308,8 @@ Each variable can only occupy one line.
 
 =head1 Singleton class
 
-Is a singleton type object, return the new object or instance of this if is 
-created previously.
+Is a class for a single access interface to Nes. Return the new object
+or instance of this if is created previously.
 
     Nes::Singleton->new('template.nhtml'); # returns a new instance
     Nes::Singleton->new('other.nhtml');    # returns same instance
@@ -331,12 +331,84 @@ associative array (%$hash) with the data we want to replace in the template.
     my $nes_tags = {};
     $nes_tags->{'hello'} = 'Hello World!';
     $nes->out(%$nes_tag);
-    
+
     ./.
-    
+
     my %nes_tags;
     $nes_tags{'hello'} = 'Hello World!';
     $nes->out(%nes_tag);
+
+=head2 Very easy to use
+
+Extremely simple, in most cases you just need to do this:
+
+    use Nes;
+    my $nes = Nes::Singleton->new('template.nhtml');
+    my %tags;
+
+    # the things that make your script...
+    ...
+
+    # set variables for output
+    $tags{'var_hello'} = 'Hello World!';
+
+    # the things that make your script...
+    ...
+
+    # send variables to Nes
+    $nes->out(%$nes_tag);
+
+And in case you want to use user session? 
+
+Too. Only in special cases need access Nes::Singleton,
+consider this example:
+
+    {: NES 1.0 ('index.cgi') :}
+    <html>
+        ...
+        {: ~ *nes_session_ok
+            {: include ('user_register.nhtml') :}
+        :}
+        ...
+    </html>
+
+The perl script required is:
+
+    none! :-) Easy?
+
+For this case we can rewrite the template as follows:
+
+    {: NES 1.0 none :}
+    <html>
+        ...
+        {: ~ *nes_session_ok
+            {: include ('user_register.nhtml') :}
+        :}
+        ...
+    </html>
+
+So to create the session:
+
+    {: NES 1.0 none :}
+    <html>
+        ...
+        {: ~ $login_ok
+          {: include ( '{: * cfg_obj_top_dir :}/session.nhtml',
+                       'create',  
+                       '{: * q_user :}',
+                       '30m'
+                     )
+          :}
+        :}
+        ...
+    </html>
+
+* In this example we assumed that there is a form that gives value 
+{: * q_user :} or/and an object that defines Nes {: $ login_ok :}
+
+Remenber, Nes is oriented at HTML and not the Perl code.
+
+See: L<Nes::Singleton>
 
 =head1 Syntax Nes
 
@@ -675,9 +747,11 @@ Out:
 With the HTTP-headers variable we have to define in our Perl script:
 
     use Nes;
-    my $nes = Nes::Singleton->new('template.nhtml');
+    my $nes      = Nes::Singleton->new('template.nhtml');
     my $nes_tags = {};
+
     $nes_tags->{'HTTP-headers'} = "Content-type: text/html\n\n";
+
     $nes->out(%$nes_tags);
 
 We can control the headers of the HTML output.
@@ -784,19 +858,7 @@ Managing user sessions with the object session.nhtml:
 
 =head2 Sessions in Perl script
 
-
-    my $nes = Nes::Singleton->new();
-    my $session = $nes->{'session'};
-
-    # Create session:
-    $session->create($user, $expire);
-
-    # Get session:
-    $user = $session->{'user'};
-
-    # Delete session:
-    $session->del;
-
+See: L<Nes::Singleton>
 
 =head2 Nes Environment Variables
 
@@ -858,10 +920,7 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Template::Toolkit>, L<HTML::Template>, L<HTML::Mason>, L<HCKit::Template>, 
-L<Catalyst>, L<CGI::Framework>, L<CGI::Application>, 
-L<CGI::Application::Framework>, L<mod_perl>
-
+L<Nes>
 
 =cut
 
