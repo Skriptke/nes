@@ -5,9 +5,9 @@ Nes::Tutorial - Step by step Nes tutorial.
 
 =head1 Install Nes
     
-See: L<README>
+See: README file
 
-=head1 Create Work Space Tutorial
+=head1 Create Work Space for Tutorial
 
 We assume you already have installed and enabled Nes for cgi-bin.
 
@@ -20,7 +20,7 @@ For this tutorial we will assume that your web root directory is
 Create a working directory on your web root directory with the 
 name nes_tutorial
 
-    /var/www/nes_tutorial
+    mkdir /var/www/nes_tutorial
 
 The next step is to set this directory to make it possible executing 
 Nes templates, is done with the shell command:
@@ -97,12 +97,12 @@ Another feature is that you do not need permission of execution to run
 the script, unless you want run the script and not the template.
 
 Now we tell the template that our script is 'script_02.pl' with
-the Tag '{: NS 1.0 (' script_02.pl ') :}'
+the Tag '{: NES 1.0 ( 'script_02.pl' ) :}'
 
 Therefore we create a new template with the name 'nes_02.nhtml' and
 the following contents:
 
-    {: NES 1.0 ('script_02.pl') :}
+    {: NES 1.0 ( 'script_02.pl' ) :}
     <html>
       <head>
         <title>Nes Tutorial</title>
@@ -136,7 +136,7 @@ another script with the name 'script_03.pl' with the following contents:
 And a new template with the name 'nes_03.nhtml' with the following 
 content:
 
-    {: NES 1.0 ('script_03.pl') :}
+    {: NES 1.0 ( 'script_03.pl' ) :}
     <html>
       <head>
         <title>Nes Tutorial</title>
@@ -164,7 +164,7 @@ anything or very little Perl code.
 Let's create an object Nes. Create a file in 'nes_tutorial' with 
 the name 'lucky_01.nhtml' and the following content:
 
-    {: NES 1.0 ('lucky_01.pl') :}
+    {: NES 1.0 ( 'lucky_01.pl' ) :}
     <html>
       <head>
         <title>Lucky</title>
@@ -199,7 +199,7 @@ rewrite everything.
 We created a template with the name 'lucky_02.nhtml' and the 
 following content:
 
-    {: NES 1.0 ('lucky_01.pl') :}
+    {: NES 1.0 ( 'lucky_01.pl' ) :}
     {: $ number :}
 
 To show it works create a template with the name 'lucky_test.nhtml' 
@@ -236,12 +236,12 @@ if not support parameters.
 Let's create our final Object with the name 'lucky.nhtml'
 and the following content:
 
-    {: NES 1.0 ('lucky.pl') :}
+    {: NES 1.0 ( 'lucky.pl' ) :}
     {: # 
 
         lucky.nhtml
 
-        Descrition:
+        Description:
            Shows a random number between min and max.
 
         Usage:
