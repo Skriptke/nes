@@ -367,9 +367,9 @@ contents:
 
 To show it works:
 
-    http://test.con/tuto/nes_06.nhtml?var=Nes
-    http://test.con/tuto/nes_06.nhtml?var=Hello
-    http://test.con/tuto/nes_06.nhtml?var=1
+    http://yousite/nes_tutorial/nes_06.nhtml?var=Nes
+    http://yousite/nes_tutorial/nes_06.nhtml?var=Hello
+    http://yousite/nes_tutorial/nes_06.nhtml?var=1
 
 =head1 Data Tables
 
@@ -425,7 +425,7 @@ contents:
 
 To show it works:
 
-    http://test.con/tuto/nes_07.nhtml
+    http://yousite/nes_tutorial/nes_07.nhtml
 
 
 =head1 AUTHOR
