@@ -318,13 +318,160 @@ the object you can simply:
 
     {: include ( object, [parameter] ) :}
 
+=head1 Nes Environment Variables
+
+Now let's create a template to see the operation of Nes Environment 
+Variables.
+
+Create a file named 'nes_05.nhtml' in 'nes_tutorial' with following 
+contents:
+
+    {: NES 1.0 none :}
+    <html>
+      <head>
+        <title>Nes Tutorial</title>
+      </head>
+      <body>
+      <pre>
+      Nes Version   : {: * nes_ver :}
+      This Template : {: * nes_this_file :}
+      HTTP_HOST     : {: * env_HTTP_HOST :}
+      QUERY_STRING  : {: * env_QUERY_STRING :}
+      name in GET   : {: * q_name :}
+      </pre>
+      </body>
+    </html>
+
+To show it works:
+
+    http://yousite/nes_tutorial/nes_05.nhtml?name=value
+
+=head1 Conditional Replacement
+
+We can use expressions to the replacement condicial.
+
+Create a file named 'nes_06.nhtml' in 'nes_tutorial' with following 
+contents:
+
+    {: NES 1.0 none :}
+    <html>
+      <head>
+        <title>Nes Tutorial</title>
+      </head>
+      <body>
+      {: ~ ( * q_var eq 'Hello' ) <b>Hello Tutorial</b> :}
+      {: ~ ( * q_var == 1 )       <b>var is 1</b> :}
+      {: ~ ( * q_var =~ /^N/ )    <b>{: * q_var :} begins with N</b> :}
+      </body>
+    </html>
+
+To show it works:
+
+    http://test.con/tuto/nes_06.nhtml?var=Nes
+    http://test.con/tuto/nes_06.nhtml?var=Hello
+    http://test.con/tuto/nes_06.nhtml?var=1
+
+=head1 Data Tables
+
+We can show the data tables.
+
+Create a file named 'nes_07.nhtml' in 'nes_tutorial' with following 
+contents:
+
+    {: NES 1.0 ( 'script_07.pl' ) :}
+    <html>
+      <head>
+        <title>Nes Tutorial</title>
+      </head>
+      <body>
+        <table border="1">
+        {: @ users
+          <tr>
+            <td> {: @$ users.name  :} </td>
+            <td> {: @$ users.email :} </td>
+          </tr>
+        :}
+        </table>
+      </body>
+    </html>
+
+And create a file named 'script_07.pl' in 'nes_tutorial' with following 
+contents:
+
+    use Nes;
+    my $nes = Nes::Singleton->new();
+
+    my %tags;
+    my $table = [ 
+                    { 
+                      name   => 'One',
+                      email  => 'one@example.com',
+                    },
+                    { 
+                      name   => 'Two',
+                      email  => 'two@example.com',
+                    },
+                    { 
+                      name   => 'Three',
+                      email  => 'three@example.com',
+                    }                                    
+                ];
+
+    $tags{'users'} = $table;
+
+    $nes->out(%tags);
+
+    1; 
+
+To show it works:
+
+    http://test.con/tuto/nes_07.nhtml
 
 
+=head1 AUTHOR
 
+Skriptke: Enrique F. Castanon
 
+=head1 VERSION
 
+Version 1.00 Febrero 2010
 
+=head1 COPYRIGHT
 
+Copyright (c) Enrique F. Castanon Barbero. All rights reserved.
 
+=head1 LICENSE
 
+This program is free software; you can redistribute it
+and/or modify it under the same terms and conditions as
+GNU Public License (GPL).
 
+This means that you can, at your option, redistribute it and/or 
+modify it under either the terms the GNU Public License (GPL), 
+or under the Perl Artistic License.
+
+See http://dev.perl.org/licenses/
+
+=head1 DISCLAIMER
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS
+OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Use of this software in any way or in any form, source or binary,
+is not allowed in any country which prohibits disclaimers of any
+implied warranties of merchantability or fitness for a particular
+purpose or any disclaimers of a similar nature.
+
+IN NO EVENT SHALL I BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT,
+SPECIAL, INCIDENTAL,  OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+USE OF THIS SOFTWARE AND ITS DOCUMENTATION (INCLUDING, BUT NOT
+LIMITED TO, LOST PROFITS) EVEN IF I HAVE BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE
+
+=head1 SEE ALSO
+
+L<Nes>
+
+=cut
