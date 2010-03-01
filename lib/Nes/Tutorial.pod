@@ -1,0 +1,330 @@
+
+=head1 NAME
+
+Nes::Tutorial - Step by step Nes tutorial.
+
+=head1 Install Nes
+    
+See: L<README>
+
+=head1 Create Work Space Tutorial
+
+We assume you already have installed and enabled Nes for cgi-bin.
+
+According to its distribution its web root directory could be in 
+/var/www/html, /var/www/htdocs, etc.
+
+For this tutorial we will assume that your web root directory is
+/var/www, change it throughout the tutorial if needed.
+
+Create a working directory on your web root directory with the 
+name nes_tutorial
+
+    /var/www/nes_tutorial
+
+The next step is to set this directory to make it possible executing 
+Nes templates, is done with the shell command:
+
+    set_nes_site
+
+Configured:
+
+    set_nes_site --dir_cfg=/var/www/nes_tutorial
+
+With this we have created a file .htaccess with the configuration
+because Nes templates can execute in this directory.
+
+The .nes.cfg file serve to configure Nes and also for your own
+Perl script or application. There is a value that needs to be changed,
+otherwise Nes release a warning:
+
+    private_key
+
+It is a password used to encrypt data such as cookies, so it is very 
+important to give a value to private_key.
+
+Create a file in /var/www/nes_tutorial with the name .nes.cfg, with the
+following content.
+
+/var/www/nes_tutorial/.nes.cfg:
+
+    private_key      = ChangeIt
+    nes_tutorial_var = test variable
+
+Change 'changeit' with the password you want. And with this 
+nes_tutorial is ready to work.
+
+=head1 Create first Nes Template
+
+Nes templates have the extension .nhtml, any file with this extension, 
+in nes_tutorial directory, will be treated as a Nes template.
+
+Create a file named 'nes_01.nhtml' in 'nes_tutorial' with following 
+contents:
+
+    <html>
+      <head>
+        <title>Nes Tutorial</title>
+      </head>
+      <body>
+      <b>Hello Nes Tutorial</b>
+      </body>
+    </html>
+
+To show it works:
+
+    http://yousite/nes_tutorial/nes_01.nhtml
+
+* Change 'yousite' with your domain or 'localhost'
+
+'nes_01.nhtml' has no special feature, is only HTML. To include dynamic
+content, must tell Nes to run a script for this template.
+
+We therefore need a Perl script. Creates a file named 'script_02.pl' 
+in 'nes_tutorial' with the following contents:
+
+    #!/usr/bin/perl
+
+    use Nes;
+    my $nes = Nes::Singleton->new();
+
+    $nes->out();
+
+    1; 
+
+It is very important that Nes scripts returns 1, or displays an error. 
+Another feature is that you do not need permission of execution to run
+the script, unless you want run the script and not the template.
+
+Now we tell the template that our script is 'script_02.pl' with
+the Tag '{: NS 1.0 (' script_02.pl ') :}'
+
+Therefore we create a new template with the name 'nes_02.nhtml' and
+the following contents:
+
+    {: NES 1.0 ('script_02.pl') :}
+    <html>
+      <head>
+        <title>Nes Tutorial</title>
+      </head>
+      <body>
+      <b>Hello Nes Tutorial</b>
+      </body>
+    </html>
+
+When we do:
+
+    http://yousite/nes_tutorial/nes_02.nhtml
+
+Nes load and run script_02.pl
+
+But our template continues without doing anything special, we will create
+another script with the name 'script_03.pl' with the following contents:
+
+    #!/usr/bin/perl
+
+    use Nes;
+    my $nes = Nes::Singleton->new();
+
+    my %tags;
+    $tags{'var_hello'} = 'Hello Nes Tutorial';
+
+    $nes->out(%tags);
+
+    1;
+
+And a new template with the name 'nes_03.nhtml' with the following 
+content:
+
+    {: NES 1.0 ('script_03.pl') :}
+    <html>
+      <head>
+        <title>Nes Tutorial</title>
+      </head>
+      <body>
+      <b>{: $ var_hello :}</b>
+      </body>
+    </html>
+
+To show it works:
+
+    http://yousite/nes_tutorial/nes_03.nhtml
+
+In 'script_03.pl' we have defined the hash variable '%tags', with the 
+name of variable for the template 'var_hello' and value 
+'Hello Nes Tutorial'. So when we included the Tag '{: $ var_hello :}' 
+this has been replaced by the value 'Hello Nes Walkthrough'
+
+=head1 Includes and Object
+
+Objects with a fundamental characteristic of Nes. With them we avoid 
+rewrite the same code, even create Web applications without writing 
+anything or very little Perl code.
+
+Let's create an object Nes. Create a file in 'nes_tutorial' with 
+the name 'lucky_01.nhtml' and the following content:
+
+    {: NES 1.0 ('lucky_01.pl') :}
+    <html>
+      <head>
+        <title>Lucky</title>
+      </head>
+      <body>
+        The lucky number is: <b>{: $ number :}</b>
+      </body>
+    </html>
+
+And a script named 'lucky_01.pl' and the following content:
+
+    #!/usr/bin/perl
+
+    use Nes;
+    my $nes = Nes::Singleton->new();
+
+    my %nes_tags;
+    $nes_tags{'number'} = int(rand(10));
+
+    $nes->out(%nes_tags);
+
+    1;
+
+To show it works:
+
+    http://yousite/nes_tutorial/lucky_01.nhtml
+
+But this is nothing more than a template. We create an object so 
+that every time we want a 'lucky number' in a Web not have to 
+rewrite everything.
+
+We created a template with the name 'lucky_02.nhtml' and the 
+following content:
+
+    {: NES 1.0 ('lucky_01.pl') :}
+    {: $ number :}
+
+To show it works create a template with the name 'lucky_test.nhtml' 
+and the following content:
+
+    {: NES 1.0 none :}
+    <html>
+      <head>
+        <title>Lucky</title>
+      </head>
+      <body>
+        The lucky number is: <b>{: include ('lucky_02.nhtml') :}</b>
+      </body>
+    </html>
+
+To show it works:
+
+    http://yousite/nes_tutorial/lucky_test.nhtml
+
+Also this works:
+
+    http://yousite/nes_tutorial/lucky_02.nhtml
+
+From that moment every time we want a 'lucky number' only we must 
+included in our templates '{: include ( 'lucky_02.nhtml' ) :}'
+
+The first line of the template 'lucky_test.nhtml' is {: NES 1.0 none :}
+means we have no Perl script to this template, but we want 
+to use the Nes Tags.
+
+But this is just a 'include' like any other, not Object might call, 
+if not support parameters.
+
+Let's create our final Object with the name 'lucky.nhtml'
+and the following content:
+
+    {: NES 1.0 ('lucky.pl') :}
+    {: # 
+
+        lucky.nhtml
+
+        Descrition:
+           Shows a random number between min and max.
+
+        Usage:
+            {: include ( 'lucky.nhtml',
+                          min,    {: # optional, default 0 :}
+                          max     {: # optional, defautl 9 :}
+                       )
+            :}
+
+        Example, random number between 1 and 5: 
+            
+            {: include ( 'lucky.nhtml',1,5 ) :}
+
+    :}
+    {: $ number :}
+
+We've added a comment documenting their use.
+
+And now the Perl script named 'lucky.pl' and content:
+
+    #!/usr/bin/perl
+
+    use Nes;
+    my $nes = Nes::Singleton->new('lucky.nhtml');
+    my $q   = $nes->{'query'}->{'q'};
+    my $min = $q->{'lucky_param_1'} || 0;
+    my $max = $q->{'lucky_param_2'} || 9;
+
+    my %nes_tags;
+    $nes_tags{'number'} = $min + int(rand($max+1-$min));
+
+    $nes->out(%nes_tags);
+
+    1;
+
+With $nes->{'query'} we get the query object, $nes->{'query'}->{'q'} is 
+equivalent to do:
+
+    my $q = CGI->new;
+
+In addition to GET or POST with Nes::Singleton->{'query'} we pick 
+parameters of objects in the following format:
+
+    objectname_param_number
+
+For our example the name of the object is lucky.nhtml, the extension 
+is ignored, then the first parameter:
+
+    Nes::Singleton->{'query'}->{'q'}->{'lucky_param_1'}
+
+Now create a template to include and prove lucky, with the name 
+'template.nhtml' and the following content:
+
+    {: NES 1.0 none :}
+    <html>
+      <head>
+        <title>Template</title>
+      </head>
+      <body>
+        The lucky number is: <b>{: include ('lucky.nhtml',10,20 ) :}</b>
+      </body>
+    </html>
+
+To show it works:
+
+    http://yousite/nes_tutorial/template.nhtml
+
+You can include lucky object in any Nes template, since he accepts 
+parameters, you will not need modification.
+
+In this example it is just a random number, but we can do object, from 
+modules from CPAN, JavaScript, forms, Ajax, etc. and once created 
+the object you can simply:
+
+    {: include ( object, [parameter] ) :}
+
+
+
+
+
+
+
+
+
+
+

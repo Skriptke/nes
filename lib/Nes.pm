@@ -1849,6 +1849,8 @@ use Nes::Singleton;
     my $self  = shift;
     my ($value, @security_options) = @_;
 
+    return $value if $value =~ /^\d*$/;
+
     my $tmp_no_html = $self->{'security_options'}{'no_html'};
     my $tmp_no_nes  = $self->{'security_options'}{'no_nes'};
     my $tmp_no_br   = $self->{'security_options'}{'no_br'};
@@ -1911,7 +1913,7 @@ use Nes::Singleton;
   sub replace_var {
     my $self  = shift;
     my ($var, @security_options) = @_;
- 
+
     return $self->security( $self->{'tags'}{$var}, @security_options );
   }
 

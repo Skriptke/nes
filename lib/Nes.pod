@@ -108,9 +108,9 @@ for your script.
 
 =head2 More samples
 
-Sample to use Nes; L<http://nes.sourceforge.net/>
+See L<Nes::Tutorial>
 
-Repository L<http://github.com/Skriptke/nes>
+Sample to use Nes; L<http://nes.sourceforge.net/>
 
 =head1 CONFIGURATION
 
@@ -406,7 +406,7 @@ So to create the session:
 * In this example we assumed that there is a form that gives value 
 {: * q_user :} or/and an object that defines Nes {: $ login_ok :}
 
-Remenber, Nes is oriented at HTML and not the Perl code.
+Nes is oriented at HTML and not the Perl code.
 
 See: L<Nes::Singleton>
 
