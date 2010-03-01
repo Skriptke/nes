@@ -670,6 +670,142 @@ Out:
     Extrac:
     Test Page - Sample to use Nes;
 
+=head1 HTTP-headers
+
+With the HTTP-headers variable we have to define in our Perl script:
+
+    use Nes;
+    my $nes = Nes::Singleton->new('template.nhtml');
+    my $nes_tags = {};
+    $nes_tags->{'HTTP-headers'} = "Content-type: text/html\n\n";
+    $nes->out(%$nes_tags);
+
+We can control the headers of the HTML output.
+
+When Nes verifies that HTTP-headers has value, prints its content and not
+the headers by default. Should be included immediately after the NES Tag:
+
+    {: NES 1.0 ('file.pl') :}
+    {: $ HTTP-headers :}
+
+If you define HTTP-headers and then not included with 
+{: $ HTTP-headers :} we get an error. 
+
+=head1 Security
+
+=head2 Code Injection and Cross-site scripting
+
+Nes transparently manages the removal of malicious code variables.
+
+By default is filtered HTML and the tags Nes all environment variables 
+(*) from forms.
+
+By default is filtered HTML and the tags of all the variables Nes ($).
+
+By default is filtered HTML and the tags Nes all the variables of Tables 
+and SQL (@$).
+
+By default HTML is allowed <br> HTML Tag.
+
+By default, calls DBI::quote on all variables that are part of a SELECT 
+statement in sql Tag
+
+=head2 Change the default behavior
+
+The types of variables x, $ y @$ accept parameters to change this behavior:
+
+    {: $  ('var','yes_html','no_sql') :}
+    {: *  ('q_var','yes_html','no_sql') :}
+    {: @$ ('table.field','yes_html','no_sql') :}
+
+We passed as parameters the filtering options you want, and are:
+
+    no_sql   # not allow SQL, call DBI::quote
+    no_html  # not allow Tag HTML
+    no_br    # not allow Tag HTML <br>
+    no_nes   # not allow Tag Nes {: :}
+    yes_sql  # allow SQL, not DBI::quote filter 
+    yes_html # allow all Tags HTML
+    yes_br   # allow Tag HTML <br>
+    yes_nes  # allow Tag Nes {: :}
+
+Allow specific HTML tags ( yes_tag_TAG ):
+
+    yes_tag_B      # allow Tag HTML <B></B>
+    yes_tag_STRONG # allow Tag HTML <strong></strong>
+    ...
+
+Format:
+
+    {: $  ('var',[list of options in any order]) :}
+
+=head2 Nes Tags
+
+If we make a variable 'yes_no' will not get run code that contains the
+variable. For safety, you can not execute code from a Nes variable. 
+The effect of 'no_nes' is that the tags are visible, and 'yes_no' 
+is disappearing.
+
+=head2 .nes.cfg
+
+We must prevent access to these files in .htaccess:
+
+     <FilesMatch \.nes.cfg$>
+        order deny,allow
+        deny from all
+     </FilesMatch>
+
+=head2 PHP
+
+Nes filters the Nes Tags of the forms in PHP include or Wrapper, but 
+NOT the HTML and SQL. It is assumed that the PHP script should 
+incorporate these filters. 
+
+=head1 Sessions
+
+We can managing user sessions with Objects or Perl script.
+
+=head2 Object session.nhtml
+
+Managing user sessions with the object session.nhtml:
+
+  {: include ( '{: * cfg_obj_top_dir :}/session.nhtml',
+               action,  {: # default: get | create | del :}
+               user,    {: # if 'get' action: user :}
+               expire   {: # if 'get' action: expire :}
+  :}
+
+  Expire format:
+    time suffix: s: seconds, m: minutes h: hours d: days, M: months, y: years
+    30s = 30 seconds
+    12h = 12 hours
+    2y  = 2 years
+    ...
+
+=head2 Sessions in Perl script
+
+
+    my $nes = Nes::Singleton->new();
+    my $session = $nes->{'session'};
+
+    # Create session:
+    $session->create($user, $expire);
+
+    # Get session:
+    $user = $session->{'user'};
+
+    # Delete session:
+    $session->del;
+
+
+=head2 Nes Environment Variables
+
+    # Session is open
+    {: * nes_session_ok :}
+    
+    # User name session
+    {: * nes_session_user :}
+
 =head1 BUGS
 
 
@@ -680,7 +816,7 @@ Out:
 
 =head1 AUTHOR
 
-Skriptke: Enrique F. Castañón
+Skriptke: Enrique F. Castanon
 
 =head1 VERSION
 
@@ -688,7 +824,7 @@ Version 1.00 Febrero 2010
 
 =head1 COPYRIGHT
 
-Copyright (c) Enrique F. Castañón Barbero. All rights reserved.
+Copyright (c) Enrique F. Castanon Barbero. All rights reserved.
 
 =head1 LICENSE
 

@@ -63,6 +63,9 @@ share/examples/nesblog/es/article_index.html
 share/examples/nesblog/es/latest_comments.nsql
 share/examples/nesblog/es/show_source.html
 share/examples/nesblog/es/items/Nes-1.00.html
+share/examples/nesblog/en/items/Sessions.html
+share/examples/nesblog/en/items/Security.html
+share/examples/nesblog/en/items/HTTP Headers.html
 'share/examples/nesblog/es/items/Logo de nes.html'
 'share/examples/nesblog/es/items/Tag ~ (expresión).html'
 share/examples/nesblog/es/items/Colabora.html
