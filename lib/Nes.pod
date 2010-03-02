@@ -90,8 +90,10 @@ for your script.
 
     use Nes;
     my = Nes::Singleton->new('template.nhtml');
+
     my $nes_tags = {};
     $nes_tags->{'var_hello'} = 'Hello World!';
+
     $nes->out(%$nes_tag);  
 
 =head2 Nes template Sample
@@ -183,7 +185,7 @@ to launch a warning each time you run Nes.
 
     tmp_dir        # Temporary directory.
     tmp_suffix     # Suffix of the temporary files. 
-    tmp_clear      # If delete the temporary files or 0 and does not delete
+    tmp_clear      # Delete temporary files or 0 and does not delete
                    # time suffix: s: seconds,
                    # m: minutes h: hours d: days, M: months, y: years
                    # 24h is 24 hours. 
@@ -215,17 +217,21 @@ to launch a warning each time you run Nes.
                    # this defined from that kB. using a temporary
                    # file in the upload, preventing these are 
                    # loaded into memory.
+
     # Plugins list separated by commas to load at startup only
-    # for the file in the URL, in all nhtml directory, eg.:
+    # for the file in the URL, in all nhtml directory.
     auto_load_plugin_top_first
+
     # Plugins list separated by commas to load at startup to
-    # all files included in all nhtml directory, eg.:
+    # all files included in all nhtml directory.
     auto_load_plugin_all_first
+
     # Plugins list separated by commas to load at end only
-    # for the file in the URL, in all nhtml directory, eg.:
+    # for the file in the URL, in all nhtml directory.
     auto_load_plugin_top_last
+
     # Plugins list separated by commas to load at end to
-    # all files included in all nhtml directory, eg.:
+    # all files included in all nhtml directory.
     auto_load_plugin_all_last
 
 =head2 Use in your script
@@ -374,7 +380,7 @@ consider this example:
 
 The perl script required is:
 
-    none! :-) Easy?
+    none! :-) easy?
 
 For this case we can rewrite the template as follows:
 

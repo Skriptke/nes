@@ -161,7 +161,7 @@ Objects with a fundamental characteristic of Nes. With them we avoid
 rewrite the same code, even create Web applications without writing 
 anything or very little Perl code.
 
-Let's create an object Nes. Create a file in 'nes_tutorial' with 
+Let's create an Nes Object. Create a file in 'nes_tutorial' with 
 the name 'lucky_01.nhtml' and the following content:
 
     {: NES 1.0 ( 'lucky_01.pl' ) :}
@@ -333,11 +333,12 @@ contents:
       </head>
       <body>
       <pre>
-      Nes Version   : {: * nes_ver :}
-      This Template : {: * nes_this_file :}
-      HTTP_HOST     : {: * env_HTTP_HOST :}
-      QUERY_STRING  : {: * env_QUERY_STRING :}
-      name in GET   : {: * q_name :}
+      Nes Version     : {: * nes_ver :}
+      This Template   : {: * nes_this_file :}
+      var in .nes.cfg : {: * cfg_nes_tutorial_var :} 
+      HTTP_HOST       : {: * env_HTTP_HOST :}
+      QUERY_STRING    : {: * env_QUERY_STRING :}
+      name in GET     : {: * q_name :}
       </pre>
       </body>
     </html>
@@ -362,6 +363,9 @@ contents:
       {: ~ ( * q_var eq 'Hello' ) <b>Hello Tutorial</b> :}
       {: ~ ( * q_var == 1 )       <b>var is 1</b> :}
       {: ~ ( * q_var =~ /^N/ )    <b>{: * q_var :} begins with N</b> :}
+      {: ~ ( * q_var =~ /lucky/ )
+          {: include ('lucky.nhtml',1,10 ) :}
+      :}
       </body>
     </html>
 
@@ -370,6 +374,7 @@ To show it works:
     http://yousite/nes_tutorial/nes_06.nhtml?var=Nes
     http://yousite/nes_tutorial/nes_06.nhtml?var=Hello
     http://yousite/nes_tutorial/nes_06.nhtml?var=1
+    http://yousite/nes_tutorial/nes_06.nhtml?var=lucky
 
 =head1 Data Tables
 
@@ -426,6 +431,42 @@ contents:
 To show it works:
 
     http://yousite/nes_tutorial/nes_07.nhtml
+
+=head1 Plugins
+
+You can add functionality using plugins to Nes, you can create your own 
+aquíor use by third parties. 
+
+Here we see how to use plugins.
+
+The plugin can be executed before or after your script, depending on 
+the requirements of the plugin.
+
+Create a file named 'nes_08.nhtml' in 'nes_tutorial' with following 
+contents:
+
+{: NES 1.0 ( 'none', '{: * cfg_plugin_top_dir :}/filter_demo.pl' ) :}
+<html>
+  <head>
+    <title>Nes Tutorial</title>
+  </head>
+  <body>
+    Nes blink
+  </body>
+</html>
+
+To show it works:
+
+    http://yousite/nes_tutorial/nes_08.nhtml
+
+This plugin is a filter demonstration, simply replace the word 'Nes' 
+for '<blink>Nes</blink>'
+
+As it is a filter should be the end, as our template does not require 
+script we put 'none'.
+
+=head1 Forms
+
 
 
 =head1 AUTHOR
