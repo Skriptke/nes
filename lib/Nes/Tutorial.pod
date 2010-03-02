@@ -157,7 +157,7 @@ this has been replaced by the value 'Hello Nes Walkthrough'
 
 =head1 Includes and Object
 
-Objects with a fundamental characteristic of Nes. With them we avoid 
+The objects are a fundamental feature of Nes. With them we avoid 
 rewrite the same code, even create Web applications without writing 
 anything or very little Perl code.
 
@@ -467,27 +467,157 @@ script we put 'none'.
 
 =head1 Forms
 
+Create a file named 'nes_09.nhtml' in 'nes_tutorial' with following 
+contents:
 
+    {: NES 1.0 none :}
+    <html>
+      <head>
+        <title>Nes Tutorial</title>
+      </head>
+      <body>
+        <form method="POST" name="test0" action="">
+            <table  border="0">
+              <tr>
+                <td align="right">
+                User:
+                </td>
+                <td align="left">
+                <input name="user" type="text"  
+                size="12" value="{: * q_user :}"/>
+                </td>
+              </tr>
+              <tr>
+                <td align="right">
+                Password:
+                </td>
+                <td align="left">
+                <input name="password" type="password"  
+                size="12" value="{: * q_password :}"/>
+                </td>
+              </tr>        
+            </table>
+            <input name="send" type="submit" value="Send" />
+        </form> 
+      </body>
+    </html>
 
+To show it works:
 
+    http://yousite/nes_tutorial/nes_09.nhtml
 
+The form recalls the value of the fields, because we have put field 
+value in  "value" 'value="{: * q_user :}"'
 
+We will now add a captcha to the form.
 
+Create a file named 'nes_10.nhtml' in 'nes_tutorial' with following 
+contents: (this is big, copy/paste :-) no problem)
 
+{: NES 1.0 ('{: * cfg_plugin_top_dir :}/captcha.pl','none') :}
+<html>
+  <head>
+    <meta http-equiv="content-type" 
+    content="text/html;charset=utf-8" />
+    <title>Nes Tutorial</title>
+  </head>
+  <body>
+  <form method="POST" name="test1" action="">
+    {: # captcha parameters:
+        name,type,digits,noise,size,sig,spc,expire,attempts 
+    :}
+    {: & captcha (test1,ascii,4,2,2,,,3m,5/1) 
+     <table width="100%" border="0">
+      <tr>
+        <td align="right">User:</td>
+        <td width="20%">
+        <input name="user" type="text"  
+        size="12" value="{: * q_user :}"/>
+        </td>
+        <td width="60%" rowspan="3">
+<pre>
+nes_captcha_plugin_test1_error_last : {: * nes_captcha_plugin_test1_error_last :} 
+nes_captcha_plugin_test1_error_fatal: {: * nes_captcha_plugin_test1_error_fatal :} 
+nes_captcha_plugin_test1_attempts   : {: * nes_captcha_plugin_test1_attempts :}
+nes_captcha_plugin_test1_is_ok      : {: * nes_captcha_plugin_test1_is_ok :}
+</pre>        
+        </td>
+      </tr>
+      <tr>
+        <td align="right">Password:</td>
+        <td width="20%">
+        <input name="password" type="password"  
+        size="12" value="{: * q_password :}"/>        
+        </td>
+      </tr>
+      <tr>
+        <td align="right">{: & captcha_code :}</td>
+        <td width="20%">
+        Security code:<br>
+        <input type="text" name="test1" size="8" /> 
+        {: ~ *nes_captcha_plugin_test1_error_fatal 
+           <blink>&#10038;</blink> <br> 
+           <small>Incorrect code</small>
+        :}        
+        </td>
+      </tr>
+      <tr>
+        <td align="right"></td>
+        <td width="20%">
+        <input name="send" type="submit" value="Send" />        
+        </td>
+      </tr>      
+     </table>
+    :}
+  </form> 
+  </body>
+</html>
 
+To show it works:
 
+    http://yousite/nes_tutorial/nes_09.nhtml
+    
+The Captcha Plugin required to be loaded before the script, 
+that we've put before 'none'.
 
+Captcha is a type 'ascii', to prevent some characters deform the 
+captcha, we have 'meta' 'charset = utf-8'.
 
+The captcha define some environment variables 'nes_captcha_plugin *',
+we've posted to the right, so you can check its value.
 
+We have put a comment with the parameters of the captcha, you can try 
+to change them and see the result.
 
+The meaning of the parameters:
 
+    name    : should be like the 'input' to the value of the Captcha
+    type    : ascii
+    digits  : digit number that shows the captcha
+    noise   : noise level 0-9
+    size    : font size
+    sig     : foreground caracter
+    spc     : background caracter
+    expire  : expire time
+    attempts: max attempts/time, 5/1 is 5 attempts in 1 minute
 
+Where we want to show the captcha '{: & captcha_code :}'
 
+Keep in mind that the variables 'nes_captcha_plugin *' have a 
+block scope:
 
+    {: & captcha (test)
+        ...
+        {: * nes_captcha_plugin_test1_is_ok :} <- Ok
+    :}
+    {: * nes_captcha_plugin_test1_is_ok :}     <- ERROR, no value here
 
+Since Perl, can verify Captcha:
 
-
-
+    use Nes;
+    my $captcha = nes_plugin->get( 'captcha_plugin', 'test1' );
+    if ( $captcha->{'is_ok'} ) {
+    ...
 
 =head1 AUTHOR
 

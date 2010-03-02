@@ -458,7 +458,7 @@ The four forms have the same meaning.
 
 Parentheses are not required provided there are no spaces between the parameters:
 
-    {: ~ $ variable <p> HTML code </p> :}                   <- * unnecessary 
+    {: ~ $variable <p> HTML code </p> :}                   <- * unnecessary 
     {: ~ ($ variable1 == $ variable2) <p> HTML code </p> :} <- * required 
 
 Use quotation marks and commas in the parameters:
