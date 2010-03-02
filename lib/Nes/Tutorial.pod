@@ -575,7 +575,7 @@ contents: (this is big, copy/paste :-) no problem)
 
 To show it works:
 
-    http://yousite/nes_tutorial/nes_09.nhtml
+    http://yousite/nes_tutorial/nes_10.nhtml
     
 The Captcha Plugin required to be loaded before the script, 
 that we've put before 'none'.
