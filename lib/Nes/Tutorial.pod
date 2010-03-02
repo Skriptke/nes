@@ -435,7 +435,7 @@ To show it works:
 =head1 Plugins
 
 You can add functionality using plugins to Nes, you can create your own 
-aquíor use by third parties. 
+or use by third parties. 
 
 Here we see how to use plugins.
 
@@ -445,15 +445,15 @@ the requirements of the plugin.
 Create a file named 'nes_08.nhtml' in 'nes_tutorial' with following 
 contents:
 
-{: NES 1.0 ( 'none', '{: * cfg_plugin_top_dir :}/filter_demo.pl' ) :}
-<html>
-  <head>
-    <title>Nes Tutorial</title>
-  </head>
-  <body>
-    Nes blink
-  </body>
-</html>
+    {: NES 1.0 ( 'none', '{: * cfg_plugin_top_dir :}/filter_demo.pl' ) :}
+    <html>
+      <head>
+        <title>Nes Tutorial</title>
+      </head>
+      <body>
+        Nes blink
+      </body>
+    </html>
 
 To show it works:
 
@@ -466,6 +466,26 @@ As it is a filter should be the end, as our template does not require
 script we put 'none'.
 
 =head1 Forms
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
