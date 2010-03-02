@@ -4,7 +4,7 @@
 Nes::Tutorial - Step by Step Nes Tutorial.
 
 =head1 Install Nes
-    
+
 See: README file
 
 =head1 Create Work Space for Tutorial
@@ -153,7 +153,7 @@ To show it works:
 In 'script_03.pl' we have defined the hash variable '%tags', with the 
 name of variable for the template 'var_hello' and value 
 'Hello Nes Tutorial'. So when we included the Tag '{: $ var_hello :}' 
-this has been replaced by the value 'Hello Nes Walkthrough'
+this has been replaced by the value 'Hello Nes Tutorial'
 
 =head1 Includes and Object
 
@@ -252,7 +252,7 @@ and the following content:
             :}
 
         Example, random number between 1 and 5: 
-            
+
             {: include ( 'lucky.nhtml',1,5 ) :}
 
     :}
@@ -290,7 +290,7 @@ parameters of objects in the following format:
 For our example the name of the object is lucky.nhtml, the extension 
 is ignored, then the first parameter:
 
-    Nes::Singleton->{'query'}->{'q'}->{'lucky_param_1'}
+    Nes::Singleton->{'query'}->{'q'}{'lucky_param_1'}
 
 Now create a template to include and prove lucky, with the name 
 'template.nhtml' and the following content:
@@ -576,7 +576,7 @@ contents: (this is big, copy/paste :-) no problem)
 To show it works:
 
     http://yousite/nes_tutorial/nes_10.nhtml
-    
+
 The Captcha Plugin required to be loaded before the script, 
 that we've put before 'none'.
 
@@ -606,7 +606,7 @@ Where we want to show the captcha '{: & captcha_code :}'
 Keep in mind that the variables 'nes_captcha_plugin *' have a 
 block scope:
 
-    {: & captcha (test)
+    {: & captcha (test1)
         ...
         {: * nes_captcha_plugin_test1_is_ok :} <- Ok
     :}
