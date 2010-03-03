@@ -207,13 +207,19 @@ In Nes, template handles the output.
 
 Usually must call many methods to manage the template.
 
-In Nes, no need to call more than one or two methods and in cases 
-musch anyone:
+In Nes, no need to call more than one or two methods, and in many 
+cases none:
 
     {: NES 1.0 none :}
     { # no Perl script requires :}
     <html>
     ...
+
+With Nes you can NOT:
+
+- Embed Perl code in the template.
+- Modify aplication data from the template.
+- Emulating an interpreter or language in the template.
 
 =head1 Very easy to use
 
