@@ -83,9 +83,9 @@ to launch a warning each time you run Nes.
 
 You can use .nes.cfg to add configuration variables to your script. We 
 recommend using a notation that clearly distinguishes Nes variables, 
-for example using prefixes the name of your application:
-
-    .nes.cfg content:
+for example using prefixes the name of your application, 
+.nes.cfg content:
+    
         private_key   = pass
         myscript_var1 = 50
 
