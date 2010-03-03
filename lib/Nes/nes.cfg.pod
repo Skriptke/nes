@@ -199,7 +199,7 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>
+L<Nes>. L<Nes::Tutorial>, L<Nes::Singleton>
 
 =cut
 

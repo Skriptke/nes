@@ -671,6 +671,6 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>
+L<Nes>, L<Nes::Singleton>, L<Nes::nes.cfg>
 
 =cut
