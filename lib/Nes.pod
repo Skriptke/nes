@@ -183,6 +183,38 @@ cgi_dir option of the set_nes_site utility, create a file like this:
     </FilesMatch>
     #---------------------------------------------
 
+=head1 HTML oriented
+
+Usually the procedure for using a template would be:
+
+    Template->new('template');
+
+The Perl script calls the template.
+
+In Nes, template calls to Perl script:
+
+    {: NES 1.0 ('script.pl') :}
+    <html>
+    ...
+
+Usually the procedure for output a template would be:
+
+    Template->out;
+
+The Perl script handles the output.
+
+In Nes, template handles the output.
+
+Usually must call many methods to manage the template.
+
+In Nes, no need to call more than one or two methods and in cases 
+musch anyone:
+
+    {: NES 1.0 none :}
+    { # no Perl script requires :}
+    <html>
+    ...
+
 =head1 Very easy to use
 
 Extremely simple, in most cases you just need to do this:
