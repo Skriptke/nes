@@ -182,19 +182,6 @@ For disable uploads, put this in you .nes.cfg:
 
     max_upload = 0
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 =head1 AUTHOR
 
 Skriptke: Enrique F. Castanon
