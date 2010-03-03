@@ -103,7 +103,7 @@ contents:</p>
     &lt;/html&gt;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/nes_01.nhtml">http://yousite/nes_tutorial/nes_01.nhtml</a></pre>
+    <a href="./nes_01.nhtml">http://yousite/nes_tutorial/nes_01.nhtml</a></pre>
 <p>* Change 'yousite' with your domain or 'localhost'</p>
 <p>'nes_01.nhtml' has no special feature, is only HTML. To include dynamic
 content, must tell Nes to run a script for this template.</p>
@@ -137,7 +137,7 @@ the following contents:</p>
     &lt;/html&gt;</pre>
 <p>When we do:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/nes_02.nhtml">http://yousite/nes_tutorial/nes_02.nhtml</a></pre>
+    <a href="./nes_02.nhtml">http://yousite/nes_tutorial/nes_02.nhtml</a></pre>
 <p>Nes load and run script_02.pl</p>
 <p>But our template continues without doing anything special, we will create
 another script with the name 'script_03.pl' with the following contents:</p>
@@ -167,7 +167,7 @@ content:</p>
     &lt;/html&gt;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/nes_03.nhtml">http://yousite/nes_tutorial/nes_03.nhtml</a></pre>
+    <a href="./nes_03.nhtml">http://yousite/nes_tutorial/nes_03.nhtml</a></pre>
 <p>In 'script_03.pl' we have defined the hash variable '%tags', with the 
 name of variable for the template 'var_hello' and value 
 'Hello Nes Tutorial'. So when we included the Tag '{: $ var_hello :}' 
@@ -206,7 +206,7 @@ the name 'lucky_01.nhtml' and the following content:</p>
     1;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/lucky_01.nhtml">http://yousite/nes_tutorial/lucky_01.nhtml</a></pre>
+    <a href="./lucky_01.nhtml">http://yousite/nes_tutorial/lucky_01.nhtml</a></pre>
 <p>But this is nothing more than a template. We create an object so 
 that every time we want a 'lucky number' in a Web not have to 
 rewrite everything.</p>
@@ -229,10 +229,10 @@ and the following content:</p>
     &lt;/html&gt;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/lucky_test.nhtml">http://yousite/nes_tutorial/lucky_test.nhtml</a></pre>
+    <a href="./lucky_test.nhtml">http://yousite/nes_tutorial/lucky_test.nhtml</a></pre>
 <p>Also this works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/lucky_02.nhtml">http://yousite/nes_tutorial/lucky_02.nhtml</a></pre>
+    <a href="./lucky_02.nhtml">http://yousite/nes_tutorial/lucky_02.nhtml</a></pre>
 <p>From that moment every time we want a 'lucky number' only we must 
 included in our templates '{: include ( 'lucky_02.nhtml' ) :}'</p>
 <p>The first line of the template 'lucky_test.nhtml' is {: NES 1.0 none :}
@@ -307,7 +307,7 @@ is ignored, then the first parameter:</p>
     &lt;/html&gt;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/template.nhtml">http://yousite/nes_tutorial/template.nhtml</a></pre>
+    <a href="./template.nhtml">http://yousite/nes_tutorial/template.nhtml</a></pre>
 <p>You can include lucky object in any Nes template, since he accepts 
 parameters, you will not need modification.</p>
 <p>In this example it is just a random number, but we can do object, from 
@@ -342,7 +342,7 @@ contents:</p>
     &lt;/html&gt;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/nes_05.nhtml?name=value">http://yousite/nes_tutorial/nes_05.nhtml?name=value</a></pre>
+    <a href="./nes_05.nhtml?name=value">http://yousite/nes_tutorial/nes_05.nhtml?name=value</a></pre>
 <p>
 </p>
 <hr />
@@ -367,10 +367,10 @@ contents:</p>
     &lt;/html&gt;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/nes_06.nhtml?var=Nes">http://yousite/nes_tutorial/nes_06.nhtml?var=Nes</a>
-    <a href="http://localhost/nes_tutorial/nes_06.nhtml?var=Hello">http://yousite/nes_tutorial/nes_06.nhtml?var=Hello</a>
-    <a href="http://localhost/nes_tutorial/nes_06.nhtml?var=1">http://yousite/nes_tutorial/nes_06.nhtml?var=1</a>
-    <a href="http://localhost/nes_tutorial/nes_06.nhtml?var=lucky">http://yousite/nes_tutorial/nes_06.nhtml?var=lucky</a></pre>
+    <a href="./nes_06.nhtml?var=Nes">http://yousite/nes_tutorial/nes_06.nhtml?var=Nes</a>
+    <a href="./nes_06.nhtml?var=Hello">http://yousite/nes_tutorial/nes_06.nhtml?var=Hello</a>
+    <a href="./nes_06.nhtml?var=1">http://yousite/nes_tutorial/nes_06.nhtml?var=1</a>
+    <a href="./nes_06.nhtml?var=lucky">http://yousite/nes_tutorial/nes_06.nhtml?var=lucky</a></pre>
 <p>
 </p>
 <hr />
@@ -424,7 +424,7 @@ contents:</p>
     1;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/nes_07.nhtml">http://yousite/nes_tutorial/nes_07.nhtml</a></pre>
+    <a href="./nes_07.nhtml">http://yousite/nes_tutorial/nes_07.nhtml</a></pre>
 <p>
 </p>
 <hr />
@@ -448,7 +448,7 @@ contents:</p>
     &lt;/html&gt;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/nes_08.nhtml">http://yousite/nes_tutorial/nes_08.nhtml</a></pre>
+    <a href="./nes_08.nhtml">http://yousite/nes_tutorial/nes_08.nhtml</a></pre>
 <p>This plugin is a filter demonstration, simply replace the word 'Nes' 
 for '&lt;blink&gt;Nes&lt;/blink&gt;'</p>
 <p>As it is a filter should be the end, as our template does not require 
@@ -493,7 +493,7 @@ contents:</p>
     &lt;/html&gt;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/nes_09.nhtml">http://yousite/nes_tutorial/nes_09.nhtml</a></pre>
+    <a href="./nes_09.nhtml">http://yousite/nes_tutorial/nes_09.nhtml</a></pre>
 <p>The form recalls the value of the fields, because we have put field 
 value in  &quot;value&quot; 'value=&quot;{: * q_user :}&quot;'</p>
 <p>We will now add a captcha to the form.</p>
@@ -560,7 +560,7 @@ contents: (this is big, copy/paste :-) no problem)</p>
     &lt;/html&gt;</pre>
 <p>To show it works:</p>
 <pre>
-    <a href="http://localhost/nes_tutorial/nes_10.nhtml">http://yousite/nes_tutorial/nes_10.nhtml</a></pre>
+    <a href="./nes_10.nhtml">http://yousite/nes_tutorial/nes_10.nhtml</a></pre>
 <p>The Captcha Plugin required to be loaded before the script, 
 that we've put before 'none'.</p>
 <p>Captcha is a type 'ascii', to prevent some characters deform the 
