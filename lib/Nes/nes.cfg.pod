@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-nes.cfg - .nes.cfg Nes configuration files.
+Nes::nes.cfg - .nes.cfg Nes configuration files.
 
 =head1 SYNOPSIS
 
@@ -86,8 +86,8 @@ recommend using a notation that clearly distinguishes Nes variables,
 for example using prefixes the name of your application, 
 .nes.cfg content:
     
-        private_key   = pass
-        myscript_var1 = 50
+    private_key   = pass
+    myscript_var1 = 50
 
 You can access these variables from the nhtml template as:
 

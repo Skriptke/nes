@@ -162,7 +162,7 @@ More help:
 
 =head2 Nes templates .htaccess configuration
 
-cgi_dir of set_nes_site option, create a file like this:
+cgi_dir option of the set_nes_site utility, create a file like this:
 
     # ---------- Nes configuration --------------
     # exec cgis
@@ -713,6 +713,10 @@ See: L<Nes::Singleton>
     # User name session
     {: * nes_session_user :}
 
+=head1 SEE
+
+L<Nes::Tutorial>, L<Nes::Singleton>, L<Nes::nes.cfg>
+
 =head1 BUGS
 
 
@@ -765,7 +769,9 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>
+L<Template::Toolkit>, L<HTML::Template>, L<HTML::Mason>, 
+L<HCKit::Template>, L<Catalyst>, L<CGI::Framework>, 
+L<CGI::Application>, L<CGI::Application::Framework>, L<mod_perl>
 
 =cut
 
