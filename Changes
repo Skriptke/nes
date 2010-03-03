@@ -1,9 +1,9 @@
 Revision history for Nes
 
-1.01.1  
+1.02    2010/03/27
         add tutorial to examples
         fix replace 0 as literal.
-        documentation fixes.
+        multiples documentation fixes.
 
 1.01    2010/02/28
         documentation fixes.
