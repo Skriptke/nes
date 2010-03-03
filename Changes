@@ -1,7 +1,9 @@
 Revision history for Nes
 
 1.02    2010/03/27
-        add tutorial to examples
+        add {: $ source :} to debub_info.
+        fix chomp source.
+        add tutorial to examples.
         fix replace 0 as literal.
         multiples documentation fixes.
 

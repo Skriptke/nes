@@ -889,6 +889,7 @@ use Nes::Singleton;
 
     if ( open my $fh, '<', "$self->{'file_name'}" ) {
       @{ $self->{'file_souce'} } = <$fh>;
+      chomp $self->{'file_souce'}[$#{$self->{'file_souce'}}];
       close $fh;
     } else {
       warn "couldn't open $self->{'file_name'}";
@@ -934,8 +935,11 @@ use Nes::Singleton;
   sub set_out {
     my $self  = shift;
 
+    $self->{'file_nes_line'} = $self->{'file_souce'}[0] 
+      if $self->{'file_souce'}[0] =~ /{:\s*NES/i || '';
+       
     my $interpret = nes_interpret->new();
-    my @param     = $interpret->replace_NES( $self->{'file_souce'}[0] );
+    my @param     = $interpret->replace_NES( $self->{'file_nes_line'} );
 
     if ( $param[0] ) {
       shift @{ $self->{'file_souce'} };    # eliminamos la primera linea

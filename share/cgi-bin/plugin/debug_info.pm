@@ -165,6 +165,7 @@ use Nes;
     $object->{'content_obj'}       = $obj->{'container'}->{'content_obj'};
     $object->{'interactions'}      = $obj->{'container'}->{'this_inter'};
     $object->{'scripts'}           = "@{ $obj->{'file_script'} }";
+    $object->{'source'}            = $obj->{'container'}->{'file_nes_line'}."@{ $obj->{'container'}->{'file_souce'} }";
     $object->{'out'}               = $obj->get_out_content();
 #    $object->{'unknown_tags'}      = $1 = $object->{'out'} =~ /({:[^}]*.?|[^{]*:})/g;
   
