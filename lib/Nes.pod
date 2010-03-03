@@ -378,6 +378,39 @@ defined in our Perl script, of not being the block is replaced by an empty strin
 The block is replaced by the value of environment_variable which is an 
 environment variable Nes.
 
+Nes defined all CGI environment as:
+
+    {: * env_SERVER_NAME :} 
+    {: * env_DOCUMENT_ROOT :} 
+    etc...
+
+All parameters passed in the GET and POST methods, add 'q_' at the 
+beginning of the name of the variable:
+
+    {: * q_varname :}
+
+The varibles in the configuration file as:
+
+    {: * cfg_varname :}
+
+Other:
+
+Current Directory:
+
+    {: * nes_this_dir :}
+
+Current file:
+
+    {: * nes_this_file :}
+
+NES version:
+
+    {: * nes_ver :}
+
+Language:
+
+    {: * nes_accept_language :}
+
 =head2 ~ Expression
 
     {: ~ (expression) HTML :}
