@@ -174,3 +174,5 @@ share/examples/tutorial/script_02.pl
 share/examples/tutorial/script_03.pl
 share/examples/tutorial/script_07.pl
 share/examples/tutorial/template.nhtml
+share/examples/tutorial/debug_info.txt
+

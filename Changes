@@ -1,6 +1,6 @@
 Revision history for Nes
 
-1.02    2010/03/27
+1.02    2010/03/03
         add {: $ source :} to debub_info.
         fix chomp source.
         add tutorial to examples.

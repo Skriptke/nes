@@ -1,0 +1,32 @@
+<pre>
+===========================================
+      Compare source and executed
+Debug info generted by plugin/debug_info.pl
+===========================================
+{: ~ $top_template 
+URL..........: [{: $ url :}]
+Template.....: [{: $ object :}]
+Headers......: [{: $ headers :}]
+Cookies......: [{: $ cookies :}]
+GET..........: [{: $ GET :}]
+POST.........: [{: $ POST :}]
+Scripts......: [{: $ scripts :}]
+Go to........: <a href="http://nes.sourceforge.net/miniblog/en/?item=Tutorial">Tutorial</a>
+:}
+Template.....: [{: $ object :}]
+Parent.......: [{: $ parent :}]
+Interactions.: [{: $ interactions :}]
+Scripts......: [{: $ scripts :}]
+
+==============
+  The Source 
+==============
+{: $ source :}
+
+==============
+  The Out 
+==============
+{: $ out :}
+
+</pre>
+

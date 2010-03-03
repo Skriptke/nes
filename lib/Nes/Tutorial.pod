@@ -619,6 +619,14 @@ Since Perl, can verify Captcha:
     if ( $captcha->{'is_ok'} ) {
     ...
 
+=head1 Install Tutorial
+
+You can install this tutorial with the following command:
+
+    set_nes_site --from_exam=tutorial --to_exam=/full-path-to/root-www/Tutorial
+
+* Change /full-path-to... for you particular path
+
 =head1 AUTHOR
 
 Skriptke: Enrique F. Castanon
