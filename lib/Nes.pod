@@ -23,6 +23,16 @@ Nes can do for you?
 With Nes can do the same or more than any other template system, only 
 much faster and easier. The time is the most valuable resource. 
 
+With Nes you can NOT:
+
+- Embed Perl code in the template.
+
+- Modify aplication data from the template.
+
+- Emulating an interpreter or language in the template.
+
+To do these things, there is already a system called PHP. :-)
+
 =head2 Some Nes features
 
 =over 2
@@ -214,12 +224,6 @@ cases none:
     { # no Perl script requires :}
     <html>
     ...
-
-With Nes you can NOT:
-
-- Embed Perl code in the template.
-- Modify aplication data from the template.
-- Emulating an interpreter or language in the template.
 
 =head1 Very easy to use
 
