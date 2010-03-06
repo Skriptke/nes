@@ -1771,7 +1771,7 @@ use Nes::Singleton;
 
   sub param_block {
     my $self  = shift;
-    my ($params) = @_;
+    my ($params,$skip_inclusion) = @_;
 
     return if !$params;
 
@@ -1796,6 +1796,18 @@ use Nes::Singleton;
       $this = $+;
       $this =~ s/\\'/'/g if $this;
       $this =~ s/\\"/"/g if $this;
+      
+      if ( !$skip_inclusion ) { # Permite la inclusión en los parámetros:
+        if ($this =~ /$self->{'pre_start'}/) {
+          my $interpret = nes_interpret->new( $self->postformat($this) );
+          $this = $interpret->go( %{ $self->{'tags'} } );
+        }
+        if ($this =~ /$self->{'tag_start'}/) {
+          my $interpret = nes_interpret->new( $this );
+          $this = $interpret->go( %{ $self->{'tags'} } );
+        }
+      }   
+    
       push @param, $this;
     }
 
@@ -1818,7 +1830,7 @@ use Nes::Singleton;
 
     } elsif ( $tag =~ /^$self->{'tag_sql'}$/ ) {
 
-      $out = $self->replace_nsql( $code, $self->param_block($params) );
+      $out = $self->replace_nsql( $code, $self->param_block($params,1) );
 
     } elsif ( $tag =~ /^$self->{'tag_hash'}$/ ) {
 
@@ -1902,13 +1914,13 @@ use Nes::Singleton;
     my ( $version, $params ) = $block =~ /$tagnes/;
     my @param = $self->param_block($params);
 
-    # Permite la inclusión:
-    foreach (@param) {
-      if (/$self->{'tag_start'}/) {    # ahorrar un poco de cpu
-        my $interpret = nes_interpret->new($_);
-        $_ = $interpret->go( %{ $self->{'tags'} } );
-      }
-    }
+#    # Permite la inclusión:
+#    foreach (@param) {
+#      if (/$self->{'tag_start'}/) {    # ahorrar un poco de cpu
+#        my $interpret = nes_interpret->new($_);
+#        $_ = $interpret->go( %{ $self->{'tags'} } );
+#      }
+#    }
     unshift( @param, $version );
 
     return @param;
@@ -1970,15 +1982,15 @@ use Nes::Singleton;
     my $self  = shift;
     my (@param) = @_;
 
-    # Permite la inclusión:
-    foreach (@param) {
-
-      # sólo los que tengan código, ahorrar un poco de cpu
-      if (/$self->{'pre_start'}/) {
-        my $interpret = nes_interpret->new( $self->postformat($_) );
-        $_ = $interpret->go( %{ $self->{'tags'} } );
-      }
-    }
+#    # Permite la inclusión:
+#    foreach (@param) {
+#
+#      # sólo los que tengan código, ahorrar un poco de cpu
+#      if (/$self->{'pre_start'}/) {
+#        my $interpret = nes_interpret->new( $self->postformat($_) );
+#        $_ = $interpret->go( %{ $self->{'tags'} } );
+#      }
+#    }
 
     my $file = shift @param;
 

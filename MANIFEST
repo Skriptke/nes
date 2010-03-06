@@ -15,6 +15,7 @@ lib/Nes/Minimal.pm
 lib/Nes/DB.pm
 lib/Nes/Minimal/Multipart.pm
 lib/Nes/Minimal/Misc.pm
+lib/Nes/Obj/secure_login.pod
 share/examples/nesblog/.htaccess
 share/examples/nesblog/scripts/cal.sh
 share/examples/nesblog/scripts/article_index.cgi
@@ -152,6 +153,9 @@ share/cgi-bin/obj/lwp_custom.nhtml
 share/cgi-bin/obj/location.pl
 share/cgi-bin/obj/location.nhtml
 share/cgi-bin/obj/session.nhtml
+share/cgi-bin/obj/secure_login.nhtml
+share/cgi-bin/obj/secure_login_errors.nhtml
+share/cgi-bin/obj/secure_login.pl
 share/examples/tutorial/.htaccess
 share/examples/tutorial/index.html
 share/examples/tutorial/lucky_01.nhtml

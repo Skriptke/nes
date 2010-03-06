@@ -1,0 +1,89 @@
+
+=head1 NAME
+
+secure_login.nhtml - Secure Login Nes Object.
+
+=head1 SYNOPSIS
+
+    {: include ('{: * cfg_obj_top_dir :}/secure_login.nhtml',
+                 mytestlogin.pl,
+                 min_len_name,
+                 max_len_name,
+                 min_len_pass,
+                 max_len_pass,
+                 attempts,
+                 form_attempts,
+                 captcha_size,
+                 captcha_noise,
+                 captcha_atempts,
+                 out_page,
+                 expire_session,
+                 msg_legend,
+                 msg_name,
+                 msg_pass,
+                 msg_remember,
+                 msg_login,
+                 msg_captcha,
+                 msg_error_form,
+                 msg_error_captcha,
+                 id_form,
+                 class_form,
+                 msg_error_name,
+                 msg_error_pass,
+                 tpl_errors,
+                 tpl_options
+               )         
+    :}
+
+=head1 DESCRIPTION
+
+Create a secure login form.
+
+=head1 AUTHOR
+
+Skriptke: Enrique F. Castanon
+
+=head1 VERSION
+
+Version 1.00 Febrero 2010
+
+=head1 COPYRIGHT
+
+Copyright (c) Enrique F. Castanon Barbero. All rights reserved.
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it
+and/or modify it under the same terms and conditions as
+GNU Public License (GPL).
+
+This means that you can, at your option, redistribute it and/or 
+modify it under either the terms the GNU Public License (GPL), 
+or under the Perl Artistic License.
+
+See http://dev.perl.org/licenses/
+
+=head1 DISCLAIMER
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS
+OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Use of this software in any way or in any form, source or binary,
+is not allowed in any country which prohibits disclaimers of any
+implied warranties of merchantability or fitness for a particular
+purpose or any disclaimers of a similar nature.
+
+IN NO EVENT SHALL I BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT,
+SPECIAL, INCIDENTAL,  OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+USE OF THIS SOFTWARE AND ITS DOCUMENTATION (INCLUDING, BUT NOT
+LIMITED TO, LOST PROFITS) EVEN IF I HAVE BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE
+
+=head1 SEE ALSO
+
+L<Nes>, L<Nes::Tutorial>, L<Nes::nes.cfg>
+
+=cut
+
