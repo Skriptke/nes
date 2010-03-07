@@ -1,6 +1,7 @@
 Revision history for Nes
 
 1.02.1  
+        fix expire last forms plugin
         add secure_login object.
         Nes Tags, all param allows inclusion.
         add attempts_for_captcha to forms plugin.

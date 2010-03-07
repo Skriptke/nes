@@ -1,16 +1,24 @@
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
-#  NES by - Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón
+#  Nes by Skriptke
+#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
 #  Licensed under the GNU GPL.
+#
+#  CPAN:
+#  http://search.cpan.org/dist/Nes/
+#
+#  Sample:
 #  http://nes.sourceforge.net/
+#
+#  Repository:
+#  http://github.com/Skriptke/nes
 # 
-#  Version 0.9 pre
+#  Version 1.01
 #
 #  forms_plugin.pm
 #
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 package forms_plugin;
@@ -129,7 +137,8 @@ use strict;
     $self->{'form_is_finish'} = 1 if $self->{'form_finish'} eq $self->{'name'};
 
     $self->{'expire'} = $expire || $self->{'CFG'}{'forms_plugin_expire'};
-    $self->{'expire'} = $expire_last || $self->{'CFG'}{'forms_plugin_expire_last'} if $self->{'form_is_start'};
+    $expire_last = $self->{'CFG'}{'forms_plugin_expire_last'} if !$expire_last;
+    $self->{'expire'} = $expire_last if $self->{'form_is_finish'};
 
     $self->{'is_ok'} = 0;
 
@@ -353,19 +362,19 @@ use strict;
     $self->{'plugin'}->add_last_error( 'forms_plugin', $self->{'name'}, 'no cookie o expire' );
     return 0 if !$self->{'cookie'};
 
-    # no se ha terminado de llenar el formulario
-    $self->{'last_error'} = 'no form finish';
-    $self->{'fatal_error'} = 0;
-    $self->{'plugin'}->add_last_error( 'forms_plugin', $self->{'name'}, 'no form finish' );
-    $self->{'plugin'}->add_fatal_error( 'forms_plugin', $self->{'name'}, '' );
-    return 0 if !$self->{'form_is_finish'};
-
     # la cookie ha expirado, expiración interna, "posible" manipulación de la cookie
     $self->{'last_error'}  = 'cookie expired, posible manipulate cookie';
     $self->{'fatal_error'} = 2;
     $self->{'plugin'}->add_fatal_error( 'forms_plugin', $self->{'name'}, '2' );
     $self->{'plugin'}->add_last_error( 'forms_plugin', $self->{'name'}, 'cookie expired, posible manipulate cookie' );
     return 0 if $self->{'expired'};
+
+    # no se ha terminado de llenar el formulario
+    $self->{'last_error'} = 'no form finish';
+    $self->{'fatal_error'} = 0;
+    $self->{'plugin'}->add_last_error( 'forms_plugin', $self->{'name'}, 'no form finish' );
+    $self->{'plugin'}->add_fatal_error( 'forms_plugin', $self->{'name'}, '' );
+    return 0 if !$self->{'form_is_finish'};
 
     # hash no coninciden, seguramente la cookie ha sido manipulada
     $self->{'last_error'}  = 'posible manipulate cookie data';

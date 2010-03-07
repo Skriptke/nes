@@ -27,7 +27,7 @@
 :}
 
 {: ~ ( * nes_forms_plugin_secure_login_form_error_fatal == 2 )
-    <p>Cookie internal error. Please do not use the Back button to this form.<br> Click to 
+    <p>Cookie expired error. Time limit exceeded.<br> Click to 
     <a href="http://{: * env_SERVER_NAME :}{: * env_REQUEST_URI :}">try again</a>
     </p>
 :}
@@ -67,5 +67,6 @@ Please do not use the Reload button to this form.<br>
 This form required to enable Cookies.<br>
 This form required to enable JavaScript.<br>
 If you try many times, get an error.<br>
+There is a limit to complete the form, if it exceeds the limit, the cookie expires or form.<br>
 </p>
 <br>

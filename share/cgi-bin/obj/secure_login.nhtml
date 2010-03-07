@@ -79,7 +79,7 @@
         :}
     :}
 :}
-{: #
+{: # 
 <pre>
 nes_forms_plugin_secure_login_form_error_last  : {: *nes_forms_plugin_secure_login_form_error_last :} &nbsp;
 nes_forms_plugin_secure_login_form_error_fatal : {: *nes_forms_plugin_secure_login_form_error_fatal :} &nbsp;
