@@ -1,4 +1,4 @@
-{: NES 1.0 ('{: * cfg_plugin_top_dir :}/forms_captcha.pl','secure_login.pl') :}
+{: NES 1.0 ('secure_login_param.pl','{: * cfg_plugin_top_dir :}/forms_captcha.pl','secure_login.pl') :}
 {: #
   -----------------------------------------------------------------------------
     
@@ -28,39 +28,39 @@
     {: include ( '{: * cfg_obj_top_dir :}/location.nhtml', '{: $ out_page :}' ) :}   
 :}
 {: ~ ( ! * nes_session_ok )
-    {: & form ( secure_login_form,0,secure_login_captcha,last,,,none,'{: * q_secure_login_param_7 :}','{: * q_secure_login_param_6 :}' ) {: & check ( 'l_User: {: * q_secure_login_param_2 :},{: * q_secure_login_param_3 :}', 'l_Password: {: * q_secure_login_param_4 :},{: * q_secure_login_param_5 :}' ) :}
+    {: & form ( '{: $ form_name :}',0,'{: $ captcha_name :}',last,'{: $ form_expire :}','{: $ form_exp_last :}','{: $ form_location :}','{: $ form_attempts :}','{: $ attempts :}' ) {: & check ( '{: $ form_name :}_User: {: $ min_len_name :},{: $ max_len_name :}', '{: $ form_name :}_Password: {: $ min_len_pass :},{: $ max_len_pass :}' ) :}
         {: ~ (   $ fatal_error ) {: include ('{: $ tpl_errors :}') :} :}  
-        {: ~ ( ! $ fatal_error )<form name="secure_login_form" id="{: $ id_form :}" class="{: $ class_form :}" action="" method="post">
+        {: ~ ( ! $ fatal_error )<form name="{: $ form_name :}" id="{: $ id_form :}" class="{: $ class_form :}" action="" method="post">
                 <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend :}</legend> :}
                     <table border="0">
                         <tr>
                             <td align="right">{: $ msg_name :}:</td>
                             <td align="left">
-                                <input type="text" size="{: $ max_len_name :}" name="{: & obfuscated l_User :}" value="{: * q_l_User :}" />
-                                {: ~ ( * nes_forms_plugin_secure_login_form_error_field_l_User ) {: $ msg_error_name,yes_html :} :}                            
+                                <input type="text" size="{: $ max_len_name :}" name="{: $ form_name :}_{: & obfuscated User :}" value="{: $ User :}" />
+                                {: ~ ( * sl_this_form_error_field_User ) {: $ msg_error_name,yes_html :} :}   
                             </td> 
                         </tr>
                         <tr>
                             <td align="right">{: $ msg_pass :}:</td>
                             <td align="left">
-                                <input type="password" size="{: $ max_len_pass :}" name="{: & obfuscated l_Password :}" value="{: * q_l_Password :}" />
-                                {: ~ ( * nes_forms_plugin_secure_login_form_error_field_l_Password ) {: $ msg_error_pass,yes_html :} :}
+                                <input type="password" size="{: $ max_len_pass :}" name="{: $ form_name :}_{: & obfuscated Password :}" value="{: $ Password :}" />
+                                {: ~ ( * sl_this_form_error_field_Password ) {: $ msg_error_pass,yes_html :} :}
                             </td> 
                         </tr>
                         {: ~ ( $ msg_remember )
                         <tr>
                             <td align="right">{: $ msg_remember :}:</td>
-                            <td align="left"><input type="checkbox" name="l_Remember" {: ~ (* q_l_Remember ) checked="checked" :}/></td> 
+                            <td align="left"><input type="checkbox" name="{: $ form_name :}_Remember" {: $ Remember :} /></td> 
                         </tr>  
                         :}
-                        {: ~ ( * nes_forms_plugin_secure_login_form_last_step && * nes_forms_plugin_secure_login_form_attempts > 3 )    
-                            {: & captcha (secure_login_captcha,ascii,'{: * q_secure_login_param_8 :}','{: * q_secure_login_param_9 :}',,,,,'{: * q_secure_login_param_10 :}')
+                        {: ~ ( * sl_this_form_last_step && * sl_this_form_attempts > 3 )    
+                            {: & captcha ('{: $ captcha_name :}',ascii,'{: $ captcha_digits :}','{: $ captcha_noise :}','{: $ captcha_size :}','{: $ captcha_sig :}','{: $ captcha_spc :}','{: $ captcha_expire :}','{: $ captcha_atempts :}')
                                 <tr>
-                                    <td align="right">{: & captcha_code :}</td>
+                                    <td align="right">{: $ captcha_tag_start,yes_html :}{: & captcha_code :}{: $ captcha_tag_end,yes_html :}</td>
                                     <td align="left">
                                         &nbsp;{: $ msg_captcha :}:<br>
-                                        &nbsp;<input type="text" name="secure_login_captcha" size="{: $ captcha_size :}" />
-                                        {: ~ ( * nes_captcha_plugin_secure_login_captcha_error_fatal ) {: $ msg_error_captcha,yes_html :} :}
+                                        &nbsp;<input {: $ this_is_captcha_field :} type="text" name="{: $ captcha_name :}" size="{: $ captcha_digits :}" />
+                                        {: ~ ( * sl_this_captcha_error_fatal ) {: $ msg_error_captcha,yes_html :} :}
                                     </td> 
                                 </tr>
                             :}                        
@@ -69,7 +69,7 @@
                             <td align="right"></td>
                             <td align="left">
                                 {: ~ ( $ error_user_pass ) {: $ msg_error_form,yes_html :} :}
-                                <input type="submit" name="l_Send" value="{: $ msg_login :}" />
+                                <input type="submit" name="{: $ form_name :}_send" value="{: $ msg_login :}" />
                             </td> 
                         </tr>             
                     </table>
@@ -79,14 +79,5 @@
         :}
     :}
 :}
-{: # 
-<pre>
-nes_forms_plugin_secure_login_form_error_last  : {: *nes_forms_plugin_secure_login_form_error_last :} &nbsp;
-nes_forms_plugin_secure_login_form_error_fatal : {: *nes_forms_plugin_secure_login_form_error_fatal :} &nbsp;
-nes_forms_plugin_secure_login_form_attempts    : {: *nes_forms_plugin_secure_login_form_attempts :} &nbsp;
 
-nes_captcha_plugin_secure_login_captcha_error_last : {: *nes_captcha_plugin_secure_login_captcha_error_last :} &nbsp;
-nes_captcha_plugin_secure_login_captcha_error_fatal: {: *nes_captcha_plugin_secure_login_captcha_error_fatal :} &nbsp;
-nes_captcha_plugin_secure_login_captcha_attempts   : {: *nes_captcha_plugin_secure_login_captcha_attempts :} &nbsp;
-</pre> 
-:}
+

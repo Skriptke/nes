@@ -156,6 +156,7 @@ share/cgi-bin/obj/session.nhtml
 share/cgi-bin/obj/secure_login.nhtml
 share/cgi-bin/obj/secure_login_errors.nhtml
 share/cgi-bin/obj/secure_login.pl
+share/cgi-bin/obj/secure_login_param.pl
 share/examples/tutorial/.htaccess
 share/examples/tutorial/index.html
 share/examples/tutorial/lucky_01.nhtml

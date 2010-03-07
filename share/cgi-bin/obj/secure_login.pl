@@ -23,46 +23,47 @@
 
 use Nes;
 
-my $nes  = Nes::Singleton->new('./secure_login.nhtml');
-my $obj  = $nes->{'query'}->{'q'}{'obj_param_0'};
+my $nes     = Nes::Singleton->new('./secure_login.nhtml');
+my $obj     = $nes->{'query'}->{'q'}{'obj_param_0'};
+my $ddumper = '('.$nes->{'query'}->{'q'}{$obj.'_param_1'}.')';
+my %param   =  eval "$ddumper";
 my %vars;
 
-# get parameters
-$vars{'script_test'}       = $nes->{'query'}->{'q'}{$obj.'_param_1'};
-$vars{'min_len_name'}      = $nes->{'query'}->{'q'}{$obj.'_param_2'};
-$vars{'max_len_name'}      = $nes->{'query'}->{'q'}{$obj.'_param_3'};
-$vars{'min_len_pass'}      = $nes->{'query'}->{'q'}{$obj.'_param_4'};
-$vars{'max_len_pass'}      = $nes->{'query'}->{'q'}{$obj.'_param_5'};
-$vars{'attempts'}          = $nes->{'query'}->{'q'}{$obj.'_param_6'};
-$vars{'form_attempts'}     = $nes->{'query'}->{'q'}{$obj.'_param_7'};
-$vars{'captcha_size'}      = $nes->{'query'}->{'q'}{$obj.'_param_8'};
-$vars{'captcha_noise'}     = $nes->{'query'}->{'q'}{$obj.'_param_9'};
-$vars{'captcha_atempts'}   = $nes->{'query'}->{'q'}{$obj.'_param_10'};
-$vars{'out_page'}          = $nes->{'query'}->{'q'}{$obj.'_param_11'} || 'http://'.$ENV{'SERVER_NAME'}.$ENV{'REQUEST_URI'};
-$vars{'expire_session'}    = $nes->{'query'}->{'q'}{$obj.'_param_12'} || '12h';
-$vars{'msg_legend'}        = $nes->{'query'}->{'q'}{$obj.'_param_13'};
-$vars{'expire_session'}    = '1y' if $nes->{'query'}->{'q'}{'l_Remember'};
-$vars{'msg_name'}          = $nes->{'query'}->{'q'}{$obj.'_param_14'} || 'User';
-$vars{'msg_pass'}          = $nes->{'query'}->{'q'}{$obj.'_param_15'} || 'Password';
-$vars{'msg_remember'}      = $nes->{'query'}->{'q'}{$obj.'_param_16'};
-$vars{'msg_login'}         = $nes->{'query'}->{'q'}{$obj.'_param_17'} || 'Enter';
-$vars{'msg_captcha'}       = $nes->{'query'}->{'q'}{$obj.'_param_18'} || 'Security code';
-$vars{'msg_error_form'}    = $nes->{'query'}->{'q'}{$obj.'_param_19'} || '<span style="text-decoration:blink;color:#880000;"">&#9658;</span> Incorrect User/Pass<br>';
-$vars{'msg_error_captcha'} = $nes->{'query'}->{'q'}{$obj.'_param_20'} || '<span style="text-decoration:blink;color:#880000;"">&#9668;</span>';
-$vars{'id_form'}           = $nes->{'query'}->{'q'}{$obj.'_param_21'} || 'secure_login_id';
-$vars{'class_form'}        = $nes->{'query'}->{'q'}{$obj.'_param_22'} || 'secure_login_class';
-$vars{'msg_error_name'}    = $nes->{'query'}->{'q'}{$obj.'_param_23'} || '<span style="text-decoration:blink;color:#880000;"">&#9668;</span>';
-$vars{'msg_error_pass'}    = $nes->{'query'}->{'q'}{$obj.'_param_24'} || '<span style="text-decoration:blink;color:#880000;"">&#9668;</span>';
-$vars{'tpl_errors'}        = $nes->{'query'}->{'q'}{$obj.'_param_25'} || 'secure_login_errors.nhtml';
-$vars{'tpl_options'}       = $nes->{'query'}->{'q'}{$obj.'_param_26'} || '';
+$param{'form_name'}    ||= 'secure_login';
+$param{'captcha_name'} ||= 'secure_login';
+
+# fields names
+my $fld_user = $param{'form_name'}.'_User';
+my $fld_pass = $param{'form_name'}.'_Password';
+my $fld_reme = $param{'form_name'}.'_Remember';
+
+$vars{'user_name'} = $nes->{'query'}->{'q'}{'l_User'};
+
+# fields
+$vars{'Remember'} = 'checked="checked"' if $nes->{'query'}->{'q'}{$fld_reme};
+$vars{'User'}     = $nes->{'query'}->{'q'}{$fld_user};
+$vars{'Password'} = $nes->{'query'}->{'q'}{$fld_pass};
+
+
+# set env, pointer to this form
+my $nes_env = $nes->{'top_container'}->{'nes_env'};
+$nes->{'top_container'}->set_nes_env( 'sl_this_form_error_field_User', $nes_env->{'nes_forms_plugin_'.$param{'form_name'}.'_error_field_'.$fld_user} );
+$nes->{'top_container'}->set_nes_env( 'sl_this_form_error_field_Password', $nes_env->{'nes_forms_plugin_'.$param{'form_name'}.'_error_field_'.$fld_pass} );
+
+foreach my $key ( keys %{ $nes_env } ) {
+  my $type = $key;
+  if ( $type =~ s/^nes_forms_plugin_$param{'form_name'}// ) {
+    $nes->{'top_container'}->set_nes_env( 'sl_this_form'.$type, $nes_env->{$key} );
+  }
+  if ( $type =~ s/^nes_captcha_plugin_$param{'captcha_name'}// ) {
+    $nes->{'top_container'}->set_nes_env( 'sl_this_captcha'.$type, $nes_env->{$key} );
+  }
+}
 
 # get form 
-my $form    = nes_plugin->get( 'forms_plugin',   'secure_login_form' );
-my $captcha = nes_plugin->get( 'captcha_plugin', 'secure_login_captcha' );
+my $form    = nes_plugin->get( 'forms_plugin',   $param{'form_name'} );
+my $captcha = nes_plugin->get( 'captcha_plugin', $param{'captcha_name'} );
 
-# user and password
-$vars{'user_name'} = $nes->{'query'}->{'q'}{'l_User'};
-my $user_pass        = $nes->{'query'}->{'q'}{'l_Password'};
 
 # errors
 $vars{'fatal_error'} = 0;
@@ -77,8 +78,10 @@ if ( $form->{'fatal_error'}      ||
 # action if ok form
 if ( $form->{'is_ok'} ) {
    {
-      require "$vars{'script_test'}";
-      $vars{'login_id'} = nes_test_login($vars{'user_name'},$user_pass);
+      if ( $param{'script_test'} ) {
+        require "$param{'script_test'}";
+        $vars{'login_id'} = nes_test_login($vars{'User'},$vars{'Password'});
+      } 
       if ( $vars{'login_id'} ) {
         $form->{'tmp'}->clear();
       } else {
@@ -88,6 +91,7 @@ if ( $form->{'is_ok'} ) {
 }
 
 $nes->out(%vars);
+
 
 # don't forget to return a true value from the file
 1;

@@ -1,7 +1,11 @@
 Revision history for Nes
 
 1.02.1  
-        fix expire last forms plugin
+        allows obfuscated: name="{: * var :}_{: & obfuscated field :}"
+        fix same cookie name in plugins forms and captcha.
+        fix add tag forms captcha.
+        fix add tag forms plugin.
+        fix expire last forms plugin.
         add secure_login object.
         Nes Tags, all param allows inclusion.
         add attempts_for_captcha to forms plugin.

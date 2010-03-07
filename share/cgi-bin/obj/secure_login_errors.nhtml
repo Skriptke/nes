@@ -20,41 +20,41 @@
 :}
 <center><br><blink>&#10038;</blink><b> Login security ERROR </b><blink>&#10038;</blink><br></center>
 <br>
-{: ~ ( * nes_forms_plugin_secure_login_form_error_fatal == 1 || * nes_captcha_plugin_secure_login_captcha_error_fatal == 1 )
+{: ~ ( * sl_this_form_error_fatal == 1 || * sl_this_captcha_error_fatal == 1 )
     <p>The form has expired or your browser does not accept cookies.<br> Please click to 
     <a href="http://{: * env_SERVER_NAME :}{: * env_REQUEST_URI :}">try again</a>
     </p>
 :}
 
-{: ~ ( * nes_forms_plugin_secure_login_form_error_fatal == 2 )
+{: ~ ( * sl_this_form_error_fatal == 2 )
     <p>Cookie expired error. Time limit exceeded.<br> Click to 
     <a href="http://{: * env_SERVER_NAME :}{: * env_REQUEST_URI :}">try again</a>
     </p>
 :}
 
-{: ~ ( * nes_forms_plugin_secure_login_form_error_fatal == 3 )
+{: ~ ( * sl_this_form_error_fatal == 3 )
     <p>Cookie key error. Please do not use the Back button to this form.<br> Click to 
     <a href="http://{: * env_SERVER_NAME :}{: * env_REQUEST_URI :}">try again</a>
     </p>
 :}
 
-{: ~ ( * nes_forms_plugin_secure_login_form_error_fatal == 4 )
+{: ~ ( * sl_this_form_error_fatal == 4 )
     <p>No key form. This form require Cookies and JavaScript.<br> Please click to 
     <a href="http://{: * env_SERVER_NAME :}{: * env_REQUEST_URI :}">try again</a>
     </p>
 :}
 
-{: ~ ( * nes_forms_plugin_secure_login_form_error_fatal == 5 || * nes_captcha_plugin_secure_login_captcha_error_fatal == 3 )
+{: ~ ( * sl_this_form_error_fatal == 5 || * sl_this_captcha_error_fatal == 3 )
     <p>It has reached the maximum attempts. <br>Please <a href="http://{: * env_SERVER_NAME :}{: * env_REQUEST_URI :}">try again</a> a<b> few minutes</b>.</p>
 :}
 
-{: ~ ( * nes_forms_plugin_secure_login_form_error_fatal == 6 || * nes_captcha_plugin_secure_login_captcha_error_fatal == 4 )
+{: ~ ( * sl_this_form_error_fatal == 6 || * sl_this_captcha_error_fatal == 4 )
     <p>Cookie error. Please do not use the Back button to this form.<br> Please click to 
     <a href="http://{: * env_SERVER_NAME :}{: * env_REQUEST_URI :}">try again</a>
     </p>
 :}
 
-{: ~ ( * nes_forms_plugin_secure_login_form_error_fatal == 7 )
+{: ~ ( * sl_this_form_error_fatal == 7 )
     <p>No key form. Please do not use the Back button to this form.<br> Click to 
     <a href="http://{: * env_SERVER_NAME :}{: * env_REQUEST_URI :}">try again</a>
     </p>

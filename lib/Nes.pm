@@ -2,7 +2,7 @@
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
+#  Copyright 2009 - 2010 Enrique F. Castanon
 #  Licensed under the GNU GPL.
 #
 #  CPAN:
@@ -1796,8 +1796,8 @@ use Nes::Singleton;
       $this = $+;
       $this =~ s/\\'/'/g if $this;
       $this =~ s/\\"/"/g if $this;
-      
-      if ( !$skip_inclusion ) { # Permite la inclusión en los parámetros:
+
+      if ( !$skip_inclusion ) { # Permite la inclusión en los parámetros
         if ($this =~ /$self->{'pre_start'}/) {
           my $interpret = nes_interpret->new( $self->postformat($this) );
           $this = $interpret->go( %{ $self->{'tags'} } );
@@ -1807,7 +1807,7 @@ use Nes::Singleton;
           $this = $interpret->go( %{ $self->{'tags'} } );
         }
       }   
-    
+ 
       push @param, $this;
     }
 

@@ -14,7 +14,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.01
+#  Version 1.03
 #
 #  forms_plugin.pm
 #
@@ -40,6 +40,10 @@ use strict;
     $self->{'captcha_name'} = '';
 
     $self->{'tag_form'} = 'form';
+    
+    foreach my $tag ( keys %{ $self->{'container'}->{'content_obj'}->{'tags'} } ) {
+      $self->{'tags'}{$tag} = $self->{'container'}->{'content_obj'}->{'tags'}{$tag};
+    }    
 
     return $self;
   }
@@ -70,15 +74,6 @@ use strict;
     my $self = shift;
     my ( $code, @param ) = @_;
 
-    foreach (@param) {
-
-      # sólo los que tengan código, ahorrar un poco de cpu
-      if (/$self->{'pre_start'}/) {
-        my $interpret = nes_interpret->new( $self->postformat($_) );
-        $_ = $interpret->go( %{ $self->{'tags'} } );
-      }
-    }
-
     $self->{'name'} = shift @param;
     $self->{'auto_submit'} = 1 if $self->{'auto_submit'} ne '0';
 
@@ -86,7 +81,7 @@ use strict;
 
     return $self->{'form'}{ $self->{'name'} }->out();
   }
-
+  
 }
 
 {
@@ -99,6 +94,10 @@ use strict;
     my $class = shift;
     my ( $out, $name, $auto_submit, $captcha_name, $captcha_last, $expire, $expire_last, $location, $attempts, $attempts_for_captcha ) = @_;
     my $self = $class->SUPER::new();
+
+    foreach my $tag ( keys %{ $self->{'container'}->{'content_obj'}->{'tags'} } ) {
+      $self->{'tags'}{$tag} = $self->{'container'}->{'content_obj'}->{'tags'}{$tag};
+    }    
 
     $self->{'plugin'} = nes_plugin->get_obj('forms_plugin');
     $self->{'plugin'}->add_obj( $name, $self );
@@ -156,13 +155,13 @@ use strict;
     }
     
     $self->get_attempts;
-    
+
     if ( $self->{'attempts'} < $self->{'attempts_for_captcha'}+1 && $self->{'attempts_for_captcha'} ) {
       $self->{'auto_submit'}  = 1;
       $self->{'captcha_name'} = '';
       $self->{'captcha_last'} = '';
     }    
-    
+
     $self->replace_check();
     $self->replace_obfuscated();
     $self->replace_init_form();
@@ -270,11 +269,24 @@ use strict;
   sub replace_obfuscated {
     my $self = shift;
 
-    $self->{'out'} =~ s/$self->{'pre_start'}\s*$self->{'tag_plugin'}\s*$self->{'tag_obfuscated'}\s*(.+?)\s*$self->{'pre_end'}/$self->{'obfuscated'}{$1} = $self->get_key( 5 + int rand 4 )/egi;
+    $self->{'out'} =~ s/(name\s*\=\s*\"?)(.*)$self->{'pre_start'}\s*$self->{'tag_plugin'}\s*$self->{'tag_obfuscated'}\s*(.+?)\s*$self->{'pre_end'}/$1.$self->obfuscated($1,$2,$3)/egi;
 
     return;
   }
+  
+  sub obfuscated {
+    my $self = shift;
+    my ($name1,$code,$field) = @_;
 
+    if ( $code ) {
+      my $interpret = nes_interpret->new( $self->postformat($code) );
+      $code = $interpret->go( %{ $self->{'tags'} } );
+    }
+    $field = $code.$field;
+
+    return $self->{'obfuscated'}{$field} = $self->get_key( 5 + int rand 4 );
+  }  
+  
   sub replace_init_form {
     my $self = shift;
 
@@ -310,6 +322,7 @@ use strict;
       $self->{'out'} =~ s/<input readonly=\"readonly\" (.*type\s*=\s*\"?submit\"?)/<input $1/gi;
       $self->{'out'} =~ s/<input readonly=\"readonly\" (.*name\s*=\s*\"?$self->{'CFG'}{'captcha_plugin_start'}_$self->{'captcha_name'}\"?)/<input $1/gi if $self->{'captcha_name'};
       $self->{'out'} =~ s/<input readonly=\"readonly\" (.*name\s*=\s*\"?$self->{'captcha_name'}\"?)/<input $1/gi if $self->{'captcha_name'};
+      $self->{'out'} =~ s/<input readonly=\"readonly\" (.*this_is_captcha_field)/<input $1/gi;
     }
 
     $self->{'auto_submit_field'} = ''  if !$self->{'auto_submit'};

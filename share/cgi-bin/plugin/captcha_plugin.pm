@@ -1,16 +1,24 @@
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
-#  NES by - Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón
+#  Nes by Skriptke
+#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
 #  Licensed under the GNU GPL.
+#
+#  CPAN:
+#  http://search.cpan.org/dist/Nes/
+#
+#  Sample:
 #  http://nes.sourceforge.net/
+#
+#  Repository:
+#  http://github.com/Skriptke/nes
 # 
-#  Version 0.9 pre
+#  Version 1.03
 #
 #  captcha_plugin.pm
 #
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 package captcha_plugin;
@@ -27,6 +35,10 @@ use strict;
     my $class = shift;
     my ($out) = @_;
     my $self  = $class->SUPER::new($out);
+    
+    foreach my $tag ( keys %{ $self->{'container'}->{'content_obj'}->{'tags'} } ) {
+      $self->{'tags'}{$tag} = $self->{'container'}->{'content_obj'}->{'tags'}{$tag};
+    }        
 
     $self->{'plugin'} = nes_plugin->new( 'captcha_plugin', 'captcha_plugin', $self );
 
@@ -41,13 +53,11 @@ use strict;
     my $self = shift;
     my ( $block, $space1, $space2 ) = @_;
     my ( $tag, $params, $code ) = $block =~ /$self->{'block_plugin'}/;
-#    $tag = '' if !$tag;
-    my @param = $self->param_block($params);
     my $out;
 
     if ( $tag && $tag =~ /^$self->{'tag_captcha'}$/ ) {
 
-      $out = $self->replace_captcha( $code, @param );
+      $out = $self->replace_captcha( $code, $self->param_block($params) );
 
     } else {
 
@@ -89,6 +99,12 @@ use strict;
     my $class = shift;
     my ( $name, $type, $digits, $noise, $size, $sig, $spc, $expire, $attempts ) = @_;
     my $self = $class->SUPER::new();
+
+    foreach my $tag ( keys %{ $self->{'container'}->{'content_obj'}->{'tags'} } ) {
+      $self->{'tags'}{$tag} = $self->{'container'}->{'content_obj'}->{'tags'}{$tag};
+    }    
+    
+    $self->{'cookie_name'} = 'cp_'.$name;
 
     $self->{'plugin'} = nes_plugin->get_obj('captcha_plugin');
     $self->{'plugin'}->add_obj( $name, $self );
@@ -224,7 +240,7 @@ use strict;
 
     my $expire = $self->{'expire'};
 
-    $self->{'cookies'}->create( $self->{'captcha_name'}, $value, $expire );
+    $self->{'cookies'}->create( $self->{'cookie_name'}, $value, $expire );
     
     return;
   }
@@ -232,7 +248,7 @@ use strict;
   sub load_captcha {
     my $self = shift;
 
-    $self->{'cookie'} = $self->{'cookies'}->get( $self->{'captcha_name'} );
+    $self->{'cookie'} = $self->{'cookies'}->get( $self->{'cookie_name'} );
 
     my $refuse;
     ( $refuse, $self->{'load_key_ok'}, $self->{'time'}, $refuse ) = split( ':', $self->{'cookie'} );

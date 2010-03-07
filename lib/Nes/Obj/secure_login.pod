@@ -6,38 +6,58 @@ secure_login.nhtml - Secure Login Nes Object.
 =head1 SYNOPSIS
 
     {: include ('{: * cfg_obj_top_dir :}/secure_login.nhtml',
-                 mytestlogin.pl,
-                 min_len_name,
-                 max_len_name,
-                 min_len_pass,
-                 max_len_pass,
-                 attempts,
-                 form_attempts,
-                 captcha_size,
-                 captcha_noise,
-                 captcha_atempts,
-                 out_page,
-                 expire_session,
-                 msg_legend,
-                 msg_name,
-                 msg_pass,
-                 msg_remember,
-                 msg_login,
-                 msg_captcha,
-                 msg_error_form,
-                 msg_error_captcha,
-                 id_form,
-                 class_form,
-                 msg_error_name,
-                 msg_error_pass,
-                 tpl_errors,
-                 tpl_options
+                '
+                 script_test  => \my_script_for_test_login.pl\'
+                '
                )         
     :}
 
 =head1 DESCRIPTION
 
 Create a secure login form.
+
+=head1 PARAMETERS
+
+    script_test
+    min_len_name
+    max_len_name
+    min_len_pass
+    max_len_pass
+    attempts
+    form_attempts
+    form_location
+    form_exp_last
+    form_expire
+    form_name
+    captcha_name
+    captcha_digits
+    captcha_size
+    captcha_noise
+    captcha_sig
+    captcha_spc
+    captcha_expire
+    captcha_atempts
+    captcha_tag_start
+    captcha_tag_start
+    captcha_tag_end
+    captcha_tag_end
+    out_page
+    expire_session
+    expire_session
+    msg_legend
+    msg_name
+    msg_pass
+    msg_remember
+    msg_login
+    msg_captcha
+    msg_error_form
+    msg_error_captcha
+    id_form
+    class_form
+    msg_error_name
+    msg_error_pass
+    tpl_errors
+    tpl_options
 
 =head1 AUTHOR
 
