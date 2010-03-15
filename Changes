@@ -1,5 +1,6 @@
 Revision history for Nes
-
+        
+        added multi_step object.
         Nes support for double quotes on parameters
         added tag inheritance to Nes.
         added 'add' method to Singleton for add tags.
