@@ -26,6 +26,7 @@ use Nes;
 
 my $nes     = Nes::Singleton->new();
 my $obj     = $nes->{'query'}->{'q'}{'obj_param_0'};
+my $cfg     = $nes->{'CFG'};
 my $ddumper = '('.$nes->{'query'}->{'q'}{$obj.'_param_1'}.')';
 my %vars    =  eval "$ddumper";
 
@@ -64,12 +65,12 @@ $vars{'msg_pass'}          ||= 'Password';
 $vars{'msg_remember'}      ||= '';
 $vars{'msg_login'}         ||= 'Enter';
 $vars{'msg_captcha'}       ||= 'Security code';
-$vars{'msg_error_form'}    ||= '<span style="text-decoration:blink;color:#880000;"">&#9658;</span> Incorrect User/Pass<br>';
-$vars{'msg_error_captcha'} ||= '<span style="text-decoration:blink;color:#880000;"">&#9668;</span>';
+$vars{'msg_error_form'}    ||= '<img src="'.$cfg->{'img_dir'}.'/error.gif"> Incorrect User/Pass<br>';
+$vars{'msg_error_captcha'} ||= '<img src="'.$cfg->{'img_dir'}.'/error.gif">';
 $vars{'id_form'}           ||= 'secure_login_id';
 $vars{'class_form'}        ||= 'secure_login_class';
-$vars{'msg_error_name'}    ||= '<span style="text-decoration:blink;color:#880000;"">&#9668;</span>';
-$vars{'msg_error_pass'}    ||= '<span style="text-decoration:blink;color:#880000;"">&#9668;</span>';
+$vars{'msg_error_name'}    ||= '<img src="'.$cfg->{'img_dir'}.'/error.gif">';
+$vars{'msg_error_pass'}    ||= '<img src="'.$cfg->{'img_dir'}.'/error.gif">';
 $vars{'tpl_errors'}        ||= 'secure_login_errors.nhtml';
 $vars{'tpl_options'}       ||= '';
 
