@@ -73,7 +73,7 @@ package multi_step;
     $self->{'txt_captcha'}       = $cfg->{'multi_step_txt_captcha'} 
                                 || '<center>Finally, enter the security code below.</center><br>';
     $self->{'msg_error_captcha'} = $cfg->{'multi_step_msg_error_captcha'} 
-                                || '<span style="text-decoration:blink;color:#880000;"">&#9668;</span>';
+                                || '<img src="'.$cfg->{'img_dir'}.'/error.gif">';
     $self->{'msg_error_form'}   = $cfg->{'multi_step_msg_error_form'} 
                                 || '<center>The following fields are invalid:</center><br>';                                
     $self->{'id_form'}           = '';
@@ -82,7 +82,7 @@ package multi_step;
     $self->{'tpl_errors'}        = 'multi_step_errors.nhtml';
     $self->{'tpl_options'}       = '';
     $self->{'msg_error_fields'}  = $cfg->{'multi_step_msg_error_fields'} 
-                                || '<span style="text-decoration:blink;color:#880000;"">&#9668;</span>';
+                                || '<img src="'.$cfg->{'img_dir'}.'/error.gif">';
                                 
 
     my $data    = '('.$nes->{'query'}->{'q'}{'multi_step_param_1'}.')';

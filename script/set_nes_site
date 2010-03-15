@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
+#  Copyright 2009 - 2010 Enrique Castanon
 #  Licensed under the GNU GPL.
 #
 #  CPAN:
@@ -15,7 +15,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.02
+#  Version 1.03
 #
 #  set_nes_site
 #
@@ -104,7 +104,7 @@ sub act {
   require Nes;
   my $sharedir   = File::ShareDir::dist_dir('Nes').'/cgi-bin';
   my $nesdir     = $cgi_dir.'/nes';  
-  my @link_files = ( '/plugin', '/obj' );
+  my @link_files = ( '/plugin', '/obj', '/images' );
   my @copy_files = ( '/dispatch.cgi', '/.htaccess' );    
   
   # Some Linux distributions are problems with symbolic in cgi-bin

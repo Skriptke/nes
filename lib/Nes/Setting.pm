@@ -55,7 +55,8 @@
       obj_dir        => $nes_dir . '/obj',
       plugin_top_dir => $nes_top_dir . '/plugin',
       obj_top_dir    => $nes_top_dir . '/obj',     
-      obj_form       => $nes_top_dir . '/obj/Nes/form', 
+      obj_form       => $nes_top_dir . '/obj/Nes/form',
+      img_dir        => $nes_dir . '/images',
       time_zone      => 'Europe/Madrid',       # * sin implementar *
       locale         => '',                    # es_ES.utf8
       session_prefix => 'NESSESSION',
