@@ -3,7 +3,7 @@
   -----------------------------------------------------------------------------
     
   Nes 1.03 by Skriptke
-  Copyright 2009 - 2010 Enrique Castañón
+  Copyright 2009 - 2010 Enrique Castañon
   Licensed under the GNU GPL.
 
   Sample:
@@ -74,8 +74,7 @@
                         &nbsp;<input type="text" name="{: $ captcha_name :}" size="{: $ captcha_digits :}" />
                         {: ~ $captcha_error {: $ msg_error_captcha,yes_html :} :}
                     </td>
-                </tr> 
-                :} :}
+                </tr>:} :}
                 <tr>
                     <td align="right">
                     </td>

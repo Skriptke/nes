@@ -17,8 +17,6 @@
 # 
 #  Version 1.03
 #
-#  multi_step.pl
-#
 #  DOCUMENTATION:
 #  perldoc Nes::Obj::multi_step  
 #

@@ -42,17 +42,18 @@ if ( $nes->{'query'}->{'q'}{'_'.$vars->{'form_name'}.'_step'} > $#{$vars->{'step
   }    
 
   $nes->add(%$vars);
+  push( @INC, $dir_plugin );
   do "$dir_plugin/captcha.pl";
   
   $vars->{'captcha_error_fatal'} = 1 if $nes_env->{'nes_captcha_plugin_'.$vars->{'captcha_name'}.'_error_fatal'} =~ /1|3|4/;
   $vars->{'captcha_error'}       = $nes_env->{'nes_captcha_plugin_'.$vars->{'captcha_name'}.'_error_fatal'};
   $vars->{'captcha_ok'}          = $nes_env->{'nes_captcha_plugin_'.$vars->{'captcha_name'}.'_is_ok'};
   $nes->add(%$vars);
+  
   my $captcha = nes_plugin->get( 'captcha_plugin', $vars->{'captcha_name'} );
   $captcha->{'tmp'}->clear() if $vars->{'captcha_ok'}; 
   
 } 
-
 
 # don't forget to return a true value from the file
 1;
