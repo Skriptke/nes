@@ -1,27 +1,68 @@
 <pre>
+================================================================================
+    Debug info to: {: $ object_no_path :}
+================================================================================
+
 Template.....: [{: $ object :}]
 Parent.......: [{: $ parent :}]
-Top container: [{: $ top_container_obj :}]
-Container....: [{: $ container_obj :}]
-Content......: [{: $ content_obj :}]
 Type.........: [{: $ type :}]
 Interactions.: [{: $ interactions :}]
 Scripts......: [{: $ scripts :}]
-Unknown tags.: [{: $ unknown_tags :}]
-Out..........: [{: $ out :}]
-{: ~ ( $ top_template ) 
+
+=================
+   Dumper Tags 
+=================
+{: $ dumper_tags,no_br :}
+=================
+   The Source 
+=================
+{: $ source,no_br :}
+
+=================
+    The Out 
+=================
+{: $ out,no_br :}
+
+=================
+ Nes Environment
+=================
+{: @ (env_nes) 
+{: @$ env_nes.key :} = [{: @$ env_nes.value :}] :}
+{: ~ $top_template 
+==========================================
+ Top Template: {: $ object_no_path :}
+==========================================
 URL..........: [{: $ url :}]
 Template.....: [{: $ object :}]
 Headers......: [{: $ headers :}]
 Cookies......: [{: $ cookies :}]
 GET..........: [{: $ GET :}]
 POST.........: [{: $ POST :}]
+Scripts......: [{: $ scripts :}]
+
+==========================================
+       Nes .nes.cfg variables
+==========================================
 {: @ (cfg) 
 {: @$ cfg.key :} = [{: @$ cfg.value :}] :}
-{: @ (env_nes) 
-{: @$ env_nes.key :} = [{: @$ env_nes.value :}] :}
+
+==========================================
+      CGI environment variables
+==========================================
 {: @ (env_cgi) 
 {: @$ env_cgi.key :} = [{: @$ env_cgi.value :}] :}
 :}
 </pre>
+{: # $ dumper_tags :}
+{: # $ dumper_top :}
+{: # $ dumper_container :}
+{: # $ dumper_template :}
+{: # $ dumper_cookies :}
+{: # $ dumper_session :}
+{: # $ dumper_query :}
+{: # $ dumper_CFG :}
+{: # $ dumper_nes :}
+
+
+
 

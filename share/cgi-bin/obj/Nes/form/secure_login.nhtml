@@ -2,8 +2,8 @@
 {: #
   -----------------------------------------------------------------------------
     
-  Nes 1.02 by Skriptke
-  Copyright 2009 - 2010 Enrique F. Castañón Barbero
+  Nes 1.03 by Skriptke
+  Copyright 2009 - 2010 Enrique Castañon
   Licensed under the GNU GPL.
 
   Sample:
@@ -18,8 +18,7 @@
   secure_login.nhtml
   
   DOCUMENTATION:
-    
-    perldoc Nes::Obj::secure_login
+  perldoc Nes::Obj::secure_login
  
   -----------------------------------------------------------------------------
 :}
@@ -36,14 +35,14 @@
                         <tr>
                             <td align="right">{: $ msg_name :}:</td>
                             <td align="left">
-                                <input type="text" size="{: $ max_len_name :}" name="{: $ form_name :}_{: & obfuscated User :}" value="{: $ User :}" />
+                                <input type="text" size="{: $ max_len_name :}" name="{: & obfuscated ('{: $ form_name :}_User') :}" value="{: $ User :}" />
                                 {: ~ ( * sl_this_form_error_field_User ) {: $ msg_error_name,yes_html :} :}   
                             </td> 
                         </tr>
                         <tr>
                             <td align="right">{: $ msg_pass :}:</td>
                             <td align="left">
-                                <input type="password" size="{: $ max_len_pass :}" name="{: $ form_name :}_{: & obfuscated Password :}" value="{: $ Password :}" />
+                                <input type="password" size="{: $ max_len_pass :}" name="{: & obfuscated ('{: $ form_name :}_Password') :}" value="{: $ Password :}" />
                                 {: ~ ( * sl_this_form_error_field_Password ) {: $ msg_error_pass,yes_html :} :}
                             </td> 
                         </tr>
@@ -53,7 +52,7 @@
                             <td align="left"><input type="checkbox" name="{: $ form_name :}_Remember" {: $ Remember :} /></td> 
                         </tr>  
                         :}
-                        {: ~ ( * sl_this_form_last_step && * sl_this_form_attempts > 3 )    
+                        {: ~ ( *sl_this_form_last_step && *sl_this_form_max_attempts )    
                             {: & captcha ('{: $ captcha_name :}',ascii,'{: $ captcha_digits :}','{: $ captcha_noise :}','{: $ captcha_size :}','{: $ captcha_sig :}','{: $ captcha_spc :}','{: $ captcha_expire :}','{: $ captcha_atempts :}')
                                 <tr>
                                     <td align="right">{: $ captcha_tag_start,yes_html :}{: & captcha_code :}{: $ captcha_tag_end,yes_html :}</td>

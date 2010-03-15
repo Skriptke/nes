@@ -249,10 +249,11 @@ use strict;
         }
 
       }
-      if ( $type =~ /^\/(.*)\/$/ ) {
+      if ( $type =~ /^\/(.*)\/(.*)$/ ) {
+        my $regex = "(?x$2)$1";
 
         if ($this_field) {    # sólo da error si el campo no esta vacío, podía ser opcional
-          $error .= 'regular expression' if $this_field !~ /$1/;
+          $error .= 'regular expression' if $this_field !~ /$regex/;
         }
 
       }
@@ -268,21 +269,29 @@ use strict;
 
   sub replace_obfuscated {
     my $self = shift;
-
-    $self->{'out'} =~ s/(name\s*\=\s*\"?)(.*)$self->{'pre_start'}\s*$self->{'tag_plugin'}\s*$self->{'tag_obfuscated'}\s*(.+?)\s*$self->{'pre_end'}/$1.$self->obfuscated($1,$2,$3)/egi;
-
+    
+#    $self->{'out'} =~ s/$self->{'pre_start'}\s*$self->{'tag_plugin'}\s*$self->{'tag_obfuscated'}\s*(.+?)\s*$self->{'pre_end'}/$self->{'obfuscated'}{$1} = $self->get_key( 5 + int rand 4 )/egi;
+#    return;
+    
+    my $obfuscated_tag = qr{(?six)
+                        \s*$self->{'pre_start'}\s*
+                            $self->{'tag_plugin'}
+                            \s*
+                            $self->{'tag_obfuscated'}    # tag del plugin
+                            \s*
+                            (\([^\(\)]+\)|[^\(\)]\S+)    # parametros
+                            \s*
+                        $self->{'pre_end'}\s*
+                        };  
+    
+    $self->{'out'} =~ s/$obfuscated_tag/$self->obfuscated($self->param_block($1))/ge;     
+   
     return;
   }
   
   sub obfuscated {
     my $self = shift;
-    my ($name1,$code,$field) = @_;
-
-    if ( $code ) {
-      my $interpret = nes_interpret->new( $self->postformat($code) );
-      $code = $interpret->go( %{ $self->{'tags'} } );
-    }
-    $field = $code.$field;
+    my ( $field ) = @_;
 
     return $self->{'obfuscated'}{$field} = $self->get_key( 5 + int rand 4 );
   }  

@@ -1,0 +1,95 @@
+{: NES 1.0 ('multi_step_captcha.pl','multi_step.pl','{: $ exec_script_NES :}') :}
+{: #
+  -----------------------------------------------------------------------------
+    
+  Nes 1.03 by Skriptke
+  Copyright 2009 - 2010 Enrique Castañón
+  Licensed under the GNU GPL.
+
+  Sample:
+  http://nes.sourceforge.net/
+
+  CPAN:
+  http://search.cpan.org/dist/Nes/
+
+  Repository:
+  http://github.com/Skriptke/nes
+   
+  DOCUMENTATION:
+  perldoc Nes::Obj::multi_step
+ 
+  -----------------------------------------------------------------------------
+:}
+{: ~ ( !$captcha_error_fatal && !$captcha_ok && !$form_error_fatal || $error_handler )
+    <script type="text/javascript">
+      {: $ form_name :}_fields = {};
+      {: @ (fields)
+      {: $ form_name :}_fields["{: $ form_name :}_{: @$ fields.name :}"] = {};
+      {: $ form_name :}_fields["{: $ form_name :}_{: @$ fields.name :}"]["RegExp"]    = {: @$ fields.js_RegExp :};
+      {: $ form_name :}_fields["{: $ form_name :}_{: @$ fields.name :}"]["min"]       = {: @$ fields.js_min :};
+      {: $ form_name :}_fields["{: $ form_name :}_{: @$ fields.name :}"]["max"]       = {: @$ fields.js_max :};
+      {: $ form_name :}_fields["{: $ form_name :}_{: @$ fields.name :}"]["msg_error"] = '{: @$ fields.js_msg_error,yes_html :}';
+      :}
+      function {: $ form_name :}_validate(field,id) {
+        error = 0;
+        if ( field.value.length > {: $ form_name :}_fields[field.name]["max"] )  { error = 1; }
+        if ( field.value.length < {: $ form_name :}_fields[field.name]["min"] )  { error = 1; }
+        if ( !{: $ form_name :}_fields[field.name]["RegExp"].test(field.value) ) { error = 1; }   
+        if ( error ) {
+            elem = document.getElementById(id);
+            elem.innerHTML = {: $ form_name :}_fields[field.name]["msg_error"];
+        } else {
+            if ( field.type == 'radio' ) {
+                allr = document.getElementsByName(field.name+"_span");
+                for (var n=0; n < allr.length; n++) {
+                    allr[n].innerHTML = '';
+                }
+            } else {
+                elem = document.getElementById(id);
+                elem.innerHTML = '';
+            }
+        }
+      };
+    </script>
+    <form name="{: $ form_name :}" {: ~ ($ id_form)id="{: $ id_form :}" :}class="{: $ class_form :}" action="{: $ action_form :}" method="POST">
+        <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend :}</legend> :}
+            <table {:~($ table_width)width="{: $ table_width :}" :}border="0">{: ~ ($error_fields && !$last_step) <tr><td colspan="2">{: $ msg_error_form,yes_html :}</td></tr> :}
+                {: @ (fields)<tr>{: ~ ( '{: @$ fields.begin :}' )<tr><td colspan="2">{: @$ fields.begin,yes_html :}</td></tr>  :}
+                    <td valign="top" align="right">{: @$ fields.msg,yes_html :}:</td>
+                    <td valign="top" align="left">{: ~ ( '{: @$ fields.type :}' ne 'select' && '{: @$ fields.type :}' ne 'textarea' ) 
+                        <input onBlur="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} type="{: @$ fields.type :}" size="{: @$ fields.size :}" name="{: $ form_name :}_{: @$ fields.name :}" {: ~ ( '{: @$ fields.checked :}' )checked="checked":} value="{: @$ (fields.value,'{: @$ fields.filter :}') :}" />
+                        :}{: ~ ( '{: @$ fields.type :}' eq 'select' )
+                        <select onBlur="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} name="{: $ form_name :}_{: @$ fields.name :}">{: @$ (fields.options,'yes_html') :}</select>
+                        :}{: ~ ( '{: @$ fields.type :}' eq 'textarea' )
+                        <textarea onBlur="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} name="{: $ form_name :}_{: @$ fields.name :}" cols="{: @$ fields.cols :}" rows="{: @$ fields.rows :}">{: @$ (fields.value,'{: @$ fields.filter :}') :}</textarea>
+                        :}<span name="{: $ form_name :}_{: @$ fields.name :}_span" id="{: $ form_name :}_{: @$ fields.js_id :}_error">{: @$ fields.error,yes_html :}</span>   
+                    {: ~ ( '{: @$ fields.end :}' ) <tr><td colspan="2">{: @$ fields.end,yes_html :}</td></tr> :}</td>
+                </tr>:}
+                {: ~ ($last_step && $show_captcha) {: & captcha ('{: $ captcha_name :}','{: $ captcha_type :}','{: $ captcha_digits :}','{: $ captcha_noise :}','{: $ captcha_size :}','{: $ captcha_sig :}','{: $ captcha_spc :}','{: $ captcha_expire :}','{: $ captcha_atempts :}')
+                <tr>
+                    <tr><td colspan="2">{: $ txt_captcha,yes_html :}</td></tr>
+                    <td align="right">{: $ captcha_tag_start,yes_html :}{: & captcha_code :}{: $ captcha_tag_end,yes_html :}</td>
+                    <td align="left">
+                        &nbsp;{: $ msg_captcha :}:<br>
+                        &nbsp;<input type="text" name="{: $ captcha_name :}" size="{: $ captcha_digits :}" />
+                        {: ~ $captcha_error {: $ msg_error_captcha,yes_html :} :}
+                    </td>
+                </tr> 
+                :} :}
+                <tr>
+                    <td align="right">
+                    </td>
+                    <td align="left">
+                        <input type="submit" name="_{: $ form_name :}_send"  value="{: $ msg_submit :}" />
+                        <input type="hidden" name="_{: $ form_name :}_ip"    value="{: * nes_remote_ip :}">
+                        <input type="hidden" name="_{: $ form_name :}_autho" value="{: $ autho :}">{: ~ ( $fields_err )
+                        <input type="hidden" name="_{: $ form_name :}_err"   value="{: $ fields_err :}">:}
+                        <input type="hidden" name="_{: $ form_name :}_step"  value="{: $ next_step :}">{: @ (fields_pre) 
+                        <input type="hidden" name="{: @$ fields_pre.name :}" value="{: @$ fields_pre.value :}" />:}
+                    </td>
+                </tr>
+            </table>
+            {: ~ ( $ tpl_options ) {: include ('{: $ tpl_options :}')  :}  :}
+        </fieldset>
+    </form>
+:} {: ~ ( $captcha_error_fatal || $form_error_fatal ) {: include ('{: $ tpl_errors :}') :} :}

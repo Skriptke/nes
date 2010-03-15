@@ -1,27 +1,30 @@
 <pre>
+==========================================
+ Template: {: $ object_no_path :}
+==========================================
+
 Template.....: [{: $ object :}]
 Parent.......: [{: $ parent :}]
-Top container: [{: $ top_container_obj :}]
-Container....: [{: $ container_obj :}]
-Content......: [{: $ content_obj :}]
 Type.........: [{: $ type :}]
 Interactions.: [{: $ interactions :}]
 Scripts......: [{: $ scripts :}]
 
-{: ~ ( $ top_template ) 
+==========================================
+ Dumper Tags: {: $ object_no_path :} 
+==========================================
+{: $ dumper_tags,no_br :}
+{: ~ $top_template 
+==========================================
+ Top: {: $ object_no_path :}
+==========================================
+
 URL..........: [{: $ url :}]
 Template.....: [{: $ object :}]
-
-Headers:
-[{: $ headers :}]
-
-Cookies:
-[{: $ cookies :}]
-
-GET: [{: $ GET :}]
-
-POST:
-[{: $ POST :}]
+Headers......: [{: $ headers :}]
+Cookies......: [{: $ cookies :}]
+GET..........: [{: $ GET :}]
+POST.........: [{: $ POST :}]
+Scripts......: [{: $ scripts :}]
 :}
 </pre>
 

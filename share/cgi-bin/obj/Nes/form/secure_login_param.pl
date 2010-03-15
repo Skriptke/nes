@@ -15,10 +15,10 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.02
+#  Version 1.03
 #
-#  secure_login_param.pl
-#    set default parameters for secure_login
+#  DOCUMENTATION:
+#  perldoc Nes::Obj::secure_login
 #  
 # -----------------------------------------------------------------------------
 
@@ -30,13 +30,15 @@ my $ddumper = '('.$nes->{'query'}->{'q'}{$obj.'_param_1'}.')';
 my %vars    =  eval "$ddumper";
 
 # get parameters
-$vars{'script_test'}       ||= ''; # requires
+$vars{'script_handler'}    ||= '';
+$vars{'function_handler'}  ||= '';
+$vars{'script_NES'}        ||= '';
 $vars{'min_len_name'}      ||= 2;
 $vars{'max_len_name'}      ||= 15;
 $vars{'min_len_pass'}      ||= 2;
 $vars{'max_len_pass'}      ||= 15;
 $vars{'attempts'}          ||= 3;
-$vars{'form_attempts'}     ||= '10/1';
+$vars{'form_attempts'}     ||= '10/5';
 $vars{'form_location'}     ||= 'none';
 $vars{'form_exp_last'}     ||= '1m';
 $vars{'form_expire'}       ||= '10m';
@@ -48,7 +50,7 @@ $vars{'captcha_noise'}     ||= 2;
 $vars{'captcha_sig'}       ||= '';
 $vars{'captcha_spc'}       ||= '';
 $vars{'captcha_expire'}    ||= '1m';
-$vars{'captcha_atempts'}   ||= '10/1';
+$vars{'captcha_atempts'}   ||= '10/5';
 $vars{'captcha_tag_start'} ||= '<pre style="font-size:2px; line-height:1.0;">';
 $vars{'captcha_tag_start'} =   '' if $vars{'captcha_size'} ne 'none';
 $vars{'captcha_tag_end'}   ||= '<br></pre>';

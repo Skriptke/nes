@@ -5,10 +5,12 @@ secure_login.nhtml - Secure Login Nes Object.
 
 =head1 SYNOPSIS
 
-    {: include ('{: * cfg_obj_top_dir :}/secure_login.nhtml',
-                '
-                 script_test  => \my_script_for_test_login.pl\'
-                '
+    {: include ('{: * cfg_obj_form :}/secure_login.nhtml',
+                "
+                  script_handler   => 'my_script_handler.pl',
+                  function_handler => 'my_function_handler',
+                  form_name        => 'my_form_1',
+                "
                )         
     :}
 
@@ -18,7 +20,8 @@ Create a secure login form.
 
 =head1 PARAMETERS
 
-    script_test
+    script_handler
+    function_handler
     min_len_name
     max_len_name
     min_len_pass

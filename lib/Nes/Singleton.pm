@@ -97,6 +97,16 @@
 
     return;
   }
+  
+  sub add {
+    my $self = shift;
+    my %tags;
+    (%tags) = @_;
+
+    $self->{'container'}->add_tags(%tags);
+
+    return;
+  }  
 
 }
 

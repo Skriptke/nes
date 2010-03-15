@@ -2,8 +2,8 @@
 {: #
   -----------------------------------------------------------------------------
     
-  Nes 1.02 by Skriptke
-  Copyright 2009 - 2010 Enrique F. Castañón Barbero
+  Nes 1.03 by Skriptke
+  Copyright 2009 - 2010 Enrique Castañón
   Licensed under the GNU GPL.
 
   Sample:
@@ -14,7 +14,9 @@
 
   Repository:
   http://github.com/Skriptke/nes
-   
+  
+  DOCUMENTATION:
+  perldoc Nes::Obj::secure_login  
 
   -----------------------------------------------------------------------------
 :}
@@ -67,6 +69,6 @@ Please do not use the Reload button to this form.<br>
 This form required to enable Cookies.<br>
 This form required to enable JavaScript.<br>
 If you try many times, get an error.<br>
-There is a limit to complete the form, if it exceeds the limit, the cookie expires or form.<br>
+There is a limit time to complete the form, if it exceeds the limit, the cookie expires or form.<br>
 </p>
 <br>

@@ -150,7 +150,6 @@ use Nes;
     return;
   }  
   
-  
   sub add {
     my $self = shift;
 
@@ -158,6 +157,8 @@ use Nes;
     my $object  = $self->{'tags'};
 
     $object->{'object'}            = $obj->{'file_name'};
+    $object->{'object_no_path'}    = $obj->{'file_name'};
+    $object->{'object_no_path'}    =~ s/.*\///;
     $object->{'parent'}            = $obj->{'previous'}->{'file_name'};
     $object->{'type'}              = $obj->{'container'}->{'type'};
     $object->{'top_container_obj'} = $obj->{'top_container'};
@@ -167,13 +168,25 @@ use Nes;
     $object->{'scripts'}           = "@{ $obj->{'file_script'} }";
     $object->{'source'}            = $obj->{'container'}->{'file_nes_line'}."@{ $obj->{'container'}->{'file_souce'} }";
     $object->{'out'}               = $obj->get_out_content();
+    use Data::Dumper;
+    $Data::Dumper::Varname = 'Dumper_VARS';
+    $Data::Dumper::Maxdepth = 2;
+    $object->{'dumper_top'}        = Data::Dumper::Dumper($obj->{'top_container'});
+    $object->{'dumper_container'}  = Data::Dumper::Dumper($obj->{'container'});
+    $object->{'dumper_template'}   = Data::Dumper::Dumper($obj->{'container'}->{'content_obj'});
+    $object->{'dumper_cookies'}    = Data::Dumper::Dumper($obj->{'cookies'});
+    $object->{'dumper_session'}    = Data::Dumper::Dumper($obj->{'session'});
+    $object->{'dumper_query'}      = Data::Dumper::Dumper($obj->{'query'});
+    $object->{'dumper_CFG'}        = Data::Dumper::Dumper($obj->{'CFG'});
+    $object->{'dumper_nes'}        = Data::Dumper::Dumper($obj->{'nes'});
+    $Data::Dumper::Maxdepth = 5;
+    $object->{'dumper_tags'}       = Data::Dumper::Dumper($obj->{'container'}->{'content_obj'}->{'tags'});
 #    $object->{'unknown_tags'}      = $1 = $object->{'out'} =~ /({:[^}]*.?|[^{]*:})/g;
   
     $self->env();   
 
     return;
   }  
-  
 
   sub env {
     my $self = shift;

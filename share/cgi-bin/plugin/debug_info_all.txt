@@ -1,4 +1,8 @@
 <pre>
+================================================================================
+    Debug info to: {: $ object_no_path :}
+================================================================================
+
 Template.....: [{: $ object :}]
 Parent.......: [{: $ parent :}]
 Top container: [{: $ top_container_obj :}]
@@ -7,31 +11,91 @@ Content......: [{: $ content_obj :}]
 Type.........: [{: $ type :}]
 Interactions.: [{: $ interactions :}]
 Scripts......: [{: $ scripts :}]
-Unknown tags.: [{: $ unknown_tags :}]
-{: @ (cfg) 
-{: @$ cfg.key :} = [{: @$ cfg.value :}] :}
+
+=================
+   Dumper Tags 
+=================
+{: $ dumper_tags,no_br :}
+=================
+   The Source 
+=================
+{: $ source,no_br :}
+
+=================
+    The Out 
+=================
+{: $ out,no_br :}
+
+=================
+ Nes Environment
+=================
 {: @ (env_nes) 
 {: @$ env_nes.key :} = [{: @$ env_nes.value :}] :}
 
-Out:
-[{: $ out :}]
+=================
+  CFG Variables
+=================
+{: @ (cfg) 
+{: @$ cfg.key :} = [{: @$ cfg.value :}] :}
+
+=================
+ Dumper Template 
+=================
+{: $ dumper_template,no_br :}
+
+=================
+Dumper Contaniner
+=================
+{: $ dumper_container,no_br :}
+
+{: ~ $top_template 
+==========================================
+ Top Template: {: $ object_no_path :}
+==========================================
 
 URL..........: [{: $ url :}]
 Template.....: [{: $ object :}]
+Headers......: [{: $ headers :}]
+Cookies......: [{: $ cookies :}]
+GET..........: [{: $ GET :}]
+POST.........: [{: $ POST :}]
+Scripts......: [{: $ scripts :}]
 
-Headers:
-[{: $ headers :}]
-
-Cookies:
-[{: $ cookies :}]
-
-GET: [{: $ GET :}]
-
-POST:
-[{: $ POST :}]
-
+==========================================
+           CGI Environment
+==========================================
 {: @ (env_cgi) 
 {: @$ env_cgi.key :} = [{: @$ env_cgi.value :}] :}
 
+==========================================
+           Dumper Cookies 
+==========================================
+{: $ dumper_cookies,no_br :}
+
+==========================================
+           Dumper Session 
+==========================================
+{: $ dumper_session,no_br :}
+
+==========================================
+            Dumper Query 
+==========================================
+{: $ dumper_query,no_br :}
+
+==========================================
+             Dumper CFG
+==========================================
+{: $ dumper_CFG,no_br :}
+
+==========================================
+             Dumper Top
+==========================================
+{: $ dumper_top,no_br :}
+
+==========================================
+             Dumper Nes
+==========================================
+{: $ dumper_nes,no_br :}
+:}
 </pre>
 
