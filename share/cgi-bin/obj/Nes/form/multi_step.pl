@@ -52,7 +52,7 @@ my $last            = $#{$vars->{'steps'}};
    $last           += 1 if $vars->{'show_captcha'};
 my $end_form        = $q_step > $last && $captcha_ok;
 my $fields_is_ok    = 0;
-
+warn "** cero_Ciudad:$nes->{'query'}->{'q'}{'cero_Ciudad'}";
 set_this_step();
 set_fields_default();
 
@@ -191,8 +191,8 @@ sub set_fields {
     if ( $field->{'type'} =~ /^button$/i ) {
       # el mismo que tenia, no cambia
     } elsif ( $field->{'type'} =~ /^select$/i && $set ) { 
-      $field->{'options'} =~ s/(<option.+?)selected(.+?>)/$1$2/i;
-      $field->{'options'} =~ s/(<option)(.*>\s*$value)/$1 selected $2/i;
+      $field->{'options'} =~ s/(<option.+?)selected\s*=\s*\"?selected\"?\s*|selected\s*(.+?>)/$1$2/gi;
+      $field->{'options'} =~ s/(<option\s*)(value\s*=\s*\"?$value|.*>$value)/$1 selected $2/i;
     } elsif ( $field->{'type'} =~ /^checkbox$/i ) {
       $field->{'checked'} = 0;
       $field->{'checked'} = 1 if $value;
@@ -211,12 +211,12 @@ sub set_fields_default {
   foreach my $field ( @{ $vars->{'fields'} } ) {
     
     my $value = $field->{'value'};
-    
+  
     if ( $field->{'type'} =~ /^button$/i ) {
       # el mismo que tenia, no cambia
     } elsif ( $field->{'type'} =~ /^select$/i ) { 
-      $field->{'options'} =~ s/(<option.+?)selected(.+?>)/$1$2/i;
-      $field->{'options'} =~ s/(<option)(.*>\s*$value)/$1 selected $2/i;
+      $field->{'options'} =~ s/(<option.+?)selected\s*=\s*\"?selected\"?\s*|selected\s*(.+?>)/$1$2/gi;
+      $field->{'options'} =~ s/(<option\s*)(value\s*=\s*\"?$value|.*>$value)/$1 selected $2/i;
     } elsif ( $field->{'type'} =~ /^checkbox$/i ) {
       my $value = $field->{'checked'};
       $field->{'checked'} = 0;
@@ -273,6 +273,10 @@ sub set_fields_error {
         } elsif ( $field->{'type'} =~ /^checkbox$/i ) {
           $field->{'checked'} = 0;
           $field->{'checked'} = 1 if $data{$field->{'name'}};
+        } elsif ( $field->{'type'} =~ /^select$/i ) {
+          $field->{'value'} = $data{$field->{'name'}};
+          $field->{'options'} =~ s/(<option.+?)selected\s*=\s*\"?selected\"?\s*|selected\s*(.+?>)/$1$2/gi;
+          $field->{'options'} =~ s/(<option\s*)(value\s*=\s*\"?$data{$field->{'name'}}|.*>$data{$field->{'name'}})/$1 selected $2/i;
         } else {
           $field->{'value'} = $data{$field->{'name'}};
         }
