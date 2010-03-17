@@ -9,9 +9,11 @@ AddHandler perl-nes .nhtml
 AddHandler perl-nes .nhtm
 
 ## uncomment for ModPerl2 and Apache Prefork:
-#SetHandler perl-script
-#PerlHandler ModPerl::RegistryPrefork
-#PerlOptions +ParseHeaders
+#<Files ~ "\.(pl|cgi)$">
+#    SetHandler perl-script
+#    PerlHandler ModPerl::RegistryPrefork
+#    PerlOptions +ParseHeaders
+#</Files>
   
 # nes dispatcher
 Action perl-nes /cgi-bin/nes/dispatch.cgi
