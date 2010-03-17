@@ -111,8 +111,9 @@
         my $line = $_;
         next if $line =~ /^#/;
         next if $line =~ /^$/;
-        my ( $key, $value ) = split( /\s*=\s*/, $line, 2 );
-        my ( $eval ) = $key =~ s/[\@\%\$]$//;
+        my ( $key, $value ) = split( /=\s*/, $line, 2 );
+        $key =~ s/\s*(\@|\%|\$)?$//;
+        my $eval = $1 || 0;
         $value =~ s/\s*$//;
 
         # impide que se reescriba 'set';
@@ -129,7 +130,7 @@
             $eval = '$' if ref( $self->{$key} ) eq 'SCALAR';
             @{ $self->{$key} } = eval { $value } if $eval eq '@';
             %{ $self->{$key} } = eval { $value } if $eval eq '%';
-            $self->{$key}      = eval { $value } if $eval eq '$';
+            $self->{$key}      = eval  "$value"  if $eval eq '$';
           } elsif ( ref( $self->{$key} ) eq 'ARRAY' ) {
             @{ $self->{$key} } = split( /,/, $value );
           } else {

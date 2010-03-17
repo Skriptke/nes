@@ -37,64 +37,64 @@ package multi_step;
     
     my $nes = Nes::Singleton->new();
     my $cfg = $nes->{'CFG'};
-
-    $self->{'script_handler'}    = '';
-    $self->{'function_handler'}  = '';
-    $self->{'script_NES'}        = '';
-
-    $self->{'referer'}           = '';
-    $self->{'private_key'}       = '';
-    $self->{'show_captcha'}      = 1;
-    $self->{'table_width'}       = '95%';
-    $self->{'submit_begin'}      = '<center>';
-    $self->{'submit_end'}        = '</center>';
-    $self->{'span_error'}        = '&nbsp;';
-    $self->{'form_expire'}       = '15m';
-    $self->{'form_name'}         = 'multi_sf';
-    $self->{'captcha_name'}      = 'multi_sc';
-    $self->{'captcha_end'}       = '<br><br>';
-    $self->{'captcha_begin'}     = '';
-    $self->{'captcha_type'}      = 'ascii';
-    $self->{'captcha_digits'}    = 5;
-    $self->{'captcha_size'}      = 2;
-    $self->{'captcha_noise'}     = 3;
-    $self->{'captcha_sig'}       = '';
-    $self->{'captcha_spc'}       = ' ';
-    $self->{'captcha_expire'}    = '1m';
-    $self->{'captcha_atempts'}   = '5/10';
-    $self->{'captcha_tag_start'} = $cfg->{'multi_step_captcha_tag_start'} 
-                                || '<pre style="font-size:2px; line-height:1.0;">';
-    $self->{'captcha_tag_start'} = '' if $self->{'captcha_size'} ne 'none';
-    $self->{'captcha_tag_end'}   = $cfg->{'multi_step_captcha_tag_end'} 
-                                || '<br></pre>';
-    $self->{'captcha_tag_end'}   = '' if $self->{'captcha_size'} ne 'none';
-    $self->{'out_page'}          = 'http://'.$ENV{'SERVER_NAME'}.$ENV{'REQUEST_URI'};
-    $self->{'msg_legend'}        = $cfg->{'multi_step_msg_legend'} 
-                                || '';
-    $self->{'msg_submit'}        = $cfg->{'multi_step_msg_submit'} 
-                                || 'Enter';
-    $self->{'msg_captcha'}       = $cfg->{'multi_step_msg_captcha'} 
-                                || 'Security code';
-    $self->{'txt_captcha'}       = $cfg->{'multi_step_txt_captcha'} 
-                                || '<center>Finally, enter the security code below.</center><br>';
-    $self->{'msg_error_captcha'} = $cfg->{'multi_step_msg_error_captcha'} 
-                                || '<img src="'.$cfg->{'img_dir'}.'/error.gif">';
-    $self->{'msg_error_form'}   = $cfg->{'multi_step_msg_error_form'} 
-                                || '<center>The following fields are invalid:</center><br>';                                
-    $self->{'id_form'}           = '';
-    $self->{'class_form'}        = '';
-    $self->{'action_form'}       = '';
-    $self->{'tpl_errors'}        = 'multi_step_errors.nhtml';
-    $self->{'tpl_options'}       = '';
-    $self->{'msg_error_fields'}  = $cfg->{'multi_step_msg_error_fields'} 
-                                || '<img src="'.$cfg->{'img_dir'}.'/error.gif">';
-                                
-
+    
     my $data    = '('.$nes->{'query'}->{'q'}{'multi_step_param_1'}.')';
     my %param   = eval "$data";
     foreach my $this (keys %param) {
       $self->{$this} = $param{$this};
-    }    
+    }        
+
+    $self->{'script_handler'}    ||= '';
+    $self->{'function_handler'}  ||= '';
+    $self->{'script_NES'}        ||= '';
+
+    $self->{'referer'}           ||= '';
+    $self->{'private_key'}       ||= '';
+    $self->{'show_captcha'}      ||= 1;
+    $self->{'table_width'}       ||= '95%';
+    $self->{'submit_begin'}      ||= '<center>';
+    $self->{'submit_end'}        ||= '</center>';
+    $self->{'span_error'}        ||= '&nbsp;';
+    $self->{'form_expire'}       ||= '15m';
+    $self->{'form_name'}         ||= 'multi_sf';
+    $self->{'captcha_name'}      ||= 'multi_sc';
+    $self->{'captcha_end'}       ||= '<br><br>';
+    $self->{'captcha_begin'}     ||= '';
+    $self->{'captcha_type'}      ||= 'ascii';
+    $self->{'captcha_digits'}    ||= 5;
+    $self->{'captcha_size'}      ||= 2;
+    $self->{'captcha_noise'}     ||= 3;
+    $self->{'captcha_sig'}       ||= '';
+    $self->{'captcha_spc'}       ||= ' ';
+    $self->{'captcha_expire'}    ||= '1m';
+    $self->{'captcha_atempts'}   ||= '5/10';
+    $self->{'captcha_tag_start'} ||= $cfg->{$self->{'form_name'}.'_multi_step_captcha_tag_start'} 
+                                 || '<pre style="font-size:2px; line-height:1.0;">';
+    $self->{'captcha_tag_start'} ||= '' if $self->{'captcha_size'} ne 'none';
+    $self->{'captcha_tag_end'}   ||= $cfg->{$self->{'form_name'}.'_multi_step_captcha_tag_end'} 
+                                 || '<br></pre>';
+    $self->{'captcha_tag_end'}   ||= '' if $self->{'captcha_size'} ne 'none';
+    $self->{'out_page'}          ||= 'http://'.$ENV{'SERVER_NAME'}.$ENV{'REQUEST_URI'};
+    $self->{'msg_legend'}        ||= $cfg->{$self->{'form_name'}.'_multi_step_msg_legend'} 
+                                 || '';
+    $self->{'msg_submit'}        ||= $cfg->{$self->{'form_name'}.'_multi_step_msg_submit'} 
+                                 || 'Enter';
+    $self->{'msg_captcha'}       ||= $cfg->{$self->{'form_name'}.'_multi_step_msg_captcha'} 
+                                 || 'Security code';
+    $self->{'txt_captcha'}       ||= $cfg->{$self->{'form_name'}.'_multi_step_txt_captcha'} 
+                                 || '<center>Finally, enter the security code below.</center><br>';
+    $self->{'msg_error_captcha'} ||= $cfg->{$self->{'form_name'}.'_multi_step_msg_error_captcha'} 
+                                 || '<img src="'.$cfg->{'img_dir'}.'/error.gif">';
+    $self->{'msg_error_form'}    ||= $cfg->{$self->{'form_name'}.'_multi_step_msg_error_form'} 
+                                 || '<center>The following fields are invalid:</center><br>';                                
+    $self->{'id_form'}           ||= '';
+    $self->{'class_form'}        ||= '';
+    $self->{'action_form'}       ||= '';
+    $self->{'tpl_errors'}        ||= 'multi_step_errors.nhtml';
+    $self->{'tpl_options'}       ||= '';
+    $self->{'msg_error_fields'}  ||= $cfg->{$self->{'form_name'}.'_multi_step_msg_error_fields'} 
+                                 || '<img src="'.$cfg->{'img_dir'}.'/error.gif">';
+                                
     
     return $self;
   } 
