@@ -40,10 +40,10 @@
             if ( field.type == 'radio' ) {
                 allr = document.getElementsByName(field.name+"_span");
                 for (var n=0; n < allr.length; n++) {
-                    allr[n].innerHTML = ' ';
+                    allr[n].innerHTML = '';
                 }
             } else {
-               document.getElementById(id).innerHTML = ' ';
+               document.getElementById(id).innerHTML = '';
             }
         }
       };
@@ -77,7 +77,8 @@
                 <tr>
                     <td colspan="2">
                         {: $ submit_begin,yes_html :}
-                        <input type="submit" name="_{: $ form_name :}_send"  value="{: $ msg_submit :}" />
+                        <input type="submit" name="_{: $ form_name :}_send"  value="{: $ msg_submit :}">
+                        <input type="hidden" name="_{: $ form_name :}_send"  value="{: $ msg_submit :}"> {: # IE no envia algunas veces el valor de los botones submit :}
                         {: $ submit_end,yes_html :}
                         <input type="hidden" name="_{: $ form_name :}_ip"    value="{: * nes_remote_ip :}">
                         <input type="hidden" name="_{: $ form_name :}_autho" value="{: $ autho :}">{: ~ ( $fields_err )

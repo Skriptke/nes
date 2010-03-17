@@ -50,7 +50,7 @@ package multi_step;
 
     $self->{'referer'}           ||= '';
     $self->{'private_key'}       ||= '';
-    $self->{'show_captcha'}      ||= 1;
+    $self->{'show_captcha'}        = 1 if !exists $self->{'show_captcha'};
     $self->{'table_width'}       ||= '95%';
     $self->{'submit_begin'}      ||= '<center>';
     $self->{'submit_end'}        ||= '</center>';
@@ -63,7 +63,7 @@ package multi_step;
     $self->{'captcha_type'}      ||= 'ascii';
     $self->{'captcha_digits'}    ||= 5;
     $self->{'captcha_size'}      ||= 2;
-    $self->{'captcha_noise'}     ||= 3;
+    $self->{'captcha_noise'}       = 3 if !exists $self->{'captcha_noise'};
     $self->{'captcha_sig'}       ||= '';
     $self->{'captcha_spc'}       ||= ' ';
     $self->{'captcha_expire'}    ||= '1m';

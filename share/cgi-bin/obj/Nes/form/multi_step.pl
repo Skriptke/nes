@@ -17,7 +17,7 @@
 # 
 #  Version 1.03
 #
-#  DOCUMENTATION:
+#  Documentation:
 #  perldoc Nes::Obj::multi_step  
 #
 # -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ set_this_step();
 set_fields_default();
 
 if ( $send ) {
-  
+
   if ( $error_referer ) {
     $vars->{'form_error_fatal'} = 1;
     $nes->add(%$vars);
@@ -95,6 +95,7 @@ if ( $fields_is_ok ) {
     
     if ( !$vars->{'form_error_fatal'} && !$vars->{'error_handler'} ) {
       $nes->{'container'}->{'content_obj'}->location( $vars->{'out_page'}, "302 Found" ) if $vars->{'out_page'};
+     
     }    
     
   } else {
@@ -355,6 +356,7 @@ sub check_autho {
   return 0;
 }
 
+# todo, comprobar que la expresión regular no pueda contener código perl.
 sub check {
   my ($field,$value) = @_;
 
