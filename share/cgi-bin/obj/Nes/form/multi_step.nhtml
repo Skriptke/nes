@@ -40,10 +40,10 @@
             if ( field.type == 'radio' ) {
                 allr = document.getElementsByName(field.name+"_span");
                 for (var n=0; n < allr.length; n++) {
-                    allr[n].innerHTML = '';
+                    allr[n].innerHTML = ' ';
                 }
             } else {
-               document.getElementById(id).innerHTML = '';
+               document.getElementById(id).innerHTML = ' ';
             }
         }
       };
@@ -52,14 +52,14 @@
         <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend :}</legend> :}
             <table {:~($ table_width)width="{: $ table_width :}" :}border="0">{: ~ ($error_fields && !$last_step) <tr><td colspan="2">{: $ msg_error_form,yes_html :}</td></tr> :}
                 {: @ (fields)<tr>{: ~ ( '{: @$ fields.begin :}' )<tr><td colspan="2">{: @$ fields.begin,yes_html :}</td></tr>  :}
-                    <td valign="top" align="right">{: @$ fields.msg,yes_html :}:</td>
+                    <td valign="top" align="right">{: @$ fields.msg,yes_html :}</td>
                     <td valign="top" align="left">{: ~ ( '{: @$ fields.type :}' ne 'select' && '{: @$ fields.type :}' ne 'textarea' ) 
                         <input onChange="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} type="{: @$ fields.type :}" size="{: @$ fields.size :}" name="{: $ form_name :}_{: @$ fields.name :}" {: ~ ( '{: @$ fields.checked :}' )checked="checked":} value="{: @$ (fields.value,'{: @$ fields.filter :}') :}" />
                         :}{: ~ ( '{: @$ fields.type :}' eq 'select' )
                         <select onChange="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} name="{: $ form_name :}_{: @$ fields.name :}">{: @$ (fields.options,'yes_html') :}</select>
                         :}{: ~ ( '{: @$ fields.type :}' eq 'textarea' )
                         <textarea onChange="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} name="{: $ form_name :}_{: @$ fields.name :}" cols="{: @$ fields.cols :}" rows="{: @$ fields.rows :}">{: @$ (fields.value,'{: @$ fields.filter :}') :}</textarea>
-                        :}<span name="{: $ form_name :}_{: @$ fields.name :}_span" id="{: $ form_name :}_{: @$ fields.js_id :}_error">{: @$ fields.error,yes_html :}&nbsp;</span>   
+                        :}<span name="{: $ form_name :}_{: @$ fields.name :}_span" id="{: $ form_name :}_{: @$ fields.js_id :}_error">{: @$ fields.error,yes_html :}{: $ span_error :}</span>   
                     {: ~ ( '{: @$ fields.end :}' ) <tr><td colspan="2">{: @$ fields.end,yes_html :}</td></tr> :}</td>
                 </tr>:}
                 {: ~ ($last_step && $show_captcha) {: & captcha ('{: $ captcha_name :}','{: $ captcha_type :}','{: $ captcha_digits :}','{: $ captcha_noise :}','{: $ captcha_size :}','{: $ captcha_sig :}','{: $ captcha_spc :}','{: $ captcha_expire :}','{: $ captcha_atempts :}')
@@ -67,16 +67,18 @@
                     <tr><td colspan="2">{: $ txt_captcha,yes_html :}</td></tr>
                     <td align="right">{: $ captcha_tag_start,yes_html :}{: & captcha_code :}{: $ captcha_tag_end,yes_html :}</td>
                     <td align="left">
-                        &nbsp;{: $ msg_captcha :}:<br>
+                        {: $ captcha_begin,yes_html :}
+                        &nbsp;{: $ msg_captcha :}<br>
                         &nbsp;<input type="text" name="{: $ captcha_name :}" size="{: $ captcha_digits :}" />
                         {: ~ $captcha_error {: $ msg_error_captcha,yes_html :} :}
+                        {: $ captcha_end,yes_html :}
                     </td>
                 </tr>:} :}
                 <tr>
-                    <td align="right">
-                    </td>
-                    <td align="left">
+                    <td colspan="2">
+                        {: $ submit_begin,yes_html :}
                         <input type="submit" name="_{: $ form_name :}_send"  value="{: $ msg_submit :}" />
+                        {: $ submit_end,yes_html :}
                         <input type="hidden" name="_{: $ form_name :}_ip"    value="{: * nes_remote_ip :}">
                         <input type="hidden" name="_{: $ form_name :}_autho" value="{: $ autho :}">{: ~ ( $fields_err )
                         <input type="hidden" name="_{: $ form_name :}_err"   value="{: $ fields_err :}">:}

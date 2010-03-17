@@ -1,2 +1,1 @@
-AddHandler server-parsed .gif .GIF .jpeg .jpg .jpe .JPG .png .PNG
-
+Options -ExecCGI

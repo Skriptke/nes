@@ -52,7 +52,7 @@ my $last            = $#{$vars->{'steps'}};
    $last           += 1 if $vars->{'show_captcha'};
 my $end_form        = $q_step > $last && $captcha_ok;
 my $fields_is_ok    = 0;
-warn "** cero_Ciudad:$nes->{'query'}->{'q'}{'cero_Ciudad'}";
+
 set_this_step();
 set_fields_default();
 
