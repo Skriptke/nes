@@ -1,5 +1,6 @@
 Revision history for Nes
 
+        fix cfg perl syntax in the value 
         added share/cgi-bin/images
         added multi_step object.
         Nes support for double quotes on parameters

@@ -369,7 +369,7 @@ sub check {
     $field_error .= 'max, ' if length($value) > $max;
   }
   if ( $regex =~ /^\/(.*)\/(.*)$/ ) {
-    $regex = "(?x$2)$1";
+    $regex = "(?$2)$1";
     if ($value) {  # sólo da error si el campo no esta vacío, podía ser opcional
       $field_error .= 'regular expression' if $value !~ /$regex/;
     }
