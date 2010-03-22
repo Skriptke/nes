@@ -72,6 +72,4 @@ You can insert SQL SELECT statements in your templates directly.
 Nes provides configuration files to the style .htaccess you can also use for your script.
 </p> 
 
-<p>
-    
-</p>
+
