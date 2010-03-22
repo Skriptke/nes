@@ -14,7 +14,7 @@ Nes dispone de <b><a href="./?action=item&item=Nes Tags">únicamente diez Tags</
 incluir en el HTML, y <b><a href="./?action=item&item=La clase Singleton">un sólo objeto</a></b>
 con <b><a href="./?action=item&item=La clase Singleton">un único método</a></b> que instanciar 
 en Perl. Podrás empezar a trabajar con Nes en horas, y no en semanas o meses 
-como en otros sitemas.
+como en otros sistemas.
 </p> 
 
 <h3>Seguridad</h3>
