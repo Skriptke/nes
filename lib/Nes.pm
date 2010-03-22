@@ -21,7 +21,7 @@
 # -----------------------------------------------------------------------------
 
 use strict;
-use warnings;
+#use warnings;
 
 # cgi environment no defined in command line
 no warnings 'uninitialized';
@@ -225,7 +225,6 @@ use Nes::Singleton;
   package nes_register;
   use vars qw(@ISA);
   @ISA = qw( Nes );
-  
 
   sub new {
     my $class = shift;
@@ -363,8 +362,7 @@ warn "$self->{'obj'}{'handler'}{$class}{$name_handler}";
 
     return;
   } 
-  
- 
+
 }
 
 
@@ -1189,6 +1187,7 @@ warn "$self->{'obj'}{'handler'}{$class}{$name_handler}";
     $self->{'Content-type'} = "Content-type: text/html";
     $self->{'HTTP-status'}  = "200 Ok";
     $self->{'X-Powered-By'} = "Nes/$VERSION";
+    $self->{'TAG_HTTP-headers'} = '';
     
     return $self;
   }
@@ -1201,6 +1200,9 @@ warn "$self->{'obj'}{'handler'}{$class}{$name_handler}";
     foreach my $tag ( keys %tags ) {
       $self->{'tags'}{$tag} = $tags{$tag};
     }
+    
+    $self->{'TAG_HTTP-headers'} = $self->{'tags'}{'HTTP-headers'};
+    $self->{'tags'}{'HTTP-headers'} = undef;
 
     return;
   }
@@ -1213,6 +1215,9 @@ warn "$self->{'obj'}{'handler'}{$class}{$name_handler}";
     foreach my $tag ( keys %tags ) {
       $self->{'tags'}{$tag} = $tags{$tag};
     }
+    
+    $self->{'TAG_HTTP-headers'} = $self->{'tags'}{'HTTP-headers'};
+    $self->{'tags'}{'HTTP-headers'} = undef;    
 
     return;
   }
@@ -1339,11 +1344,11 @@ warn "$self->{'obj'}{'handler'}{$class}{$name_handler}";
   
   sub out {
     my $self  = shift;
-    
+   
     print $self->{'cookies'}->out;
     print "X-Powered-By: $self->{'X-Powered-By'}\n";
 #    print "Status: $self->{'HTTP-status'}\n" if !$self->{'tags'}{'HTTP-headers'};
-    print $self->{'Content-type'}."\n\n" if !$self->{'tags'}{'HTTP-headers'};
+    print $self->{'TAG_HTTP-headers'} || $self->{'Content-type'}."\n\n";
     print $self->{'out'};
 
   }
@@ -1645,7 +1650,7 @@ warn "$self->{'obj'}{'handler'}{$class}{$name_handler}";
     print $self->{'cookies'}->out;
     print "X-Powered-By: $self->{'X-Powered-By'}\n";
 #    print "Status: $self->{'HTTP-status'}\n" if !$self->{'tags'}{'HTTP-headers'};
-    print $self->{'HTTP-headers'}."\n\n" if !$self->{'tags'}{'HTTP-headers'};
+    print $self->{'TAG_HTTP-headers'} || $self->{'Content-type'}."\n\n";
     print $self->{'out'};
 
   }

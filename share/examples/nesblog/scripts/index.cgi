@@ -30,6 +30,11 @@ my $item      = $q->{'item'};
 my $source    = $q->{'source'};
 my $nes_tags  = {};
 
+$nes_tags->{'HTTP-headers'}  = "Cache-control: max-age=0\n";
+$nes_tags->{'HTTP-headers'} .= "Cache-control: no-cache\n";
+$nes_tags->{'HTTP-headers'} .= "Expires: Mon, 1 Jan 1900 00:00:00 GMT\n";
+$nes_tags->{'HTTP-headers'} .= "Content-type: text/html; charset=utf-8\n\n";
+
 $nes_tags->{'item_name'}        = $item;
 $nes_tags->{'title'}            = 'Sample to use Nes; A powerful template system in Perl.';
 $nes_tags->{'header'}           = 'header.nhtml';
