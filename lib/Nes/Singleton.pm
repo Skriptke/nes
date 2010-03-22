@@ -57,7 +57,8 @@
     $self->{'container'}     = nes_container->get_obj();
     $self->{'cookies'}       = nes_cookie->get_obj();
     $self->{'session'}       = nes_session->get_obj();
-    $self->{'query'}         = nes_query->get_obj();      
+    $self->{'query'}         = nes_query->get_obj();
+    $self->{'register'}      = nes_register->get_obj();
     $self->{'nes'}           = $self->{'top_container'}->{'nes'};
     $self->{'this_template_name'} = $self->{'container'}->{'file_name'};
     $self->{'top_template_name'}  = $self->{'top_container'}->{'file'};

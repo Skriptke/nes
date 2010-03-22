@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
+#  Copyright 2009 - 2010 Enrique Castañón 
 #  Licensed under the GNU GPL.
 #
 #  CPAN:
@@ -15,7 +15,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.00
+#  Version 1.03
 #
 #  DB.pm
 #
@@ -76,8 +76,8 @@
 
     eval {
       $self->{'dbh'}->disconnect;
-      $self->{'errstr'} = $DBI::errstr;
-      $self->{'error'}  = $DBI::errstr;
+#      $self->{'errstr'} = $DBI::errstr;
+      $self->{'error'}  .= $DBI::errstr;
     };  
 
     $self->{'dbh'} = 0;
@@ -121,16 +121,14 @@
       $self->{'filas'} = $sth->execute();
       $self->{'rows'} = $self->{'dbh'}->rows;
       $self->{'errstr'} = $self->{'dbh'}->errstr;
-    };      
+    };   
+    
     return if $DBI::errstr;
-  
     while( $resultado = $sth->fetchrow_hashref ) {
       push(@encontrados, $resultado);
     }
-  
-    $sth->finish();
-    
-    $self->close();
+    $sth->finish(); 
+    $self->close();    
     
     return @encontrados;
   }
@@ -149,15 +147,15 @@
       $self->{'filas'} = $sth->execute();
       $self->{'rows'} = $self->{'dbh'}->rows;
       $self->{'errstr'} = $self->{'dbh'}->errstr;
-    };      
+    };
+
     return if $DBI::errstr;
-  
+
     while( $resultado = $sth->fetchrow_hashref ) {
       push(@encontrados, $resultado);
     }
-  
     $sth->finish();
-    
+
     return @encontrados;
   }
   

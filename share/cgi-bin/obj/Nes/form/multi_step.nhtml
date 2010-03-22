@@ -1,9 +1,9 @@
-{: NES 1.0 ('multi_step_captcha.pl','multi_step.pl','{: $ exec_script_NES :}') :}
+{: NES 1.0 ('multi_step.pl','{: $ exec_script_NES :}') :}
 {: #
   -----------------------------------------------------------------------------
     
   Nes 1.03 by Skriptke
-  Copyright 2009 - 2010 Enrique Castañon
+  Copyright 2009 - 2010 Enrique Castanon
   Licensed under the GNU GPL.
 
   Sample:
@@ -19,8 +19,9 @@
   perldoc Nes::Obj::multi_step
  
   -----------------------------------------------------------------------------
-:}{: ~ ( !$captcha_error_fatal && !$captcha_ok && !$form_error_fatal || $error_handler )
+:}{: ~ ( !$captcha_error_fatal && !$captcha_ok && !$form_error_fatal && !$error_data && !$ok_data || $error_handler )
     <script type="text/javascript">
+      submit = 0;
       {: $ form_name :}_fields = {};
       {: @ (fields)
       {: $ form_name :}_fields["{: $ form_name :}_{: @$ fields.name :}"] = {};
@@ -29,7 +30,9 @@
       {: $ form_name :}_fields["{: $ form_name :}_{: @$ fields.name :}"]["max"]       = {: @$ fields.js_max :};
       {: $ form_name :}_fields["{: $ form_name :}_{: @$ fields.name :}"]["msg_error"] = '{: @$ fields.js_msg_error,yes_html :}';
       :}
+      function set_submit(set) { submit = set; }
       function {: $ form_name :}_validate(field,id) {
+        if ( submit ) { return; }
         error = 0;
         if ( field.value.length > {: $ form_name :}_fields[field.name]["max"] )  { error = 1; }
         if ( field.value.length < {: $ form_name :}_fields[field.name]["min"] )  { error = 1; }
@@ -46,38 +49,28 @@
                document.getElementById(id).innerHTML = '';
             }
         }
-      };
+      }
     </script>
     <form name="{: $ form_name :}" {: ~ ($ id_form)id="{: $ id_form :}" :}class="{: $ class_form :}" action="{: $ action_form :}" method="POST">
         <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend :}</legend> :}
+            {: ~ ( $ tpl_options_begin ) {: include ('{: $ tpl_options_begin :}')  :}  :}
             <table {:~($ table_width)width="{: $ table_width :}" :}border="0">{: ~ ($error_fields && !$last_step) <tr><td colspan="2">{: $ msg_error_form,yes_html :}</td></tr> :}
                 {: @ (fields)<tr>{: ~ ( '{: @$ fields.begin :}' )<tr><td colspan="2">{: @$ fields.begin,yes_html :}</td></tr>  :}
                     <td valign="top" align="right">{: @$ fields.msg,yes_html :}</td>
                     <td valign="top" align="left">{: ~ ( '{: @$ fields.type :}' ne 'select' && '{: @$ fields.type :}' ne 'textarea' ) 
-                        <input onChange="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} type="{: @$ fields.type :}" size="{: @$ fields.size :}" name="{: $ form_name :}_{: @$ fields.name :}" {: ~ ( '{: @$ fields.checked :}' )checked="checked":} value="{: @$ (fields.value,'{: @$ fields.filter :}') :}" />
+                        <input onChange="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} type="{: @$ fields.type :}" size="{: @$ fields.size :}" name="{: $ form_name :}_{: @$ fields.name :}" {: ~ ( '{: @$ fields.checked :}' )checked="checked":} value="{: @$ fields.value :}" />
                         :}{: ~ ( '{: @$ fields.type :}' eq 'select' )
                         <select onChange="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} name="{: $ form_name :}_{: @$ fields.name :}">{: @$ (fields.options,'yes_html') :}</select>
                         :}{: ~ ( '{: @$ fields.type :}' eq 'textarea' )
-                        <textarea onChange="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} name="{: $ form_name :}_{: @$ fields.name :}" cols="{: @$ fields.cols :}" rows="{: @$ fields.rows :}">{: @$ (fields.value,'{: @$ fields.filter :}') :}</textarea>
-                        :}<span name="{: $ form_name :}_{: @$ fields.name :}_span" id="{: $ form_name :}_{: @$ fields.js_id :}_error">{: @$ fields.error,yes_html :}{: $ span_error :}</span>   
+                        <textarea onChange="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} name="{: $ form_name :}_{: @$ fields.name :}" cols="{: @$ fields.cols :}" rows="{: @$ fields.rows :}">{: @$ fields.value :}</textarea>
+                        :}{: ~ ( '{: @$ fields.type :}' !~ /^hidden$/i )<span name="{: $ form_name :}_{: @$ fields.name :}_span" id="{: $ form_name :}_{: @$ fields.js_id :}_error">{: @$ fields.error,yes_html :}{: $ span_error :}</span>:} 
                     {: ~ ( '{: @$ fields.end :}' ) <tr><td colspan="2">{: @$ fields.end,yes_html :}</td></tr> :}</td>
                 </tr>:}
-                {: ~ ($last_step && $show_captcha) {: & captcha ('{: $ captcha_name :}','{: $ captcha_type :}','{: $ captcha_digits :}','{: $ captcha_noise :}','{: $ captcha_size :}','{: $ captcha_sig :}','{: $ captcha_spc :}','{: $ captcha_expire :}','{: $ captcha_atempts :}')
-                <tr>
-                    <tr><td colspan="2">{: $ txt_captcha,yes_html :}</td></tr>
-                    <td align="right">{: $ captcha_tag_start,yes_html :}{: & captcha_code :}{: $ captcha_tag_end,yes_html :}</td>
-                    <td align="left">
-                        {: $ captcha_begin,yes_html :}
-                        &nbsp;{: $ msg_captcha :}<br>
-                        &nbsp;<input type="text" name="{: $ captcha_name :}" size="{: $ captcha_digits :}" />
-                        {: ~ $captcha_error {: $ msg_error_captcha,yes_html :} :}
-                        {: $ captcha_end,yes_html :}
-                    </td>
-                </tr>:} :}
+                {: ~ ($last_step && $show_captcha) {: include ('multi_step_captcha.nhtml') :}  :}
                 <tr>
                     <td colspan="2">
                         {: $ submit_begin,yes_html :}
-                        <input type="submit" name="_{: $ form_name :}_send"  value="{: $ msg_submit :}">
+                        <input type="submit" name="_{: $ form_name :}_send"  value="{: $ msg_submit :}" onMouseDown="set_submit(1);">
                         <input type="hidden" name="_{: $ form_name :}_send"  value="{: $ msg_submit :}"> {: # IE no envia algunas veces el valor de los botones submit :}
                         {: $ submit_end,yes_html :}
                         <input type="hidden" name="_{: $ form_name :}_ip"    value="{: * nes_remote_ip :}">
@@ -88,7 +81,8 @@
                     </td>
                 </tr>
             </table>
-            {: ~ ( $ tpl_options ) {: include ('{: $ tpl_options :}')  :}  :}
+            {: ~ ( $ tpl_options_end ) {: include ('{: $ tpl_options_end :}')  :}  :}
         </fieldset>
     </form>
 :} {: ~ ( $captcha_error_fatal || $form_error_fatal ) {: include ('{: $ tpl_errors :}') :} :}
+{: ~  $error_data {: $ msg_error_data,yes_html :} :}{: ~  $ok_data    {: $ msg_ok_data,yes_html  :} :}

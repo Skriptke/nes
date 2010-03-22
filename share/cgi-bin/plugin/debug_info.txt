@@ -27,7 +27,7 @@ Scripts......: [{: $ scripts :}]
  Nes Environment
 =================
 {: @ (env_nes) 
-{: @$ env_nes.key :} = [{: @$ env_nes.value :}] :}
+{: @$ env_nes.key :} = [{: @$ env_nes.value,no_br :}] :}
 {: ~ $top_template 
 ==========================================
  Top Template: {: $ object_no_path :}
@@ -44,13 +44,13 @@ Scripts......: [{: $ scripts :}]
        Nes .nes.cfg variables
 ==========================================
 {: @ (cfg) 
-{: @$ cfg.key :} = [{: @$ cfg.value :}] :}
+{: @$ cfg.key :} = [{: @$ cfg.value,no_br :}] :}
 
 ==========================================
       CGI environment variables
 ==========================================
 {: @ (env_cgi) 
-{: @$ env_cgi.key :} = [{: @$ env_cgi.value :}] :}
+{: @$ env_cgi.key :} = [{: @$ env_cgi.value,no_br :}] :}
 :}
 </pre>
 {: # $ dumper_tags :}

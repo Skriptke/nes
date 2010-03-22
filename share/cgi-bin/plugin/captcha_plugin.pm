@@ -25,6 +25,36 @@ package captcha_plugin;
 
 use strict;
 
+my $captcha;
+my $captcha2;
+
+sub replace_captcha {
+  my ( $out, @param ) = @_;
+  my ( $name, $type, $digits, $noise, $size, $sig, $spc, $expire, $attempts ) = @param;
+
+  $type = 'ascii' if !$type;
+  $captcha = nes_captcha->new( $name, $type, $digits, $noise, $size, $sig, $spc, $expire, $attempts );
+  $captcha->create;
+
+  return $out;
+}
+
+sub replace_captcha_code {
+  my ( $out, @param ) = @_;
+
+  return $captcha->out();   
+}
+
+sub verify {
+  my ( $name, $type, $expire, $attempts ) = @_;
+
+  $captcha = nes_captcha->new( $name,$type,'','','','','', $expire, $attempts );
+  $captcha->verify();
+  $captcha->{'tmp'}->clear() if $captcha->{'is_ok'};
+     
+}
+
+
 {
 
   package nes_captcha_plugin;
@@ -80,6 +110,7 @@ use strict;
 
     $type = 'ascii' if !$type;
     $self->{'captcha'}{$name} = nes_captcha->new( $name, $type, $digits, $noise, $size, $sig, $spc, $expire, $attempts );
+    $self->{'captcha'}{$name}->create;
 
     my $captcha_code = $self->{'captcha'}{$name}->out();
     $out =~ s/$self->{'pre_start'}\s*$self->{'tag_plugin'}\s*$self->{'tag_captcha_out'}\s*(.+?)\s*$self->{'pre_end'}/$captcha_code/gi;
@@ -107,7 +138,14 @@ use strict;
     $self->{'cookie_name'} = 'cp_'.$name;
 
     $self->{'plugin'} = nes_plugin->get_obj('captcha_plugin');
-    $self->{'plugin'}->add_obj( $name, $self );
+
+    if ($self->{'plugin'} =~ /nes_plugin/) {
+      # antiguo método, obsoleto
+      $self->{'plugin'}->add_obj( $name, $self );
+    } else {
+      # nevo método
+      $self->{'plugin'} = $self->{'register'}->add_obj('captcha_plugin', $name, $self);
+    }
     
     $attempts = $self->{'CFG'}{'captcha_plugin_max_attempts'} if !$attempts;
     ($self->{'max_attempts'}, $self->{'max_time'})  = split ('/',$attempts);
@@ -122,15 +160,26 @@ use strict;
 
     $self->{'is_ok'} = 0;
     $self->load_captcha();  
-    $self->{'captcha'}->create();
-    $self->{'key_ok'} = $self->{'captcha'}->{'key_ok'};
-    $self->save_captcha();
+#    $self->{'captcha'}->create();
+#    $self->{'key_ok'} = $self->{'captcha'}->{'key_ok'};
+#    $self->save_captcha();
     
-    $self->{'tmp'}->save(time.':') if $self->{'captcha_start'} eq $self->{'captcha_name'};
+#    $self->{'tmp'}->save(time.':') if $self->{'captcha_start'} eq $self->{'captcha_name'};
     $self->get_attempts;
 
     return $self;
   }
+  
+  sub create {
+    my $self = shift;
+
+    $self->{'captcha'}->create();
+    $self->{'key_ok'} = $self->{'captcha'}->{'key_ok'};
+    $self->save_captcha();    
+    $self->{'tmp'}->save(time.':') if $self->{'captcha_start'} eq $self->{'captcha_name'};
+    $self->get_attempts;
+    
+  }  
   
   sub get_attempts {
     my $self = shift;

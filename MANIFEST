@@ -141,6 +141,8 @@ share/cgi-bin/plugin/debug_info.pm
 share/cgi-bin/plugin/captcha.pl
 share/cgi-bin/plugin/forms_plugin.pm
 share/cgi-bin/plugin/.forms_plugin.nes.cfg
+share/cgi-bin/plugin/register_captcha.pl
+share/cgi-bin/plugin/unregister_captcha.pl
 share/cgi-bin/obj/.htaccess
 share/cgi-bin/obj/lwp.nhtml
 share/cgi-bin/obj/date_time.pl
@@ -153,7 +155,7 @@ share/cgi-bin/obj/lwp_custom.nhtml
 share/cgi-bin/obj/location.pl
 share/cgi-bin/obj/location.nhtml
 share/cgi-bin/obj/session.nhtml
-share/cgi-bin/obj/Nes/form/multi_step_captcha.pl
+share/cgi-bin/obj/Nes/form/multi_step_captcha.nhtml
 share/cgi-bin/obj/Nes/form/multi_step_errors.nhtml
 share/cgi-bin/obj/Nes/form/multi_step.nhtml
 share/cgi-bin/obj/Nes/form/multi_step.pl

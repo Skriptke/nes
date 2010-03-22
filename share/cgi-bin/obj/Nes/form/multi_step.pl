@@ -38,12 +38,13 @@ my $q_autho    = $nes->{'query'}->{'q'}{'_'.$vars->{'form_name'}.'_autho'};
 my $key        = $vars->{'private_key'} || $nes->{'CFG'}{'private_key'};
 my %data;
 my $vars_error;
-my %return_fields_error;
+my $return_fields_error;
+$vars->{'latest'}       = $#{$vars->{'steps'}}+1+$vars->{'show_captcha'};
 $vars->{'show_captcha'} = 0 if $q_autho;
 $vars->{'autho'}        = $q_autho;
 
 my $error_referer   = $vars->{'referer'} && $ENV{'HTTP_REFERER'} !~ /$vars->{'referer'}/;
-my $captcha_ok      = $nes->{'container'}->get_tag('captcha_ok');
+my $captcha_ok      = check_captcha();
    $captcha_ok      = 1 if !$vars->{'show_captcha'};
 my $in_errors_step  = $q_err;
 my $in_captcha_step = 1 if defined $nes->{'query'}->{'q'}{$vars->{'captcha_name'}};
@@ -52,6 +53,7 @@ my $last            = $#{$vars->{'steps'}};
    $last           += 1 if $vars->{'show_captcha'};
 my $end_form        = $q_step > $last && $captcha_ok;
 my $fields_is_ok    = 0;
+
 
 set_this_step();
 set_fields_default();
@@ -79,7 +81,7 @@ if ( $fields_is_ok ) {
   if ( $end_form ) {  
 
     $vars->{'fields_err'}       = '';
-    %return_fields_error        = undef;
+    $return_fields_error        = undef;
     $vars->{'form_error_fatal'} = check_form();
 
     if ( !$vars->{'form_error_fatal'} ) {
@@ -91,6 +93,7 @@ if ( $fields_is_ok ) {
         $in_fields_step  = 0;
         go_next_step();
       }
+      to_database() if $vars->{'to_fields_assort'} && $vars->{'to_table'} && !$error;
     }
     
     if ( !$vars->{'form_error_fatal'} && !$vars->{'error_handler'} ) {
@@ -113,8 +116,16 @@ sub send_data {
   $vars->{'error_handler'} = 0;
   require "$vars->{'script_handler'}";
   no strict "refs";
-  %return_fields_error = &{$vars->{'function_handler'}}(\%data);
-  $vars->{'error_handler'} = 1 if %return_fields_error;  
+  $return_fields_error = &{$vars->{'function_handler'}}(\%data);
+  if ( ref $return_fields_error ne 'HASH' && $return_fields_error ) { 
+    $vars->{'form_error_fatal'} = 0;
+    $vars->{'error_data'}       = 1;
+    $vars->{'msg_error_data'}   = $return_fields_error if !$vars->{'msg_error_data'};
+    $nes->add(%$vars);
+    return 1;
+  }
+  $vars->{'error_handler'} = 1 if $return_fields_error;
+  $vars->{'ok_data'}       = 1 if !$return_fields_error;
   
   return $vars->{'error_handler'};
 }
@@ -147,6 +158,8 @@ sub go_next_step {
   
   } 
   js_regexp();
+  $vars->{'in_step'} = $vars->{'this_step'} + 1;
+  $vars->{'in_step'} = $vars->{'latest'} if $vars->{'in_step'} > $vars->{'latest'};
   
 }
 
@@ -178,6 +191,8 @@ sub set_this_step {
     
   }
   js_regexp();
+  $vars->{'in_step'} = $vars->{'this_step'} + 1;
+  $vars->{'in_step'} = $vars->{'latest'} if $vars->{'in_step'} > $vars->{'latest'};
   
 }
 
@@ -267,8 +282,8 @@ sub set_fields_error {
   $vars_error = undef;
   foreach my $step ( @{ $vars->{'steps'} } ) {
     foreach my $field ( @{ $step } ) {
-      if ( $return_fields_error{$field->{'name'}} ) {
-        $field->{'error'} = $field->{$return_fields_error{$field->{'name'}}};
+      if ( $return_fields_error->{$field->{'name'}} ) {
+        $field->{'error'} = $field->{$return_fields_error->{$field->{'name'}}};
         if ( $field->{'type'} =~ /^radio$/i ) {
           $field->{'value'} = $field->{'value'}; # el mismo.
         } elsif ( $field->{'type'} =~ /^checkbox$/i ) {
@@ -402,10 +417,18 @@ sub check_form {
   
   # volver a chequear todos los campos
   foreach my $step ( @{ $vars->{'steps'} } ) {
+
+    # chequear, ** los campos pueden crecer despues del filtro.
     foreach my $field ( @{ $step } ) {
       next if !$field->{'check'};
       return 4 if check($field, $data{$field->{'name'}});
     }
+    # filtrar
+    foreach my $field ( @{ $step } ) {
+      next if !$field->{'filter'};
+      $data{$field->{'name'}} = filter($data{$field->{'name'}},$field->{'filter'});
+    }    
+    
   }
   
   return 0;
@@ -459,8 +482,110 @@ sub js_regexp {
   
 }
 
+sub to_database {
+  my $data = shift;
 
+  use Nes::DB;
+  my $config    = $nes->{'CFG'};
+  my $db_name   = $config->{'DB_base'};
+  my $db_user   = $config->{'DB_user'};
+  my $db_pass   = $config->{'DB_pass'};
+  my $db_driver = $config->{'DB_driver'};
+  my $db_host   = $config->{'DB_host'};
+  my $db_port   = $config->{'DB_port'};
+  my $base      = Nes::DB->new( $db_name, $db_user, $db_pass, $db_driver, $db_host, $db_port );
+
+  my $values = '';
+  my $fields = '';
+  my $set    = '';
+  my $sql    = '';
   
+  if ( $vars->{'to_database'} =~ /^insert$/i ) {
+    foreach my $field ( keys %{ $vars->{'to_fields_assort'} } ) {
+      $fields .= qq~\`$field\`,~;
+      if ( $vars->{'to_fields_assort'}{$field} =~ /^:(.*)/ ) {
+        $values .= qq~$1,~;
+      } else {
+        $values .= qq~\'$data{$field}\',~;
+      }
+    }
+    $values =~ s/,$//;
+    $fields =~ s/,$//;      
+    
+    $sql = qq~INSERT INTO `$vars->{'to_table'}` 
+              ( $fields ) VALUES ( $values );~;
+  }
+  
+  if ( $vars->{'to_database'} =~ /^update$/i ) {
+    foreach my $field ( keys %{ $vars->{'to_fields_assort'} } ) {
+      if ( $vars->{'to_fields_assort'}{$field} =~ /^:(.*)/ ) {
+        $set .= qq~\`$field\`=\'$1\',~;
+      } else {
+        $set .= qq~\`$field\`=\'$data{$field}\',~;
+      }
+    }
+    $set =~ s/,$//;
+
+    $sql = qq~UPDATE `$vars->{'to_table'}` 
+              SET $set
+              WHERE $vars->{'to_where'}
+              LIMIT $vars->{'to_limit'};~;           
+  }  
+
+  my $result = $base->sen_no_select($sql);
+
+  if ( !$result ) { 
+    $vars->{'form_error_fatal'} = 0;
+    $vars->{'error_data'}       = 1;
+    $vars->{'msg_error_data'}   = $base->{'errstr'} if !$vars->{'msg_error_data'};
+    $nes->add(%$vars);
+    return 1;
+  } else {
+    $vars->{'ok_data'} = 1;
+  }
+
+  return;
+}
+
+sub filter {
+  my ($value, $filter) = @_;
+  my @security_options = split(',',$filter);
+  my %options;
+  my @yes_tag;
+
+  foreach my $key ( @security_options ) {
+    my $val = 1;
+    if ($key =~ /^yes_tag_(.*)/) {
+      push(@yes_tag, $1);
+      $options{'yes_br'} = 1 if $1 =~ /^br$/i;
+    } else {  
+      $options{$key} = $val;
+    }
+  }
+  push(@yes_tag, 'br')  if $options{'yes_br'};
+  $value =~ s/\n/<br>/g if $options{'yes_br'};
+
+  $value = utl::quote($value)               if $options{'no_sql'};
+  $value = utl::no_nes($value)              if $options{'no_nes'};
+  $value = utl::no_html( $value, @yes_tag ) if $options{'no_html'};
+
+  return $value;
+}
+
+sub check_captcha {
+  
+  return 1 if !($nes->{'query'}->{'q'}{'_'.$vars->{'form_name'}.'_step'} > $#{$vars->{'steps'}} && $vars->{'show_captcha'});
+
+  use captcha_plugin;
+
+  &captcha_plugin::verify($vars->{'captcha_name'}, $vars->{'captcha_type'}, $vars->{'captcha_expire'}, $vars->{'captcha_atempts'});
+  
+  $vars->{'captcha_error_fatal'} = 1 if $nes_env->{'nes_captcha_plugin_'.$vars->{'captcha_name'}.'_error_fatal'} =~ /1|3|4/;
+  $vars->{'captcha_error'}       = $nes_env->{'nes_captcha_plugin_'.$vars->{'captcha_name'}.'_error_fatal'};
+  $vars->{'captcha_ok'}          = $nes_env->{'nes_captcha_plugin_'.$vars->{'captcha_name'}.'_is_ok'};
+  
+  return $vars->{'captcha_ok'};
+}
 # don't forget to return a true value from the file
 1;
 

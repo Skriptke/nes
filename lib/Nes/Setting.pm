@@ -150,6 +150,9 @@
     $self->{'obj_dir'}        =~ s/[\/\\]$//;
     $self->{'plugin_top_dir'} =~ s/[\/\\]$//;
     $self->{'obj_top_dir'}    =~ s/[\/\\]$//;
+    $self->{'obj_form'}       =~ s/[\/\\]$//;
+
+    push( @INC, ( $self->{'plugin_top_dir'}, $self->{'obj_top_dir'}, $self->{'obj_form'} )  );
     
     return;
   }
