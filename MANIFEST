@@ -189,7 +189,6 @@ share/examples/nesblog/index.html
 share/examples/nesblog/.nes.cfg
 share/examples/nesblog/scripts/add_user.pl
 share/examples/nesblog/scripts/comments.cgi
-share/examples/nesblog/scripts/examples
 share/examples/nesblog/scripts/examples/archivo.txt
 share/examples/nesblog/scripts/examples/calendar.php
 share/examples/nesblog/scripts/examples/cal.sh
