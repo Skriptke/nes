@@ -586,7 +586,6 @@ sub check_captcha {
   
   return $vars->{'captcha_ok'};
 }
+
 # don't forget to return a true value from the file
 1;
-
-

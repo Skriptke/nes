@@ -1,5 +1,6 @@
 Revision history for Nes
 
+        completely rewritten nesblog sample
         new API for plugin 'register' 
         fix cfg perl syntax in the value 
         added share/cgi-bin/images
