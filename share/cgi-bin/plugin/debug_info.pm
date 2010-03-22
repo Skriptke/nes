@@ -143,7 +143,7 @@ use Nes;
     
     $object->{'cookies'} = $obj->{'cookies'}->out;
     $object->{'headers'} = $obj->{'content_obj'}->{'HTTP-headers'} || 
-                           $obj->{'content_obj'}->{'tags'}{'HTTP-headers'} || 
+                           $obj->{'content_obj'}->{'TAG_HTTP-headers'} || 
                            $obj->{'content_obj'}->{'Content-type'};
 
 

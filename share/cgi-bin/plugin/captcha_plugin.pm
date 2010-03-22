@@ -20,13 +20,12 @@
 #
 # -----------------------------------------------------------------------------
 
-
+# despues de tanto parche, esto hay que volver a escribirlo.
 package captcha_plugin;
 
 use strict;
 
 my $captcha;
-my $captcha2;
 
 sub replace_captcha {
   my ( $out, @param ) = @_;
@@ -142,11 +141,10 @@ sub verify {
     if ($self->{'plugin'} =~ /nes_plugin/) {
       # antiguo método, obsoleto
       $self->{'plugin'}->add_obj( $name, $self );
-    } else {
-      # nevo método
-      $self->{'plugin'} = $self->{'register'}->add_obj('captcha_plugin', $name, $self);
     }
-    
+    # nevo método
+    $self->{'plugin'} = $self->{'register'}->add_obj('captcha_plugin', $name, $self);
+
     $attempts = $self->{'CFG'}{'captcha_plugin_max_attempts'} if !$attempts;
     ($self->{'max_attempts'}, $self->{'max_time'})  = split ('/',$attempts);
 
@@ -160,11 +158,7 @@ sub verify {
 
     $self->{'is_ok'} = 0;
     $self->load_captcha();  
-#    $self->{'captcha'}->create();
-#    $self->{'key_ok'} = $self->{'captcha'}->{'key_ok'};
-#    $self->save_captcha();
-    
-#    $self->{'tmp'}->save(time.':') if $self->{'captcha_start'} eq $self->{'captcha_name'};
+
     $self->get_attempts;
 
     return $self;

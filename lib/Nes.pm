@@ -274,7 +274,7 @@ use Nes::Singleton;
 
     my $cfg_file = $self->{'CFG'}{'plugin_top_dir'}.'/.'.$class.'.nes.cfg';
     Nes::Setting->load_cfg($cfg_file);  
-    
+
     $self->{'obj'}{$class}{$name} = $obj;
 
     return $self;
@@ -323,7 +323,7 @@ use Nes::Singleton;
   sub get_handler {
     my $self  = shift;
     my ($class, $name_handler) = @_;
-warn "$self->{'obj'}{'handler'}{$class}{$name_handler}";
+
     return \&{$self->{'obj'}{'handler'}{$class}{$name_handler}};
   }    
   
@@ -456,6 +456,7 @@ warn "$self->{'obj'}{'handler'}{$class}{$name_handler}";
   }  
   
 }
+
 
 {
 
