@@ -28,7 +28,7 @@ use Nes;
   
   package dispatch;
 
-  my $nes = Nes::Singleton->new();
+  my $nes = Nes::Singleton->start();
   $nes->run();
   
 }

@@ -26,7 +26,7 @@ use strict;
 # cgi environment no defined in command line
 no warnings 'uninitialized';
 
-our $VERSION          = '1.02.3';
+our $VERSION          = '1.02.4';
 our $CRLF             = "\015\012";
 our $MAX_INTERACTIONS = 500;
 our $MOD_PERL         = $ENV{'MOD_PERL'} || 0;
@@ -47,6 +47,8 @@ use Nes::Singleton;
     my $self  = bless {}, $class;
     $self->{'previous'} = $class->get_obj();
     $instance{$class}   = $self;
+  
+#    utl::cleanup(\%instance) if $ENV{'MOD_PERL'};
   
     $self->{'top_container'}    = nes_top_container->get_obj();
     $self->{'CFG'}              = Nes::Setting->get_obj();
@@ -379,6 +381,8 @@ use Nes::Singleton;
     my $class = shift;
     my ( $obj_class, $name, $obj ) = @_;
     my $self = $class->SUPER::new();
+    
+#    utl::cleanup(\%instance) if $ENV{'MOD_PERL'};
 
     $self->{'plugin'} = $obj_class;
     $self->{'obj'}{$name} = $obj;
@@ -1155,10 +1159,10 @@ use Nes::Singleton;
     my $self  = shift;
 
     if ( ! $self->{'content_obj'}->{'is_binary'} ) {
-#      while ( $self->{'content_obj'}->{'out'} =~ s/{:(\s*(\$|\*|\~|sql|\%|inc|\#|\&|nes).+?):}//gsio ) 
-#      { 
-#        # impedir que los tags con error o no reemplazados aparezcan en la salida 
-#      }
+      while ( $self->{'content_obj'}->{'out'} =~ s/{:(\s*(\$|\*|\~|sql|\%|inc|\#|\&|nes).+?):}//gsio ) 
+      { 
+        # impedir que los tags con error o no reemplazados aparezcan en la salida 
+      }
     }
 
     $self->{'content_obj'}->out();
@@ -2517,33 +2521,34 @@ use Nes::Singleton;
       require Apache2::RequestUtil;
       require Apache2::RequestIO;
       require APR::Pool;
-      Apache2::RequestUtil->request->pool->cleanup_register
-        (
-          sub { 
-                foreach my $var (@vars) {
-                  $$var = undef; 
-                }
-                return 1; 
-              }
-        );
+      Apache2::RequestUtil->request->pool->cleanup_register(\&utl::cleanup_callback, @vars);
+
     }
       
     if ( $MOD_PERL1 ) {
       require Apache;
-      Apache->request->register_cleanup
-        (
-          sub { 
-                foreach my $var (@vars) {
-                  $$var = undef; 
-                }
-                return 1;
-              }
-        );
+      Apache->request->register_cleanup(\&utl::cleanup_callback, @vars);
     }
     
     return 1;
-  } 
+  }
+  
+  sub cleanup_callback {
+    my (@vars) = @_;
+    
+    foreach my $var (@vars) {
+      my $ref = ref $var;
+      undef $$var if $ref eq 'SCALAR' || $ref eq 'REF' ;
+      undef %$var if $ref eq 'HASH';
+      undef @$var if $ref eq 'ARRAY';
+    }
+  
+    return 1;
+  }  
 
 }
+
+
+
 
 1;

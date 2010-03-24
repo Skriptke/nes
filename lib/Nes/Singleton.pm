@@ -15,7 +15,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.00
+#  Version 1.03
 #
 #  Singleton.pm
 #
@@ -30,9 +30,7 @@
     my $class = shift;
     my $self  = $singleton || bless {}, $class;
     my ( $file ) = @_;
-
-    utl::cleanup(\$singleton) if $ENV{'MOD_PERL'};   
-
+    
     if ( $singleton ) {
       $self->{'container'} = nes_container->get_obj();
       $self->{'this_template_name'} = $self->{'container'}->{'file_name'};
@@ -82,8 +80,8 @@
 
     $self->{'container'}->go(); 
     $self->{'top_container'}->{'container'}->out();
-    $self->{'container'}->forget();
-    $self->{'top_container'}->forget();
+#    $self->{'container'}->forget();
+#    $self->{'top_container'}->forget();
 
     return;
   }
@@ -107,7 +105,15 @@
     $self->{'container'}->add_tags(%tags);
 
     return;
-  }  
+  }
+  
+  sub start {
+    my $class = shift;
+    
+    utl::cleanup(\$singleton) if $ENV{'MOD_PERL'};
+
+    return $class->new();
+  }   
 
 }
 

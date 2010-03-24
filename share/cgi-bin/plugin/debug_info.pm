@@ -38,9 +38,7 @@ use Nes;
     $self->{'first_time'} = 1;
     $self->init($template) if !$instance;
     $self->{'first_time'} = 0 if $instance; 
-    
-    utl::cleanup(\$instance) if $ENV{'MOD_PERL'};    
-    
+      
     $instance = $self;
     return $self;
   }
@@ -99,7 +97,15 @@ use Nes;
     }  
 
     return;
-  }  
+  }
+  
+  sub del_instance {
+    my $self = shift;
+
+    utl::cleanup(\$instance) if $ENV{'MOD_PERL'}; 
+
+    return;
+  }   
   
 {
 

@@ -20,7 +20,6 @@
 <a name="form_register" id="form_register"></a>
 <div id="cuadro2">
 <center>
-    
 {: ~ ( ! * nes_session_ok ) 
     {: include ('{: * cfg_obj_form :}/multi_step.nhtml',
                 "

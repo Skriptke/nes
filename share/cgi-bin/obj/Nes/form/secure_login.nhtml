@@ -27,39 +27,39 @@
     {: include ( '{: * cfg_obj_top_dir :}/location.nhtml', '{: $ out_page :}' ) :}   
 :}
 {: ~ ( ! * nes_session_ok )
-    {: & form ( '{: $ form_name :}',0,'{: $ captcha_name :}',last,'{: $ form_expire :}','{: $ form_exp_last :}','{: $ form_location :}','{: $ form_attempts :}','{: $ attempts :}' ) {: & check ( '{: $ form_name :}_User: {: $ min_len_name :},{: $ max_len_name :}', '{: $ form_name :}_Password: {: $ min_len_pass :},{: $ max_len_pass :}' ) :}
+    {: & form ( '{: $ form_name :}',0,'{: $ captcha_name :}','last','{: $ form_expire :}','{: $ form_exp_last :}','{: $ form_location :}','{: $ form_attempts :}','{: $ attempts :}' ) {: & check ( '{: $ form_name :}_User: {: $ min_len_name :},{: $ max_len_name :}', '{: $ form_name :}_Password: {: $ min_len_pass :},{: $ max_len_pass :}' ) :}
         {: ~ (   $ fatal_error ) {: include ('{: $ tpl_errors :}') :} :}  
         {: ~ ( ! $ fatal_error )<form name="{: $ form_name :}" id="{: $ id_form :}" class="{: $ class_form :}" action="" method="post">
                 <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend :}</legend> :}
                     <table border="0">
                         <tr>
-                            <td align="right">{: $ msg_name :}:</td>
+                            <td align="right">{: $ msg_name :}</td>
                             <td align="left">
                                 <input type="text" size="{: $ max_len_name :}" name="{: & obfuscated ('{: $ form_name :}_User') :}" value="{: $ User :}" />
-                                {: ~ ( * sl_this_form_error_field_User ) {: $ msg_error_name,yes_html :} :}   
+                                <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( $ error_field_user ){: $ msg_error_name,yes_html :}:}</span>
                             </td> 
                         </tr>
                         <tr>
-                            <td align="right">{: $ msg_pass :}:</td>
+                            <td align="right">{: $ msg_pass :}</td>
                             <td align="left">
                                 <input type="password" size="{: $ max_len_pass :}" name="{: & obfuscated ('{: $ form_name :}_Password') :}" value="{: $ Password :}" />
-                                {: ~ ( * sl_this_form_error_field_Password ) {: $ msg_error_pass,yes_html :} :}
+                                <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( $ error_field_password ){: $ msg_error_pass,yes_html :}:}</span>
                             </td> 
                         </tr>
                         {: ~ ( $ msg_remember )
                         <tr>
-                            <td align="right">{: $ msg_remember :}:</td>
+                            <td align="right">{: $ msg_remember :}</td>
                             <td align="left"><input type="checkbox" name="{: $ form_name :}_Remember" {: $ Remember :} /></td> 
                         </tr>  
                         :}
-                        {: ~ ( *sl_this_form_last_step && *sl_this_form_max_attempts )    
-                            {: & captcha ('{: $ captcha_name :}',ascii,'{: $ captcha_digits :}','{: $ captcha_noise :}','{: $ captcha_size :}','{: $ captcha_sig :}','{: $ captcha_spc :}','{: $ captcha_expire :}','{: $ captcha_atempts :}')
+                        {: ~ ( $ last_step && $ form_max_attempts )    
+                            {: & captcha ('{: $ captcha_name :}','{: $ captcha_type :}','{: $ captcha_digits :}','{: $ captcha_noise :}','{: $ captcha_size :}','{: $ captcha_sig :}','{: $ captcha_spc :}','{: $ captcha_expire :}','{: $ captcha_atempts :}')
                                 <tr>
                                     <td align="right">{: $ captcha_tag_start,yes_html :}{: & captcha_code :}{: $ captcha_tag_end,yes_html :}</td>
                                     <td align="left">
                                         &nbsp;{: $ msg_captcha :}:<br>
                                         &nbsp;<input {: $ this_is_captcha_field :} type="text" name="{: $ captcha_name :}" size="{: $ captcha_digits :}" />
-                                        {: ~ ( * sl_this_captcha_error_fatal ) {: $ msg_error_captcha,yes_html :} :}
+                                        <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( $ captcha_error_fatal ){: $ msg_error_captcha,yes_html :}:}</span>
                                     </td> 
                                 </tr>
                             :}                        

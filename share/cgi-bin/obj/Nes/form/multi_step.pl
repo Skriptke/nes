@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
-#  Copyright 2009 - 2010 Enrique Casta\xc3\xb1\xc3\xb3n
+#  Copyright 2009 - 2010 Enrique Castañón
 #  Licensed under the GNU GPL.
 #
 #  CPAN:
@@ -115,8 +115,8 @@ sub send_data {
   
   $vars->{'error_handler'} = 0;
   require "$vars->{'script_handler'}";
-  no strict "refs";
-  $return_fields_error = &{$vars->{'function_handler'}}(\%data);
+  my $handler = \&{$vars->{'function_handler'}};
+  $return_fields_error = $handler->(\%data);
   if ( ref $return_fields_error ne 'HASH' && $return_fields_error ) { 
     $vars->{'form_error_fatal'} = 0;
     $vars->{'error_data'}       = 1;

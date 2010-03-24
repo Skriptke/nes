@@ -15,7 +15,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.00
+#  Version 1.03
 #
 #  Setting.pm
 #
@@ -29,9 +29,8 @@
 
   sub new {
     my $class = shift;
-          
-    utl::cleanup(\$instance) if $ENV{'MOD_PERL'};   
-
+    
+    utl::cleanup(\$instance) if $ENV{'MOD_PERL'};
     return $instance if $instance;
 
     my $level       = utl::get_file_dir();

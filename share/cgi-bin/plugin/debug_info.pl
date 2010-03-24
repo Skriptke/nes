@@ -37,6 +37,7 @@ $info->add();
 if ( $nes->{'container'} eq $nes->{'top_container'}->{'container'} && $config->{'debug_info_show_in_out'} ) {
   
   $nes->{'container'}->set_out_content( $container->get_out_content.$info->{'out'} );
+  $info->del_instance();
 
 }
 

@@ -2,7 +2,7 @@
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
+#  Copyright 2009 - 2010 Enrique F. Castañón
 #  Licensed under the GNU GPL.
 #
 #  CPAN:

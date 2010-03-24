@@ -1,17 +1,25 @@
 #!/usr/bin/perl
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
-#  NES by - Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón
+#  Nes by Skriptke
+#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
 #  Licensed under the GNU GPL.
+#
+#  CPAN:
+#  http://search.cpan.org/dist/Nes/
+#
+#  Sample:
 #  http://nes.sourceforge.net/
+#
+#  Repository:
+#  http://github.com/Skriptke/nes
 # 
-#  Version 0.9 pre
+#  Version 1.03
 #
 #  forms.pl
 #
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 use strict;
 use Nes;
@@ -31,7 +39,6 @@ foreach my $name ( keys %{$forms->{'form'}} ) {
   $forms->{'form'}{$name}->is_ok();
   my $plugin = nes_plugin->get_obj('forms_plugin');
   $plugin->add_env( 'forms_plugin', $name, 'is_ok', $forms->{'form'}{$name}->{'is_ok'} );
-
   if ( $forms->{'form'}{$name}->{'fatal_error'} ) {
     if ( $forms->{'form'}{$name}->{'location'} ne 'none' ) {
       if ( $forms->{'form'}{$name}->{'location'} ) {

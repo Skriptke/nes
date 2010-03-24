@@ -33,7 +33,7 @@ package multi_step;
   
   sub new {
     my $class = shift;
-    my $self =  bless {}, $class;;
+    my $self =  bless {}, $class;
     
     my $nes   = Nes::Singleton->new();
     my $cfg   = $nes->{'CFG'};
