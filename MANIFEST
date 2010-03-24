@@ -66,6 +66,7 @@ share/cgi-bin/obj/Nes/form/secure_login_errors.nhtml
 share/cgi-bin/obj/Nes/form/secure_login.nhtml
 share/cgi-bin/obj/Nes/form/secure_login_param.pl
 share/cgi-bin/obj/Nes/form/secure_login.pl
+share/cgi-bin/obj/Nes/form/secure_login.pm
 share/cgi-bin/images/error.gif
 share/cgi-bin/images/error_b.gif
 share/cgi-bin/images/error_w.gif
