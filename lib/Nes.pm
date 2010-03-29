@@ -988,7 +988,7 @@ use Nes::Singleton;
     $self->{'souce_types'}{'txt'}     = 'txt';
     $self->{'souce_types'}{'bash'}    = 'sh';
     $self->{'souce_types'}{'python'}  = 'py';
-    #$self->{'souce_types'}{'js'}      = 'js';
+    $self->{'souce_types'}{'js'}      = 'njs,js';
     #$self->{'souce_types'}{'mail'}    = 'eml';
     # ...
 
@@ -1031,6 +1031,9 @@ use Nes::Singleton;
       
     } elsif ( $self->{'type'} eq 'python' ) {
       $self->{'content_obj'} = nes_python->new( $self );
+               
+    } elsif ( $self->{'type'} eq 'js' ) {
+      $self->{'content_obj'} = nes_js->new( $self );
                
     } else {
       $self->{'content_obj'} = nes_unknown->new( $self );
@@ -1723,6 +1726,24 @@ use Nes::Singleton;
     return;
   }
    
+}
+
+{
+
+  package nes_js;
+  use vars qw(@ISA);
+  @ISA = qw( nes_content );
+
+  sub new {
+    my $class = shift;
+    my ( $container ) = @_;
+    my $self = $class->SUPER::new($container);
+
+    $self->{'Content-type'} = "Content-type: text/javascript";
+
+    return $self;
+  }
+  
 }
 
 # lo intenta como si fuese un archivo de texto plano

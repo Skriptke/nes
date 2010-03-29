@@ -8,6 +8,9 @@ AddHandler cgi-script .cgi .pl
 AddHandler perl-nes .nhtml
 AddHandler perl-nes .nhtm
 
+# Nes nJS files
+AddHandler perl-nes .njs
+
 ## uncomment for ModPerl2 and Apache Prefork:
 #<Files ~ "\.(pl|cgi)$">
 #    SetHandler perl-script

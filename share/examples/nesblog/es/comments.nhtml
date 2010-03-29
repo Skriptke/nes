@@ -24,7 +24,7 @@
             <br>
             {: sql (
                       'SELECT * FROM `comments` 
-                                WHERE ((article LIKE {: $ article :} OR article LIKE \'\')
+                                WHERE ((article LIKE {: $ item_name :} OR article LIKE \'\')
                                         AND lang LIKE {: $ lang :})
                                 ORDER BY date DESC
                                 LIMIT 100;'

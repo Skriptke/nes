@@ -67,10 +67,17 @@ share/cgi-bin/obj/Nes/form/secure_login.nhtml
 share/cgi-bin/obj/Nes/form/secure_login_param.pl
 share/cgi-bin/obj/Nes/form/secure_login.pl
 share/cgi-bin/obj/Nes/form/secure_login.pm
+share/cgi-bin/obj/Nes/ajax/include_js.nhtml
+share/cgi-bin/obj/Nes/ajax/pseudo_ajax.nhtml
+share/cgi-bin/obj/Nes/ajax/pseudo_ajax.pl
 share/cgi-bin/images/error.gif
 share/cgi-bin/images/error_b.gif
 share/cgi-bin/images/error_w.gif
 share/cgi-bin/images/error_g.gif
+share/cgi-bin/images/loading_g.gif
+share/cgi-bin/images/loading.gif
+share/cgi-bin/js/.htaccess
+share/cgi-bin/js/nes.js
 share/examples/tutorial/.htaccess
 share/examples/tutorial/index.html
 share/examples/tutorial/lucky_01.nhtml

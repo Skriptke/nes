@@ -34,13 +34,13 @@ my $nes_tags = {};
 require 'lib.cgi';
 
 my $item_name = $q->{'item'};
-my $file_name = $config->{'miniblog_item_dir'}.'/'.$item_name.'.html';
+my $file_name = $config->{'miniblog_item_dir'}.'/'.$item_name.'.nhtml';
    $item_name = last_article() if !-e $file_name;
    $item_name =~ s/.*\///;
    $item_name =~ s/\..?htm.?$//;   
-   $file_name = $config->{'miniblog_item_dir'}.'/'.$item_name.'.html';
+   $file_name = $config->{'miniblog_item_dir'}.'/'.$item_name.'.nhtml';
 
-$nes_tags->{'article'}   = $item_name;
+$nes_tags->{'article'}   = $file_name;
 $nes_tags->{'item_name'} = $item_name;
 
 

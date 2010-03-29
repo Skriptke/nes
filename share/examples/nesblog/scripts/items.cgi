@@ -39,7 +39,6 @@ $nes_tags->{'item_name'} = $item_name;
 $nes_tags->{'article'}   = $file_name;
 $nes_tags->{'article'}   = 'article_index.nhtml' if $item eq 'index';
 
-
 $nes->out(%$nes_tags);
 
 1;

@@ -32,4 +32,3 @@ use Nes;
   $nes->run();
   
 }
-

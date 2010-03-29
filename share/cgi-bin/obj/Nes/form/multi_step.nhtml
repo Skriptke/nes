@@ -52,7 +52,7 @@
       }
     </script>
     <form name="{: $ form_name :}" {: ~ ($ id_form)id="{: $ id_form :}" :}class="{: $ class_form :}" action="{: $ action_form :}" method="POST">
-        <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend :}</legend> :}
+        <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend,yes_html :}</legend> :}
             {: ~ ( $ tpl_options_begin ) {: include ('{: $ tpl_options_begin :}')  :}  :}
             <table {:~($ table_width)width="{: $ table_width :}" :}border="0">{: ~ ($error_fields && !$last_step) <tr><td colspan="2">{: $ msg_error_form,yes_html :}</td></tr> :}
                 {: @ (fields)<tr>{: ~ ( '{: @$ fields.begin :}' )<tr><td colspan="2">{: @$ fields.begin,yes_html :}</td></tr>  :}
@@ -64,9 +64,9 @@
                         :}{: ~ ( '{: @$ fields.type :}' eq 'textarea' )
                         <textarea onChange="{: $ form_name :}_validate(this,'{: $ form_name :}_{: @$ fields.js_id :}_error');" {: @$ fields.property :} name="{: $ form_name :}_{: @$ fields.name :}" cols="{: @$ fields.cols :}" rows="{: @$ fields.rows :}">{: @$ fields.value :}</textarea>
                         :}{: ~ ( '{: @$ fields.type :}' !~ /^hidden$/i )<span name="{: $ form_name :}_{: @$ fields.name :}_span" id="{: $ form_name :}_{: @$ fields.js_id :}_error">{: @$ fields.error,yes_html :}{: $ span_error :}</span>:} 
-                    {: ~ ( '{: @$ fields.end :}' ) <tr><td colspan="2">{: @$ fields.end,yes_html :}</td></tr> :}</td>
-                </tr>:}
-                {: ~ ($last_step && $show_captcha) {: include ('multi_step_captcha.nhtml') :}  :}
+                    {: ~ ( '{: @$ fields.end :}' ) <tr><td colspan="2">{: @$ fields.end,yes_html :}</td></tr> :}{: ~ ( '{: @$ fields.tpl :}' ) {: include ('{: @$ fields.tpl :}')  :}  :}</td>
+                </tr>:}{:# cut
+              :}{: ~ ($last_step && $show_captcha) {: include ('multi_step_captcha.nhtml') :}  :}
                 <tr>
                     <td colspan="2">
                         {: $ submit_begin,yes_html :}
@@ -80,9 +80,10 @@
                         <input type="hidden" name="{: @$ fields_pre.name :}" value="{: @$ fields_pre.value :}" />:}
                     </td>
                 </tr>
-            </table>
-            {: ~ ( $ tpl_options_end ) {: include ('{: $ tpl_options_end :}')  :}  :}
+            </table>{:# cut
+          :}{: ~ ( $ tpl_options_end  ) {: include ('{: $ tpl_options_end :}')  :}  :}
         </fieldset>
-    </form>
-:} {: ~ ( $captcha_error_fatal || $form_error_fatal ) {: include ('{: $ tpl_errors :}') :} :}
-{: ~  $error_data {: $ msg_error_data,yes_html :} :}{: ~  $ok_data    {: $ msg_ok_data,yes_html  :} :}
+    </form>{:# cut
+:}:}{:# cut
+:}{: ~ ( $captcha_error_fatal || $form_error_fatal ) {: include ('{: $ tpl_errors :}') :} :}{:# cut
+:}{: ~  $error_data {: $ msg_error_data,yes_html :} :}{: ~  $ok_data    {: $ msg_ok_data,yes_html  :} :}

@@ -1,0 +1,92 @@
+{: NES 1.0 ('pseudo_ajax.pl') :}
+{: #
+  -----------------------------------------------------------------------------
+    
+  Nes 1.03 by Skriptke
+  Copyright 2009 - 2010 Enrique Castanon
+  Licensed under the GNU GPL.
+
+  Sample:
+  http://nes.sourceforge.net/
+
+  CPAN:
+  http://search.cpan.org/dist/Nes/
+
+  Repository:
+  http://github.com/Skriptke/nes
+   
+  DOCUMENTATION:
+  perldoc 
+
+   {: include ('{: * cfg_obj_top_dir :}/Nes/ajax/pseudo_ajax.nhtml',
+                "
+                  js_file            => '/www-lib/js/test.njs',
+                  timer              => 0,
+                  script             => '/* script */',
+                  script_tpl         => '',
+                  lparam  => 
+                          {  
+                            uno     => 'value', 
+                          },
+                  vparam  => 
+                          {  
+                            dos     => 'el_f_remen_Seudonimo.value', 
+                          },                          
+                       
+                  events  => 
+                        [    
+                          {  
+                            event     => 'onMouseDown', 
+                            by        => 'fieldname',
+                            idname    => 'f_remen_Seudonimo',
+                            preload   => 'alert(\"precarga\")',
+                            lparam    => 
+                                     {
+                                        tres   => 'el_f_remen_Seudonimo.value',
+                                     },
+                            vparam    => 
+                                     {
+                                        cuatro => 'el_f_remen_Seudonimo.value',
+                                     },                                     
+                          },
+                          {
+                            event     => 'onMouseDown', 
+                            by        => 'fieldname',
+                            idname    => 'f_remen_Password',
+                            preload   => '',
+                            afterload => '',
+                            lparam    => 
+                                     {
+                                        cinco => 'el_f_remen_Password.value',
+                                     },
+                            vparam    => 
+                                     {
+                                        seis  => 'el_f_remen_Password.value',
+                                     },                                     
+                          },                          
+                        ],
+                "
+               )    
+    :}  
+ 
+  -----------------------------------------------------------------------------
+:}
+
+    
+    <script type="text/javascript">{: @ events 
+    {: ~ ( '{: @$ events.by :}' =~ /^field/i )el_{: @$ events.idname :} = document.getElementsByName('{: @$ events.idname :}')[0]; :}{:#
+  :}{: ~ ( '{: @$ events.by :}' =~ /^name/i  )el_{: @$ events.idname :} = document.getElementsByName('{: @$ events.idname :}'); :}{:#
+  :}{: ~ ( '{: @$ events.by :}' =~ /^tag/i   )el_{: @$ events.idname :} = document.getElementsByTagName('{: @$ events.idname :}')[0]; :}{:#
+  :}{: ~ ( '{: @$ events.by :}' =~ /^id/i    )el_{: @$ events.idname :} = document.getElementById('{: @$ events.idname :}'); :}
+    var ev = el_{: @$ events.idname :}.getAttribute("{: @$ events.event :}");
+    el_{: @$ events.idname :}.setAttribute("{: @$ events.event :}", "{: @$ events.idname :}_go();"+ev, 0);
+    function {: @$ events.idname :}_go() {
+        js_{: @$ events.idname :} = document.createElement("script");
+        js_{: @$ events.idname :}.type = "text/javascript";               
+        js_{: @$ events.idname :}.src = "{: $ js_file :}?{: $ params :}{: @$ events.params :}";
+        {: @$ events.preload,yes_html :};document.getElementsByTagName('head')[0].appendChild(js_{: @$ events.idname :});
+    }
+   :}{: $ script,yes_html :}{: ~ ( $ script_tpl  ) {: include ('{: $ script_tpl :}')  :}  :}
+   </script>    
+
+

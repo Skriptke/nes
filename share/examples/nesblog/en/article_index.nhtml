@@ -19,10 +19,8 @@
 :}
 <h3>Article Index</h3>
 <p>
-    <ul id="mi">
-    {: @ (articles) 
-        <li><a href="./?action=item&item={: @$ articles.name :}">{: @$ articles.name :}</a></li>
-    :}
+    <ul id="mi">{: @ (articles) 
+        <li><a href="./?action=item&item={: @$ articles.name :}">{: @$ articles.name :}</a></li>:}
     </ul>
 </p>
 <br>

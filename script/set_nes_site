@@ -178,6 +178,9 @@ AddHandler cgi-script .cgi .pl
 # Nes nhtml files
 AddHandler perl-nes .nhtml
 AddHandler perl-nes .nhtm
+
+# Nes nJS files
+AddHandler perl-nes .njs
   ';
   
   $configuration .= '

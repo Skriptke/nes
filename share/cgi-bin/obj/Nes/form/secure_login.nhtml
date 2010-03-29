@@ -33,14 +33,14 @@
                 <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend :}</legend> :}
                     <table border="0">
                         <tr>
-                            <td align="right">{: $ msg_name :}</td>
+                            <td align="right">{: $ msg_name,yes_html :}</td>
                             <td align="left">
                                 <input type="text" size="{: $ max_len_name :}" name="{: & obfuscated ('{: $ form_name :}_User') :}" value="{: $ User :}" />
                                 <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( $ error_field_user ){: $ msg_error_name,yes_html :}:}</span>
                             </td> 
                         </tr>
                         <tr>
-                            <td align="right">{: $ msg_pass :}</td>
+                            <td align="right">{: $ msg_pass,yes_html :}</td>
                             <td align="left">
                                 <input type="password" size="{: $ max_len_pass :}" name="{: & obfuscated ('{: $ form_name :}_Password') :}" value="{: $ Password :}" />
                                 <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( $ error_field_password ){: $ msg_error_pass,yes_html :}:}</span>
@@ -48,7 +48,7 @@
                         </tr>
                         {: ~ ( $ msg_remember )
                         <tr>
-                            <td align="right">{: $ msg_remember :}</td>
+                            <td align="right">{: $ msg_remember,yes_html :}</td>
                             <td align="left"><input type="checkbox" name="{: $ form_name :}_Remember" {: $ Remember :} /></td> 
                         </tr>  
                         :}
@@ -57,7 +57,7 @@
                                 <tr>
                                     <td align="right">{: $ captcha_tag_start,yes_html :}{: & captcha_code :}{: $ captcha_tag_end,yes_html :}</td>
                                     <td align="left">
-                                        &nbsp;{: $ msg_captcha :}:<br>
+                                        &nbsp;{: $ msg_captcha :}<br>
                                         &nbsp;<input {: $ this_is_captcha_field :} type="text" name="{: $ captcha_name :}" size="{: $ captcha_digits :}" />
                                         <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( $ captcha_error_fatal ){: $ msg_error_captcha,yes_html :}:}</span>
                                     </td> 

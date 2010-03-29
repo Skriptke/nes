@@ -1,5 +1,9 @@
 Revision history for Nes
 
+        added pseudo_ajax.nhtml object
+        added include_js.nhtml object
+        added dir share/cgi-bin/js
+        added 'js' and 'njs' Nes types
         now is not necessary place in the template {: $ HTTP-headers :}
         completely rewritten nesblog sample
         new API for plugin 'register' 

@@ -79,8 +79,8 @@
                           {
                             name     => 'article', 
                             type     => 'hidden',
-                            value    => '{: $ article :}',
-                            check    => ',,/^{: $ article :}$/',
+                            value    => '{: $ item_name :}',
+                            check    => ',,/^{: $ item_name :}$/',
                             msg_error=> '',
                           }, 
                           {
@@ -154,8 +154,8 @@
                           {
                             name     => 'article', 
                             type     => 'hidden',
-                            value    => '{: $ article :}',
-                            check    => ',,/^{: $ article :}$/',
+                            value    => '{: $ item_name :}',
+                            check    => ',,/^{: $ item_name :}$/',
                             msg_error=> '',
                           }, 
                           {
