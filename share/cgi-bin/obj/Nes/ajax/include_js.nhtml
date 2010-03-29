@@ -16,7 +16,7 @@
   http://github.com/Skriptke/nes
    
   DOCUMENTATION:
-  perldoc 
+  perldoc Nes::Obj::include_js
  
   -----------------------------------------------------------------------------
 :}

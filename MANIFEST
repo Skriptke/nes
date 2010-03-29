@@ -17,6 +17,8 @@ lib/Nes/Minimal/Multipart.pm
 lib/Nes/Minimal/Misc.pm
 lib/Nes/Obj/secure_login.pod
 lib/Nes/Obj/multi_step.pod
+lib/Nes/Obj/include_js.pod
+lib/Nes/Obj/pseudo_ajax.pod
 share/examples/hello_nes/.htaccess
 share/examples/hello_nes/hello.cgi
 share/examples/hello_nes/.nes.cfg

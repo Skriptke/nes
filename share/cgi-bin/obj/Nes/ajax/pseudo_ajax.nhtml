@@ -16,58 +16,7 @@
   http://github.com/Skriptke/nes
    
   DOCUMENTATION:
-  perldoc 
-
-   {: include ('{: * cfg_obj_top_dir :}/Nes/ajax/pseudo_ajax.nhtml',
-                "
-                  js_file            => '/www-lib/js/test.njs',
-                  timer              => 0,
-                  script             => '/* script */',
-                  script_tpl         => '',
-                  lparam  => 
-                          {  
-                            uno     => 'value', 
-                          },
-                  vparam  => 
-                          {  
-                            dos     => 'el_f_remen_Seudonimo.value', 
-                          },                          
-                       
-                  events  => 
-                        [    
-                          {  
-                            event     => 'onMouseDown', 
-                            by        => 'fieldname',
-                            idname    => 'f_remen_Seudonimo',
-                            preload   => 'alert(\"precarga\")',
-                            lparam    => 
-                                     {
-                                        tres   => 'el_f_remen_Seudonimo.value',
-                                     },
-                            vparam    => 
-                                     {
-                                        cuatro => 'el_f_remen_Seudonimo.value',
-                                     },                                     
-                          },
-                          {
-                            event     => 'onMouseDown', 
-                            by        => 'fieldname',
-                            idname    => 'f_remen_Password',
-                            preload   => '',
-                            afterload => '',
-                            lparam    => 
-                                     {
-                                        cinco => 'el_f_remen_Password.value',
-                                     },
-                            vparam    => 
-                                     {
-                                        seis  => 'el_f_remen_Password.value',
-                                     },                                     
-                          },                          
-                        ],
-                "
-               )    
-    :}  
+  perldoc Nes::Obj::pseudo_ajax
  
   -----------------------------------------------------------------------------
 :}
