@@ -5,7 +5,9 @@ secure_login.nhtml - Secure Login Nes Object.
 
 =head1 SYNOPSIS
 
-    {: include ('{: * cfg_obj_form :}/secure_login.nhtml',
+Checking for script handler:
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/secure_login.nhtml',
                 "
                   script_handler   => 'my_script_handler.pl',
                   function_handler => 'my_function_handler',
@@ -14,53 +16,233 @@ secure_login.nhtml - Secure Login Nes Object.
                )         
     :}
 
+Checking directly from a database:
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/secure_login.nhtml',
+                "
+                  from_table         => 'table',
+                  from_user_field    => 'table_field_user',
+                  from_user_pass     => 'table_field_pass',
+                  from_user_function => 'sql_function',
+                  from_pass_function => 'sql_function',
+                  form_name          => 'my_form_1',
+                "
+               )         
+    :}
+
 =head1 DESCRIPTION
 
-Create a secure login form.
+Create a user session if the login is successful. Verification can be done 
+with a script handle or directly from a database. The form prevents intrusion 
+by the obfuscation of the fields, limiting the number of attempts and captcha.
 
 =head1 PARAMETERS
 
-    script_handler
-    function_handler
-    min_len_name
-    max_len_name
-    min_len_pass
-    max_len_pass
-    attempts
-    form_attempts
-    form_location
-    form_exp_last
-    form_expire
-    form_name
-    captcha_name
-    captcha_digits
-    captcha_size
-    captcha_noise
-    captcha_sig
-    captcha_spc
-    captcha_expire
-    captcha_atempts
-    captcha_tag_start
-    captcha_tag_start
-    captcha_tag_end
-    captcha_tag_end
-    out_page
-    expire_session
-    expire_session
-    msg_legend
-    msg_name
-    msg_pass
-    msg_remember
-    msg_login
-    msg_captcha
-    msg_error_form
-    msg_error_captcha
-    id_form
-    class_form
-    msg_error_name
-    msg_error_pass
-    tpl_errors
-    tpl_options
+=over 2
+
+=item script_handler
+
+The script that contains the "function_handler"
+
+=item function_handler
+
+Function to call to verify login. Receives the form fields user and password. 
+Must return "user id" if successful or 0 if failure. Sample:
+
+    sub check_user_login {
+      my $user = shift;
+      my $pass = shift;
+
+      return 0 if !$user || !$pass;
+
+      # check user and password in db or other
+      ...
+
+      return $user_id if $ok;
+      return 0        if !$ok;
+    }
+
+=item from_table
+
+Verify login to this table name.
+
+=item from_user_field
+
+The field name in the table corresponds to the "user".
+
+=item from_user_pass
+
+The field name in the table corresponds to the "password".
+
+=item from_user_function
+
+SQL function apply to "user" in SQL query.
+
+=item from_pass_function
+
+SQL function apply to "password" in SQL query.
+
+=item min_len_name
+
+Min length of user.
+
+=item max_len_name
+
+Max length of user.
+
+=item min_len_pass
+
+Min length of password.
+
+=item max_len_pass
+
+Max length of password.
+
+=item attempts
+
+Attempts to show the captcha. Default 3.
+
+=item form_attempts
+
+Attempts/minutes, if we reach attempts, wait the time shown in "minutes". 
+Default is '10/5'
+
+=item form_location
+
+Error out page, Default 'none'.
+
+=item form_exp_last
+
+Time to expire form in last step. Default '1m' one minute. Time suffix: 
+s: seconds, m: minutes h: hours d: days, M: months, y: years. 
+
+=item form_expire
+
+Time to expire form. Default '10m' ten minutes. Time suffix: 
+s: seconds, m: minutes h: hours d: days, M: months, y: years. 
+
+=item form_name
+
+Tag name property of form.
+
+=item id_form
+
+Tag id property of form.
+
+=item class_form
+
+Tag class property of form.
+
+=item captcha_name
+
+Tag name property of captcha.
+
+=item captcha_type
+
+ascii.
+
+=item captcha_digits
+
+Digit number captcha.
+
+=item captcha_size
+
+Captcha size.
+
+=item captcha_noise
+
+Captcha noise level.
+
+=item captcha_sig
+
+Character to the foreground
+
+=item captcha_spc
+
+Character to the background
+
+=item captcha_expire
+
+Time to expire captcha. Default '1m' one minute. Time suffix: 
+s: seconds, m: minutes h: hours d: days, M: months, y: years. 
+
+=item captcha_atempts
+
+Attempts/minutes, if we reach attempts, wait the time shown in "minutes". 
+Default is '10/5'
+
+=item captcha_tag_start
+
+HTML Tag for the design of the captcha.
+
+=item captcha_tag_end
+
+HTML Tag for the design of the captcha.
+
+=item out_page
+
+Out page. Default self.
+
+=item expire_session
+
+The session is created with this time expires. Default '12h'. Time suffix: 
+s: seconds, m: minutes h: hours d: days, M: months, y: years. 
+
+=item expire_session_re
+
+The session is created with this time expires if 'remember' option is enable. 
+Default '48h'. Time suffix: s: seconds, m: minutes h: hours d: days, 
+M: months, y: years. 
+
+=item msg_legend
+
+Text to show in lengend tag.
+
+=item msg_name
+
+Text to show in user name field.
+
+=item msg_pass
+
+Text to show in password field.
+
+=item msg_remember
+
+Text to show in remember field. If empty, remember option is disable.
+
+=item msg_login
+
+Text to show in send button.
+
+=item msg_captcha
+
+Text to show in captcha field.
+
+=item msg_error_form
+
+Text to show error if user/password error.
+
+=item msg_error_captcha
+
+Text to show error if captcha error.
+
+=item msg_error_name
+
+Text to show error if user error. (min_len_name and max_len_name)
+
+=item msg_error_pass
+
+Text to show error if password error. (min_len_pass and max_len_pass)
+
+=item tpl_errors
+
+Template errors.
+
+=item tpl_options
+
+Template for options.
+
+=back
 
 =head1 AUTHOR
 

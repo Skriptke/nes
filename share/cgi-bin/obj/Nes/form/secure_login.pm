@@ -70,10 +70,10 @@ package secure_login;
     $self->{'captcha_tag_start'} = '<pre style="font-size:2px; line-height:1.0;">';
     $self->{'captcha_tag_start'} = '' if $param{'captcha_size'} ne 'none';
     $self->{'captcha_tag_end'}   = '<br></pre>';
-    $self->{'captcha_tag_end'}   = '' if $param{'c$self->{_size'} ne 'none';
+    $self->{'captcha_tag_end'}   = '' if $param{'captcha_size'} ne 'none';
     $self->{'out_page'}          = 'http://'.$ENV{'SERVER_NAME'}.$ENV{'REQUEST_URI'};
     $self->{'expire_session'}    = '12h';
-    $self->{'expire_session'}    = '48h' if $nes->{'query'}->{'q'}{'l_Remember'};
+    $self->{'expire_session_re'} = '48h';
     $self->{'msg_legend'}        = '';
     $self->{'msg_name'}          = 'User:';
     $self->{'msg_pass'}          = 'Password:';
@@ -92,7 +92,9 @@ package secure_login;
     
     foreach my $this (keys %param) {
       $self->{$this} = $param{$this};
-    }                                        
+    }
+    
+    $self->{'expire_session'} = $self->{'expire_session_re'} if $nes->{'query'}->{'q'}{'l_Remember'};                                      
     
     return $self;    
   }

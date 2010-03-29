@@ -14,11 +14,28 @@ include_js.nhtml - Asynchronous JavaScript .js file loading.
 
 =head1 DESCRIPTION
 
-
+Asynchronous inclusion for js files, without blocking browser. Dynamic 
+version of tag: "<script src=file.js>"
 
 =head1 PARAMETERS
 
+=over 2
 
+=item js_file.js
+
+Js file to include.
+
+=item name
+
+Name for create JavaScript variables.
+
+=item timer
+
+Millisecond, delay to load. Some browsers requires js load by setTimeout JS 
+function with a value greater than 10 milliseconds for not blocking. Default
+is 0.
+
+=back
 
 =head1 AUTHOR
 
