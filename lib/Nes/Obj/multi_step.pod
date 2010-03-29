@@ -124,7 +124,8 @@ LIMIT clause in sql sentence in UPDATE mode.
 
 =item to_fields_assort
 
-Correspondence from the fields of the database to form.
+Correspondence from the fields of the database to form. If it begins with 
+two points, is a function sql. Sample: date => ':NOW()'
    
 =item msg_error_data
 
@@ -152,13 +153,24 @@ Width table form.
 
 =item submit_begin
 
+Text or HTML to show before submit button.
+
 =item submit_end
+
+Text or HTML to show after submit button.
 
 =item span_error
 
+Text to show in span tag error.
+
 =item form_expire
 
+Time to expire form. Default 60 second for field. Time suffix: 
+s: seconds, m: minutes h: hours d: days, M: months, y: years. 
+
 =item form_name
+
+Tag name property of form.
 
 =item captcha_name
 
@@ -190,12 +202,16 @@ Character to the background
 
 =item captcha_expire
 
-Time to expire captcha. Default '40s' one minute. Time suffix: 
+Time to expire captcha. Default '40s'. Time suffix: 
 s: seconds, m: minutes h: hours d: days, M: months, y: years. 
 
 =item captcha_end
 
+Text or HTML to show after captcha.
+
 =item captcha_begin
+
+Text or HTML to show before captcha.
 
 =item captcha_atempts
 
@@ -228,22 +244,116 @@ Text to show in captcha field.
 
 =item txt_captcha
 
+Text or HTML to show in captcha. Default 
+"Finally, enter the security code below."
+
 =item msg_error_captcha
 
+Text or HTML to show if captcha error.
+
 =item msg_error_form
+
+Text or HTML to show if form error.
                              
 =item id_form
 
+Tag id property of form.
+
 =item class_form
+
+Tag class property of form.
 
 =item action_form
 
+Action property form.
+
 =item tpl_errors
 
-=item tpl_options
+Template errors.
+
+=item tpl_options_begin
+
+Template for options.
+
+=item tpl_options_end
+
+Template for options.
 
 =item msg_error_fields
 
+Text or HTML to show if field error.
+
+=back
+
+=head1 STEPS PARAMETERS
+
+=over 2
+
+=item name
+
+Tag name property of field.
+
+=item field_id
+
+Tag id property of field.
+
+=item field_class
+
+Tag class property of field.
+
+=item value
+
+Tag value property of field.
+
+=item size
+
+Tag size property of field.
+
+=item property
+
+Others tag property of field. Sample: property => 'READONLY'
+
+=item type
+
+Tag type of field: text, textarea, select, hidden.
+
+=item cols
+
+Tag cols property in textarea.
+
+=item rows
+
+Tag rows property in textarea.
+
+=item msg
+
+Text to show for the field.
+
+=item begin
+
+Text or HTML to show before field.
+
+=item end
+
+Text or HTML to show after field.
+
+=item check
+
+Verify field in format: 'min,max,regexp'. Sample: 
+'0,70,/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i' is optional (0 min length)
+70 max length, and email regular expression.
+
+=item msg_error
+
+Text or HTML to show if check error.
+
+=item filter
+
+Filter field value by Nes filter options, no_html, yes_html, etc.
+
+=item tpl
+
+Template to include in field.
 
 =back
 
