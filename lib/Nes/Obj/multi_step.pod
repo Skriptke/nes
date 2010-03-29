@@ -5,15 +5,15 @@ multi_step.nhtml - Secure Multi Step Form.
 
 =head1 SYNOPSIS
 
-    {: include ('{: * cfg_obj_form :}/multi_step.nhtml',
+Send data over a script handler:
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/multi_step.nhtml',
                 "
-                  {: # general options :}
                   script_handler   => 'my_script_handler.pl',
                   function_handler => 'my_function_handler',
                   form_name        => 'my_form_1',
 
-                  {: # steps  :}
-                  steps  => 
+                  steps  => {: # steps  :}
                       [     
                         [   {: # step 1 :}
                           { {: # field 1 for step 1 :}
@@ -21,7 +21,8 @@ multi_step.nhtml - Secure Multi Step Form.
                             msg      => 'The \"Name\"',
                             type     => 'text',
                             size     => 12,
-                            {: # check 4 min, 22 max, begins with a letter, alphanumeric :} 
+                            {: # check 4 min, 22 max, begins with a 
+                            letter, alphanumeric :} 
                             check    => '4,22,/^[a-zA-Z]\w*$/',
                           },
                           { {: # field 2 for step 1 :}
@@ -31,9 +32,7 @@ multi_step.nhtml - Secure Multi Step Form.
                             size     => 12,
                             check    => '8,40,/[\w-]+@([\w-]+\.)+[\w-]+/i',
                           },
-                           
                             {: # more fields for stept 1 ... :}
-                                                                                  
                         ],
                         [   {: # step 2 :}
                           { {: # field 1 for step 2 :}
@@ -44,63 +43,209 @@ multi_step.nhtml - Secure Multi Step Form.
                             cols     => 20,
                             rows     => 6,
                           },
-                          
-                          {: # more fields for step 2 ... :}
-
+                            {: # more fields for step 2 ... :}
                         ],                                
-                        
-                           {: #  more steps ... :}                                              
+                            {: #  more steps ... :}                                              
                       ],
+                "
+               )         
+    :}
+
+Insert data directly to the database:
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/multi_step.nhtml',
+                "
+                  to_database        => 'INSERT',
+                  to_table           => 'table',
+                  to_fields_assort   => 
+                         {
+                           name      => 'name',
+                         },   
+
+                  {: # steps ... :}
+                "
+               )         
+    :}
+
+Update data directly to the database:
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/multi_step.nhtml',
+                "
+                  to_database        => 'UPDATE',
+                  to_table           => 'table',
+                  to_where           => '',
+                  to_limit           => '',                  
+                  to_fields_assort   => 
+                         {
+                           name      => 'name',
+                         },   
+
+                  {: # steps ... :}
                 "
                )         
     :}
 
 =head1 DESCRIPTION
 
-Create a secure login form.
+Create a form with one or more steps, with a captcha at the end. Data can be 
+sent over a script handler or directly to the database.
 
 =head1 PARAMETERS
 
-    script_handler
-    function_handler
-    script_NES
-    referer
-    private_key
-    show_captcha
-    table_width
-    form_expire
-    form_name
-    captcha_name
-    captcha_type
-    captcha_digits
-    captcha_size
-    captcha_noise
-    captcha_sig
-    captcha_spc
-    captcha_expire
-    captcha_atempts
-    captcha_tag_start
-    captcha_tag_start
-    captcha_tag_end
-    captcha_tag_end
-    out_page
-    msg_legend
-    msg_submit
-    msg_captcha
-    txt_captcha
-    msg_error_captcha
-    msg_error_form
-    id_form
-    class_form
-    action_form
-    tpl_errors
-    tpl_options
-    msg_error_fields
+=over 2
 
-=head1 Quoting
+=item script_handler
 
-    regexp:  [^\\\"][^\\\\']
-    param:   msg  => 'The \\'Name\"'
+The script that contains the "function_handler"
+
+=item function_handler
+
+Function that receives the form data.
+
+=item script_NES
+
+Perl script to execute.
+
+=item to_database
+
+INSERT or UPDATE database.
+
+=item to_table
+
+Table name to insert or update.
+
+=item to_where
+
+WHERE clause in sql sentence in UPDATE mode.
+
+=item to_limit
+
+LIMIT clause in sql sentence in UPDATE mode.
+
+=item to_fields_assort
+
+Correspondence from the fields of the database to form.
+   
+=item msg_error_data
+
+Text to show if error data.
+
+=item msg_ok_data
+
+Text to show if success data.
+
+=item referer
+
+Check referer.
+
+=item private_key
+
+Private key to crypt data.
+
+=item show_captcha
+
+1 show captcha, 0 not
+
+=item table_width
+
+Width table form.
+
+=item submit_begin
+
+=item submit_end
+
+=item span_error
+
+=item form_expire
+
+=item form_name
+
+=item captcha_name
+
+Tag name property of captcha.
+
+=item captcha_type
+
+ascii.
+
+=item captcha_digits
+
+Digit number captcha.
+
+=item captcha_size
+
+Captcha size.
+
+=item captcha_noise
+
+Captcha noise level.
+
+=item captcha_sig
+
+Character to the foreground
+
+=item captcha_spc
+
+Character to the background
+
+=item captcha_expire
+
+Time to expire captcha. Default '40s' one minute. Time suffix: 
+s: seconds, m: minutes h: hours d: days, M: months, y: years. 
+
+=item captcha_end
+
+=item captcha_begin
+
+=item captcha_atempts
+
+Attempts/minutes, if we reach attempts, wait the time shown in "minutes". 
+Default is '10/5'
+
+=item captcha_tag_start
+
+HTML Tag for the design of the captcha.
+
+=item captcha_tag_end
+
+HTML Tag for the design of the captcha.
+
+=item out_page
+
+Out page. Default self.
+
+=item msg_legend
+
+Text to show in lengend tag.
+
+=item msg_submit
+
+Text to show in send button.
+
+=item msg_captcha
+
+Text to show in captcha field.
+
+=item txt_captcha
+
+=item msg_error_captcha
+
+=item msg_error_form
+                             
+=item id_form
+
+=item class_form
+
+=item action_form
+
+=item tpl_errors
+
+=item tpl_options
+
+=item msg_error_fields
+
+
+=back
 
 =head1 BUGS
 
