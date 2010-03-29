@@ -85,7 +85,7 @@
         js_{: @$ events.idname :}.type = "text/javascript";               
         js_{: @$ events.idname :}.src = "{: $ js_file :}?{: $ params :}{: @$ events.params :}";
         js_{: @$ events.idname :}.onload = function () { {: @$ events.afterload,yes_html :}; };
-        js_{: @$ events.idname :}.onreadystatechange = function () { if (js_{: @$ events.idname :}.readyState == 'loaded') { {: @$ events.afterload,yes_html :}; } }
+        js_{: @$ events.idname :}.onreadystatechange = function () { if (js_{: @$ events.idname :}.readyState == 'loaded' || js_{: @$ events.idname :}.readyState == 'complete' ) { {: @$ events.afterload,yes_html :}; } }
         {: @$ events.preload,yes_html :};document.getElementsByTagName('head')[0].appendChild(js_{: @$ events.idname :});
     }
    :}{: $ script,yes_html :}{: ~ ( $ script_tpl  ) {: include ('{: $ script_tpl :}')  :}  :}
