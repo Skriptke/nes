@@ -127,6 +127,7 @@ share/examples/nesblog/en/items/Tutorial.nhtml
 share/examples/nesblog/en/latest_articles.nhtml
 share/examples/nesblog/en/latest_comments.nhtml
 share/examples/nesblog/en/login.nhtml
+share/examples/nesblog/en/login_db.nhtml
 share/examples/nesblog/en/logout.nhtml
 share/examples/nesblog/en/none.nhtml
 share/examples/nesblog/en/profile.nhtml
@@ -180,6 +181,7 @@ share/examples/nesblog/es/items/Sesiones.nhtml
 share/examples/nesblog/es/latest_articles.nhtml
 share/examples/nesblog/es/latest_comments.nhtml
 share/examples/nesblog/es/login.nhtml
+share/examples/nesblog/es/login_db.nhtml
 share/examples/nesblog/es/logout.nhtml
 share/examples/nesblog/es/.nes.cfg
 share/examples/nesblog/es/none.nhtml

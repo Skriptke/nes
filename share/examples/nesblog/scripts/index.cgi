@@ -59,6 +59,12 @@ if ( $action =~ /^login$/i ) {
   $nes_tags->{'title'}         = 'Login';
   $nes_tags->{'content'}       = 'login.nhtml';
   
+} elsif ( $action =~ /^logindb$/i ) {
+  
+  $nes_tags->{'show_comments'} = 0;
+  $nes_tags->{'title'}         = 'Login';
+  $nes_tags->{'content'}       = 'login_db.nhtml';
+  
 } elsif ( $action =~ /^register$/i ) {
   
   $nes_tags->{'show_comments'} = 0;

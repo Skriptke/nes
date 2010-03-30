@@ -22,7 +22,7 @@ Checking directly from a database:
                 "
                   from_table         => 'table',
                   from_user_field    => 'table_field_user',
-                  from_user_pass     => 'table_field_pass',
+                  from_pass_field    => 'table_field_pass',
                   from_user_function => 'sql_function',
                   from_pass_function => 'sql_function',
                   form_name          => 'my_form_1',
@@ -64,13 +64,32 @@ Must return "user id" if successful or 0 if failure. Sample:
 
 =item from_table
 
-Verify login to this table name.
+Verify login to this table name. Sample:
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/secure_login.nhtml',
+                "
+                  from_table         => 'users',
+                  from_user_field    => 'user',
+                  from_pass_field    => 'password',
+                "
+               )         
+    :}
+
+For these parameters secure_login make the following sql query:
+
+    SELECT `user`  
+    FROM  `users`
+    WHERE ( 
+           `user` = $user  AND 
+           `password` = $pass
+          )
+    LIMIT 0,1;~;
 
 =item from_user_field
 
 The field name in the table corresponds to the "user".
 
-=item from_user_pass
+=item from_pass_field
 
 The field name in the table corresponds to the "password".
 
@@ -80,7 +99,99 @@ SQL function apply to "user" in SQL query.
 
 =item from_pass_function
 
-SQL function apply to "password" in SQL query.
+SQL function apply to "password" in SQL query. Sample:
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/secure_login.nhtml',
+                "
+                  from_table         => 'users',
+                  from_user_field    => 'user',
+                  from_pass_field    => 'password',
+                  from_pass_function => 'PASSWORD',
+                "
+               )         
+    :}
+
+For these parameters secure_login make the following sql query:
+
+    SELECT `user`  
+    FROM  `users`
+    WHERE ( 
+           `user` = $user  AND 
+           `password` = PASSWORD($pass)
+          )
+    LIMIT 0,1;~;
+
+=item DB_base
+
+Database name. Usually DB_... must be previously defined in its nes.cfg, 
+secure_login take these defaults. But if you need to consult another 
+database, can DB_... as parameters.
+
+Not a good idea to include passwords in files html:
+
+    BAD:
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/secure_login.nhtml',
+                "
+                  from_table         => 'users',
+                  from_user_field    => 'user',
+                  from_pass_field    => 'password',
+                  DB_base            => 'basename',
+                  DB_user            => 'baseuser',
+                  DB_pass            => 'sakjuje7ey',
+                "
+               )         
+    :}
+
+Declare them as variables in their nes.cfg:
+
+    # primary database
+    DB_base    = basename
+    DB_user    = username
+    DB_pass    = password
+    DB_driver  = mysql
+    DB_host    = localhost
+    DB_port    = 3306
+
+    # database for login
+    login_DB_base    = otherbasename
+    login_DB_user    = username
+    login_DB_pass    = password
+    login_DB_driver  = mysql
+    login_DB_host    = localhost
+    login_DB_port    = 3306
+
+And so:
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/secure_login.nhtml',
+                "
+                  from_table         => 'users',
+                  from_user_field    => 'user',
+                  DB_base            => '{: * cfg_login_DB_base :}',
+                  DB_user            => '{: * cfg_login_DB_user :}',
+                  DB_pass            => '{: * cfg_login_DB_pass :}',
+                "
+               )         
+    :}
+
+=item DB_user
+
+Database user.
+
+=item DB_pass
+
+Database password.
+
+=item DB_driver
+
+Database driver.
+
+=item DB_host
+
+Database host.
+
+=item DB_port
+
+Database port.
 
 =item min_len_name
 

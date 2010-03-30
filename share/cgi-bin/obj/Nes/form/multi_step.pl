@@ -487,12 +487,12 @@ sub to_database {
 
   use Nes::DB;
   my $config    = $nes->{'CFG'};
-  my $db_name   = $config->{'DB_base'};
-  my $db_user   = $config->{'DB_user'};
-  my $db_pass   = $config->{'DB_pass'};
-  my $db_driver = $config->{'DB_driver'};
-  my $db_host   = $config->{'DB_host'};
-  my $db_port   = $config->{'DB_port'};
+  my $db_name   = $vars->{'DB_base'}   || $config->{'DB_base'};
+  my $db_user   = $vars->{'DB_user'}   || $config->{'DB_user'};
+  my $db_pass   = $vars->{'DB_pass'}   || $config->{'DB_pass'};
+  my $db_driver = $vars->{'DB_driver'} || $config->{'DB_driver'};
+  my $db_host   = $vars->{'DB_host'}   || $config->{'DB_host'};
+  my $db_port   = $vars->{'DB_port'}   || $config->{'DB_port'};
   my $base      = Nes::DB->new( $db_name, $db_user, $db_pass, $db_driver, $db_host, $db_port );
 
   my $values = '';

@@ -89,15 +89,15 @@ if ( $form->{'is_ok'} ) {
 $nes->out(%$vars);
 
 sub from_table {
-  
+
   return '' if !$vars->{'User'} || !$vars->{'Password'};
   
   my $user = '\''.$vars->{'User'}.'\'';
      $user = $vars->{'from_user_function'}.'(\''.$vars->{'User'}.'\')' if $vars->{'from_user_function'};
   my $pass = '\''.$vars->{'Password'}.'\'';
-     $pass = $vars->{'from_user_function'}.'(\''.$vars->{'Password'}.'\')' if $vars->{'from_pass_function'};
+     $pass = $vars->{'from_pass_function'}.'(\''.$vars->{'Password'}.'\')' if $vars->{'from_pass_function'};
 
-  my $query = qq~SELECT name  
+  my $query = qq~SELECT `$vars->{'from_user_field'}`  
                  FROM  `$vars->{'from_table'}`
                  WHERE ( 
                          `$vars->{'from_user_field'}` = $user  AND 
@@ -108,17 +108,17 @@ sub from_table {
 
   use Nes::DB;
   my $config    = $nes->{'CFG'};
-  my $db_name   = $config->{'DB_base'};
-  my $db_user   = $config->{'DB_user'};
-  my $db_pass   = $config->{'DB_pass'};
-  my $db_driver = $config->{'DB_driver'};
-  my $db_host   = $config->{'DB_host'};
-  my $db_port   = $config->{'DB_port'};
+  my $db_name   = $vars->{'DB_base'}   || $config->{'DB_base'};
+  my $db_user   = $vars->{'DB_user'}   || $config->{'DB_user'};
+  my $db_pass   = $vars->{'DB_pass'}   || $config->{'DB_pass'};
+  my $db_driver = $vars->{'DB_driver'} || $config->{'DB_driver'};
+  my $db_host   = $vars->{'DB_host'}   || $config->{'DB_host'};
+  my $db_port   = $vars->{'DB_port'}   || $config->{'DB_port'};
   my $base      = Nes::DB->new( $db_name, $db_user, $db_pass, $db_driver, $db_host, $db_port );
 
   my @result  = $base->sen_select($query);
   my $user_id = $result[0]->{$vars->{'from_user_field'}};
-  
+
   return $user_id;
 }
 
