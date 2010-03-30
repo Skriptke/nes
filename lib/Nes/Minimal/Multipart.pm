@@ -13,7 +13,7 @@
 #
 # ------------------------------------------------------------------------------
 
-package NES::Minimal;
+package Nes::Minimal;
 
 # This program is licensed under the same terms as Perl.
 # See http://dev.perl.org/licenses/

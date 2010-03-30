@@ -51,7 +51,7 @@
         }
       }
     </script>
-    <form name="{: $ form_name :}" {: ~ ($ id_form)id="{: $ id_form :}" :}class="{: $ class_form :}" action="{: $ action_form :}" method="POST">
+    <form name="{: $ form_name :}" {: ~ ($ id_form)id="{: $ id_form :}" :}class="{: $ class_form :}" action="{: $ action_form :}" method="POST" {: $ property :}>
         <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend,yes_html :}</legend> :}
             {: ~ ( $ tpl_options_begin ) {: include ('{: $ tpl_options_begin :}')  :}  :}
             <table {:~($ table_width)width="{: $ table_width :}" :}border="0">{: ~ ($error_fields && !$last_step) <tr><td colspan="2">{: $ msg_error_form,yes_html :}</td></tr> :}
