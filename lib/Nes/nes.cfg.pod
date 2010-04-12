@@ -61,7 +61,11 @@ to launch a warning each time you run Nes.
     tmp_upload     # In big upload, memory consumption is high,
                    # this defined from that kB. using a temporary
                    # file in the upload, preventing these are 
-                   # loaded into memory.
+                   # loaded into memory. 
+                   # * If tmp_upload is 0 or is greater than max_post, 
+                   # max_upload limit will be equal to max_post. Therefore, 
+                   # max_upload to take value, tmp_upload to be equal to or 
+                   # less than max_post.
 
     # Plugins list separated by commas to load at startup only
     # for the file in the URL, in all nhtml directory.
@@ -161,7 +165,7 @@ Skriptke: Enrique F. Castanon
 
 =head1 VERSION
 
-Version 1.00 Febrero 2010
+Version 1.03 April 2010
 
 =head1 COPYRIGHT
 
@@ -199,7 +203,8 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>. L<Nes::Tutorial>, L<Nes::Singleton>
+L<Nes>. L<Nes::Tutorial>, L<Nes::Singleton>, 
+Sample to use Nes; L<http://nes.sourceforge.net/>
 
 =cut
 

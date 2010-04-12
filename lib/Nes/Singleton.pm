@@ -24,20 +24,20 @@
 {
   package Nes::Singleton;
   
-  my $singleton;
+  my $instance;
 
   sub new {
     my $class = shift;
-    my $self  = $singleton || bless {}, $class;
+    my $self  = $instance || bless {}, $class;
     my ( $file ) = @_;
     
-    if ( $singleton ) {
+    if ( $instance ) {
       $self->{'container'} = nes_container->get_obj();
       $self->{'this_template_name'} = $self->{'container'}->{'file_name'};
       $self->{'top_template_name'}  = $self->{'top_container'}->{'file'};      
       return $self;
     } else {
-      $singleton = $self;
+      $instance = $self;
     }
 
     $self->{'file'} = $ENV{'PATH_TRANSLATED'} || $file;
@@ -80,8 +80,6 @@
 
     $self->{'container'}->go(); 
     $self->{'top_container'}->{'container'}->out();
-#    $self->{'container'}->forget();
-#    $self->{'top_container'}->forget();
 
     return;
   }
@@ -110,7 +108,7 @@
   sub start {
     my $class = shift;
     
-    utl::cleanup(\$singleton) if $ENV{'MOD_PERL'};
+    utl::cleanup(\$instance) if $ENV{'MOD_PERL'};
 
     return $class->new();
   }   

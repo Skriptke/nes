@@ -633,7 +633,7 @@ Skriptke: Enrique F. Castanon
 
 =head1 VERSION
 
-Version 1.00 Febrero 2010
+Version 1.03 April 2010
 
 =head1 COPYRIGHT
 
@@ -671,6 +671,7 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>, L<Nes::Singleton>, L<Nes::nes.cfg>
+L<Nes>, L<Nes::Singleton>, L<Nes::nes.cfg>, 
+Sample to use Nes; L<http://nes.sourceforge.net/>
 
 =cut

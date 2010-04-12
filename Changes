@@ -1,5 +1,6 @@
 Revision history for Nes
 
+        fix can't locate object method "_burst_multipart_buffer"
         added pseudo_ajax.nhtml object
         added include_js.nhtml object
         added dir share/cgi-bin/js
@@ -14,7 +15,6 @@ Revision history for Nes
         added tag inheritance to Nes.
         added 'add' method to Singleton for add tags.
         added Data::Dumper to debug info.
-        added obj_form => $nes_top_dir.'/obj/Nes/form' to setting.
         added dir share/cgi-bin/obj/Nes/form 
         allows parameters to obfuscated
         fix same cookie name in plugins forms and captcha.

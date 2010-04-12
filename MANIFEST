@@ -69,6 +69,9 @@ share/cgi-bin/obj/Nes/form/secure_login.nhtml
 share/cgi-bin/obj/Nes/form/secure_login_param.pl
 share/cgi-bin/obj/Nes/form/secure_login.pl
 share/cgi-bin/obj/Nes/form/secure_login.pm
+share/cgi-bin/obj/Nes/form/file_upload_loading.nhtml
+share/cgi-bin/obj/Nes/form/file_upload.nhtml
+share/cgi-bin/obj/Nes/form/file_upload.pl
 share/cgi-bin/obj/Nes/ajax/include_js.nhtml
 share/cgi-bin/obj/Nes/ajax/pseudo_ajax.nhtml
 share/cgi-bin/obj/Nes/ajax/pseudo_ajax.pl
@@ -78,6 +81,12 @@ share/cgi-bin/images/error_w.gif
 share/cgi-bin/images/error_g.gif
 share/cgi-bin/images/loading_g.gif
 share/cgi-bin/images/loading.gif
+share/cgi-bin/images/error_b_i.gif
+share/cgi-bin/images/error_g_i.gif
+share/cgi-bin/images/error_i.gif
+share/cgi-bin/images/error_w_i.gif
+share/cgi-bin/images/f_loading_g.gif
+share/cgi-bin/images/f_loading.gif
 share/cgi-bin/js/.htaccess
 share/cgi-bin/js/nes.js
 share/examples/tutorial/.htaccess
@@ -119,6 +128,7 @@ share/examples/nesblog/en/items/Help.nhtml
 'share/examples/nesblog/en/items/Include PHP and others.nhtml'
 share/examples/nesblog/en/items/Installation.nhtml
 share/examples/nesblog/en/items/Nes-1.00.nhtml
+share/examples/nesblog/en/items/Singleton.nhtml
 'share/examples/nesblog/en/items/Nes configuration file.nhtml'
 share/examples/nesblog/en/items.nhtml
 share/examples/nesblog/en/items/Security.nhtml

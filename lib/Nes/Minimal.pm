@@ -228,19 +228,46 @@ sub upload {
   my $vars = $self->{$pkg};
   
   return if !defined($vars->{'field'}->{$field_name});
-  
-  my $fh;
+  return $vars->{'from_file'}->{'fh'}->{$field_name} if exists $vars->{'from_file'}->{'fh'}->{$field_name};
   
   # if not tmp file, the data is in var in old style =< 1.29
   if ( !$vars->{'from_file'}->{$field_name} ) {
     require IO::String;
-    $fh = IO::String->new($vars->{'field'}->{$field_name});
+    $vars->{'from_file'}->{'fh'}->{$field_name} = IO::String->new($vars->{'field'}->{$field_name}->{'value'}[0]);
   } else {
-    $fh = $vars->{'from_file'}->{$field_name};
+    $vars->{'from_file'}->{'fh'}->{$field_name} = $vars->{'from_file'}->{$field_name};
   }
-  binmode $fh;  
+  binmode $vars->{'from_file'}->{'fh'}->{$field_name};  
 
-  return $fh; 
+  return $vars->{'from_file'}->{'fh'}->{$field_name}; 
+}
+
+sub upload_is_tmp {
+  my $self = shift;
+  my $pkg = __PACKAGE__;
+  my ($field_name) = @_;
+  my $vars = $self->{$pkg};
+  
+  return 1 if $vars->{'from_file'}->{$field_name};
+  return 0; 
+}
+
+sub upload_max_size {
+  my $self = shift;
+  my $pkg = __PACKAGE__;
+  my $vars = $self->{$pkg};
+  
+  return 1 if $Nes::Minimal::_ERROR_max_upload;
+  return 0; 
+}
+
+sub post_max_size {
+  my $self = shift;
+  my $pkg = __PACKAGE__;
+  my $vars = $self->{$pkg};
+  
+  return 1 if $Nes::Minimal::_ERROR_max_post;
+  return 0; 
 }
 
 ####
@@ -391,10 +418,18 @@ sub _read_post {
 
 	my $buffer = '';
 	my $read_bytes = 0;
-
+	
 	if ( ($bdry && $Nes::Minimal::_sub_filter) || 
 	     ($bdry && $ENV{'CONTENT_LENGTH'} > $Nes::Minimal::_use_tmp && $Nes::Minimal::_use_tmp) ) {
-
+	       
+    if ($ENV{'CONTENT_LENGTH'} > $Nes::Minimal::_max_upload) {
+      $Nes::Minimal::_ERROR_max_upload = 1;
+      require Carp;
+      Carp::carp($pkg . " The POST is greater than max_upload: $ENV{'CONTENT_LENGTH'} > $Nes::Minimal::_max_upload");
+      return;
+    }     
+	       
+	       
     if (2 == $Nes::Minimal::_mod_perl) {
       $read_bytes = $self->_read_post_bdry(\$buffer,$bdry,$r);
     } else {
@@ -402,12 +437,13 @@ sub _read_post {
     }
 
 	} else {
-
+	  
     if ($ENV{'CONTENT_LENGTH'} > $vars->{'max_buffer'}) {
       $Nes::Minimal::_ERROR_max_post = 1;
       require Carp;
-      Carp::carp($pkg . " - The POST is greater than max_read_size: $ENV{'CONTENT_LENGTH'} > $vars->{'max_buffer'}");
-    }  
+      Carp::carp($pkg . "  The POST is greater than max_post: $ENV{'CONTENT_LENGTH'} > $vars->{'max_buffer'}");
+      return;
+    }  	  
 
   	if ($read_length) {
   		if (2 == $Nes::Minimal::_mod_perl) {
@@ -484,6 +520,7 @@ sub _read_post_bdry {
     $read_bytes += $readb;
 
     if ($read_bytes > $Nes::Minimal::_max_upload) {
+      $Nes::Minimal::_ERROR_max_upload = 1;
       require Carp;
       Carp::carp($pkg . " - The POST is greater than max_upload: $ENV{'CONTENT_LENGTH'} > $Nes::Minimal::_max_upload");
       last;

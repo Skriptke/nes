@@ -91,8 +91,7 @@ You can insert SQL SELECT statements in your templates directly.
 
 =item .nes.cfg configuration files
 
-Nes provides configuration files to the style .htaccess you can also use
-for your script. 
+Nes provides configuration files per directory.
 
 =back
 
@@ -253,7 +252,7 @@ consider this example:
     {: NES 1.0 ('index.cgi') :}
     <html>
         ...
-        {: ~ *nes_session_ok
+        {: ~ ( ! *nes_session_ok )
             {: include ('user_register.nhtml') :}
         :}
         ...
@@ -268,7 +267,7 @@ For this case we can rewrite the template as follows:
     {: NES 1.0 none :}
     <html>
         ...
-        {: ~ *nes_session_ok
+        {: ~ ( ! *nes_session_ok )
             {: include ('user_register.nhtml') :}
         :}
         ...
@@ -279,7 +278,7 @@ So to create the session:
     {: NES 1.0 none :}
     <html>
         ...
-        {: ~ $login_ok
+        {: ~ ( $login_ok )
           {: include ( '{: * cfg_obj_top_dir :}/session.nhtml',
                        'create',  
                        '{: * q_user :}',
@@ -311,7 +310,7 @@ close a block are respectively:
 The Tags are the word or symbol that precedes the keys to open the block. 
 Similar to the HTML Tags. The Tag Nes syntax is:
 
-    {: TAG (parameters) [HTML] :}
+    {: TAG [(parameters)] [HTML] :}
 
 TAG can be:
 
@@ -344,7 +343,20 @@ Parentheses are not required provided there are no spaces between the parameters
 
 Use quotation marks and commas in the parameters:
 
-    {: include ('file.nhtml','The \'Title\'','one, two and three') :} 
+    {: include ('template.nhtml',
+                'The \'Title\'',
+                'one, two and three'
+               ) 
+    :}
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/secure_login.nhtml',
+                "
+                  script_handler   => 'my_script_handler.pl',
+                  function_handler => 'my_function_handler',
+                  form_name        => 'my_form_1',
+                "
+               )         
+    :}    
 
 All Tags except NES may occupy several lines:
 
@@ -364,12 +376,47 @@ All Tags except NES may occupy several lines:
 
 Block is removed and not displayed in the HTML output.
 
+    {: NES 1.0 none :}
+    <html>
+      <head>
+        <title>Nes sample</title>
+      </head>
+      <body>
+        {: # this is a comment :}
+      </body>
+    </html>
+
 =head2 $ Variable
 
     {: $ variable :}
 
-The block is replaced by the value of "variable" that must have been previously 
-defined in our Perl script, of not being the block is replaced by an empty string.
+The block is replaced by the value of "variable" that must have been 
+previously defined in our Perl script, of not being the block is replaced 
+by an empty string.
+
+template.nhtml:
+
+    {: NES 1.0 ('script.pl') :}
+    <html>
+      <head>
+        <title>Nes sample</title>
+      </head>
+      <body>
+        <b>{: $ var_name :}</b>
+      </body>
+    </html>
+
+script.pl:
+
+    use Nes;
+
+    my $nes = Nes::Singleton->new('archivo.nhtml');
+    my $nes_tags = {};
+
+    $nes_tags->{'var_name'} = 'Hello!';
+
+    $nes->out(%$nes_tags);
+   
 
 =head2 * Environment variable
 
@@ -439,13 +486,32 @@ Table. We refer to each field in each record with:
 
 Table must be defined in our Perl script as an array of hashes reference.
 
-Sample:
+In script.pl:
 
-    <table border="1">
-    {: @ user
+    my $table = [ 
+                  { 
+                    name   => 'one',
+                    email  => 'one@example.com',
+                  },
+                  { 
+                    name   => 'two',
+                    email  => 'two@example.com',
+                  },
+                  { 
+                    name   => 'three',
+                    email  => 'three@example.com',
+                  }                                    
+                ];
+
+    $tag{'users'} = $table;
+
+In template.nhtml:
+
+    <table>
+    {: @ users
       <tr>
-        <td> {: @$ user.name  :} </td>
-        <td> {: @$ user.email :} </td>
+        <td> {: @$ users.name  :} </td>
+        <td> {: @$ users.email :} </td>
       </tr>
     :}
     </table>    
@@ -454,17 +520,19 @@ Sample:
 
     {: @$ table.field :}
 
-Where "field" is the name of the field in the table. {: @$ table.field :} is a 
-property of {: @ (table) HTML :} or {: sql (SQL SELECT) HTML :}
+Where "field" is the name of the field in the table. {: @$ table.field :} is 
+a property of {: @ (table) HTML :} or {: sql (SQL SELECT) HTML :}
 
 =head2 sql SQL SELECT
 
     {: sql (SQL SELECT) HTML :}
 
-The block is replaced and is repeated by "HTML" for each record returned by the
-query. The operation is similar to Tag @. The SQL statement must begin with SELECT.
+The block is replaced and is repeated by "HTML" for each record returned by 
+the query. The operation is similar to Tag @. The SQL statement must begin 
+with SELECT.
 
-It reads the configuration (.nes.cfg) the following variables to access the database:
+It reads the configuration (.nes.cfg) the following variables to access 
+the database:
 
     DB_base    = base_name
     DB_user    = user
@@ -475,7 +543,7 @@ It reads the configuration (.nes.cfg) the following variables to access the data
 
 Sample:
 
-    <table border="1">
+    <table>
     {: sql (
               'SELECT * FROM `table` 
                         WHERE 1 
@@ -492,8 +560,29 @@ Sample:
 
     {: include ('file') :}
 
-The block is replaced by the file "file", file can be a nhtml, nsql, html, php, 
-sh, text, perl, etc..
+The block is replaced by the file "file", file can be a nhtml, nsql, html, 
+php, sh, text, perl, etc..
+
+You can send parameters to the included file:
+
+    {: include ('file.nhtml','param', ... ) :}
+
+These will be received in the file nHtml environment variables as:
+
+    q_filename_param_number
+    
+    {: * q_file_param_1 :}
+
+And in the Perl script with similar notation, excluding 'q_' in the 
+query:
+
+    use Nes;
+    my $nes = Nes::Singleton->new('file.nhtml');
+    
+    my $q = $nes->{'query'}->{'q'};
+    my $param = $q->{'file_param_1'};
+
+The included file inherits the parent tags
 
 =head2 NES Nes
 
@@ -662,6 +751,8 @@ Out:
     Extrac:
     Test Page - Sample to use Nes;
 
+See: L<Nes::Obj::secure_login>, L<Nes::Obj::multi_step>
+
 =head1 HTTP-headers
 
 With the HTTP-headers variable we have to define in our Perl script:
@@ -683,7 +774,23 @@ the headers by default. Should be included immediately after the NES Tag:
     {: $ HTTP-headers :}
 
 If you define HTTP-headers and then not included with 
-{: $ HTTP-headers :} we get an error. 
+{: $ HTTP-headers :} we get an error. * This is not required from version 1.03.
+
+You can use any module of CPAN to create the HTTP headers. The difference is 
+that you can not send them directly to the output, assign it to the 
+variable {'HTTP-headers'}
+
+    use Nes;
+    use CGI ':standard';
+
+    my $nes  = Nes::Singleton->new('template.nhtml');
+    my $cgi  = CGI->new();
+    my %tags = {};
+
+    print $cgi->header('text/html');                      <- It will not work
+    $tags->{'HTTP-headers'} = $cgi->header('text/html');  <- Ok
+
+    $nes->out(%tags);
 
 =head1 Security
 
@@ -806,7 +913,7 @@ Skriptke: Enrique F. Castanon
 
 =head1 VERSION
 
-Version 1.00 Febrero 2010
+Version 1.03 April 2010
 
 =head1 COPYRIGHT
 
@@ -846,7 +953,8 @@ POSSIBILITY OF SUCH DAMAGE
 
 L<Template::Toolkit>, L<HTML::Template>, L<HTML::Mason>, 
 L<HCKit::Template>, L<Catalyst>, L<CGI::Framework>, 
-L<CGI::Application>, L<CGI::Application::Framework>, L<mod_perl>
+L<CGI::Application>, L<CGI::Application::Framework>, L<mod_perl>, 
+Sample to use Nes; L<http://nes.sourceforge.net/>
 
 =cut
 

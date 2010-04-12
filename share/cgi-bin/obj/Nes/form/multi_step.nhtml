@@ -54,7 +54,7 @@
     <form name="{: $ form_name :}" {: ~ ($ id_form)id="{: $ id_form :}" :}class="{: $ class_form :}" action="{: $ action_form :}" method="POST" {: $ property :}>
         <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend,yes_html :}</legend> :}
             {: ~ ( $ tpl_options_begin ) {: include ('{: $ tpl_options_begin :}')  :}  :}
-            <table {:~($ table_width)width="{: $ table_width :}" :}border="0">{: ~ ($error_fields && !$last_step) <tr><td colspan="2">{: $ msg_error_form,yes_html :}</td></tr> :}
+            <table {:~($ table_width)width="{: $ table_width :}" :}border="0" {: $ table_property :}>{: ~ ($error_fields && !$last_step) <tr><td colspan="2">{: $ msg_error_form,yes_html :}</td></tr> :}
                 {: @ (fields)<tr>{: ~ ( '{: @$ fields.begin :}' )<tr><td colspan="2">{: @$ fields.begin,yes_html :}</td></tr>  :}
                     <td valign="top" align="right">{: @$ fields.msg,yes_html :}</td>
                     <td valign="top" align="left">{: ~ ( '{: @$ fields.type :}' ne 'select' && '{: @$ fields.type :}' ne 'textarea' ) 

@@ -26,7 +26,7 @@ use strict;
 # cgi environment no defined in command line
 no warnings 'uninitialized';
 
-our $VERSION          = '1.02.4';
+our $VERSION          = '1.02.5';
 our $CRLF             = "\015\012";
 our $MAX_INTERACTIONS = 500;
 our $MOD_PERL         = $ENV{'MOD_PERL'} || 0;
@@ -694,6 +694,66 @@ use Nes::Singleton;
 
     return;
   }
+  
+  sub param {
+    my $self  = shift;
+    my ($param) = @_;
+
+    return $self->{'CGI'}->param($param);
+  }  
+  
+#  sub get_upload {
+#    my $self  = shift;
+#    my ($param,$buffer) = @_;
+# 
+#    my $fh = $self->{'CGI'}->upload($param);
+#    return if !$fh;
+#    
+#    return read($fh, $$buffer, 8192);
+#  }  
+  
+  sub get_upload_buffer {
+    my $self  = shift;
+    my ($param,$buffer) = @_;
+ 
+    my $fh = $self->{'CGI'}->upload($param);
+    return if !$fh;
+    
+    return read($fh, $$buffer, 8192);
+  }
+  
+  sub get_upload_name {
+    my $self  = shift;
+    my ($param) = @_;
+
+    return $self->{'CGI'}->param_filename($param);
+  }
+  
+  sub get_upload_fh {
+    my $self  = shift;
+    my ($param) = @_;
+ 
+    return $self->{'CGI'}->upload($param);
+  }
+  
+  sub upload_is_tmp {
+    my $self  = shift;
+    my ($param) = @_;
+ 
+    return $self->{'CGI'}->upload_is_tmp($param);
+  }
+  
+  sub upload_max_size {
+    my $self  = shift;
+ 
+    return $self->{'CGI'}->upload_max_size();
+  }  
+  
+  sub post_max_size {
+    my $self  = shift;
+ 
+    return $self->{'CGI'}->post_max_size();
+  }  
   
   sub url_encode {
     my $self  = shift;

@@ -135,9 +135,12 @@ use strict;
     $self->{'form_is_finish'} = 0;
     $self->{'form_is_finish'} = 1 if $self->{'form_finish'} eq $self->{'name'};
 
-    $self->{'expire'} = $expire || $self->{'CFG'}{'forms_plugin_expire'};
-    $expire_last = $self->{'CFG'}{'forms_plugin_expire_last'} if !$expire_last;
-    $self->{'expire'} = $expire_last if $self->{'form_is_finish'};
+    $self->{'expire'}      = $expire || $self->{'CFG'}{'forms_plugin_expire'};
+    $self->{'expire_last'} = $expire_last || $self->{'CFG'}{'forms_plugin_expire_last'};
+    
+    if ( $self->{'form_is_start'} && !$self->{'form_finish'} ) {
+      $self->{'expire'} = $self->{'expire_last'};
+    }
 
     $self->{'is_ok'} = 0;
 
@@ -300,7 +303,7 @@ use strict;
     my $self = shift;
 
     # siempre, indica que se ha iniciado el formulario
-    $self->{'out'} =~ s/(\<\/form\>)/$self->{'form_start_field'}\n$1/;
+    $self->{'out'} =~ s/(\<\/form\>)/$self->{'form_start_field'}$1/;
 
     return;
   }
@@ -328,6 +331,7 @@ use strict;
       $self->{'out'} =~ s/<select /<input readonly=\"readonly\" /gi;
 
       # excluimos submit y captcha
+      $self->{'out'} =~ s/<input readonly=\"readonly\" (.*type\s*=\s*\"?hidden\"?)/<input $1/gi;
       $self->{'out'} =~ s/<input readonly=\"readonly\" (.*type\s*=\s*\"?submit\"?)/<input $1/gi;
       $self->{'out'} =~ s/<input readonly=\"readonly\" (.*name\s*=\s*\"?$self->{'CFG'}{'captcha_plugin_start'}_$self->{'captcha_name'}\"?)/<input $1/gi if $self->{'captcha_name'};
       $self->{'out'} =~ s/<input readonly=\"readonly\" (.*name\s*=\s*\"?$self->{'captcha_name'}\"?)/<input $1/gi if $self->{'captcha_name'};
