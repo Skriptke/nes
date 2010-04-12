@@ -19,6 +19,11 @@ lib/Nes/Obj/secure_login.pod
 lib/Nes/Obj/multi_step.pod
 lib/Nes/Obj/include_js.pod
 lib/Nes/Obj/pseudo_ajax.pod
+lib/Nes/Obj/date_time.pod
+lib/Nes/Obj/go_language.pod
+lib/Nes/Obj/location.pod
+lib/Nes/Obj/lwp.pod
+lib/Nes/Obj/session.pod
 share/examples/hello_nes/.htaccess
 share/examples/hello_nes/hello.cgi
 share/examples/hello_nes/.nes.cfg

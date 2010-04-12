@@ -909,7 +909,7 @@ L<Nes::Tutorial>, L<Nes::Singleton>, L<Nes::nes.cfg>
 
 =head1 AUTHOR
 
-Skriptke: Enrique F. Castanon
+Skriptke: Enrique Castañón
 
 =head1 VERSION
 

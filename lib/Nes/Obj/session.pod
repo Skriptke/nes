@@ -1,39 +1,44 @@
 
 =head1 NAME
 
-Nes::Obj::include_js - Asynchronous JavaScript .js file loading.
+Nes::Obj::session - manage users session
 
 =head1 SYNOPSIS
 
-    {: include ('{: * cfg_obj_top_dir :}/Nes/ajax/include_js.nhtml',
-                'js_file.js',
-                'name',
-                 timer
-               )         
+    {: include ( '{: * cfg_obj_top_dir :}/session.nhtml',
+                  action,
+                  user,
+                  expire
+               )
     :}
 
 =head1 DESCRIPTION
 
-Asynchronous inclusion for js files, without blocking browser. Dynamic 
-version of tag: "<script src=file.js>"
+Manage users session.
 
 =head1 PARAMETERS
 
 =over 2
 
-=item js_file.js
+=item action
 
-Js file to include.
+Action can be 'get' for get session user_id, 'create' for create session 
+or 'del' for delete session.
 
-=item name
+=item user
 
-Name for create JavaScript variables.
+The user_id.
 
-=item timer
+=item expire
 
-Millisecond, delay to load. Some browsers requires js load by setTimeout JS 
-function with a value greater than 10 milliseconds for not blocking. Default
-is 0.
+if action is create: expire time.
+
+Expire format:
+
+    suffix: s: seconds, m: minutes h: hours d: days, M: months, y: years
+    30s = 30 seconds
+    12h = 12 hours
+    2y  = 2 years
 
 =back
 
@@ -81,7 +86,7 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>, L<Nes::Tutorial>, L<Nes::nes.cfg>
+L<Nes>, L<Nes::Tutorial>, Sample to use Nes; L<http://nes.sourceforge.net/>
 
 =cut
 

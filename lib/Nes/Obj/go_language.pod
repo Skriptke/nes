@@ -1,41 +1,57 @@
 
 =head1 NAME
 
-Nes::Obj::include_js - Asynchronous JavaScript .js file loading.
+Nes::Obj::go_language - Redirect based on user agent language.
 
 =head1 SYNOPSIS
 
-    {: include ('{: * cfg_obj_top_dir :}/Nes/ajax/include_js.nhtml',
-                'js_file.js',
-                'name',
-                 timer
-               )         
+    {: include ('{: * cfg_obj_top_dir :}/go_language.nhtml', 
+                'es_ES: http//example.com/es_ES',
+                'es:    http//example.com/es_generic',
+                'en_US: http//example.com/en_US',
+                {: #  more...  :}
+                ':      http//example.com/default'
+                )
     :}
 
 =head1 DESCRIPTION
 
-Asynchronous inclusion for js files, without blocking browser. Dynamic 
-version of tag: "<script src=file.js>"
+Redirect to especific page based on user agent language by 302 Found status.
 
 =head1 PARAMETERS
 
-=over 2
+Format:
 
-=item js_file.js
+    'user_agent_language: page'
 
-Js file to include.
+To indicate the default page:
 
-=item name
+    ': default_page'
 
-Name for create JavaScript variables.
+=head1 Samples
 
-=item timer
+Redirect if user agent language begins by 'en_':
 
-Millisecond, delay to load. Some browsers requires js load by setTimeout JS 
-function with a value greater than 10 milliseconds for not blocking. Default
-is 0.
+    {: include ('{: * cfg_obj_top_dir :}/go_language.nhtml', 
+                'en_: http//example.com/en_generic.html'
+               )
+    :}
 
-=back
+Redirect if user agent language begins by 'en_US':
+
+    {: include ('{: * cfg_obj_top_dir :}/go_language.nhtml', 
+                'en_US: http//example.com/en_US.html'
+               )
+    :}  
+
+Combined and default page:
+
+    {: include ('{: * cfg_obj_top_dir :}/go_language.nhtml', 
+                'en_:   http//example.com/en_generic.html',
+                'en_US: http//example.com/en_US.html',
+                ':      http//example.com/en_generic.html'
+               )
+    :}
 
 =head1 AUTHOR
 
@@ -81,7 +97,7 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>, L<Nes::Tutorial>, L<Nes::nes.cfg>
+L<Nes>, L<Nes::Tutorial>, Sample to use Nes; L<http://nes.sourceforge.net/>
 
 =cut
 

@@ -1,41 +1,50 @@
 
 =head1 NAME
 
-Nes::Obj::include_js - Asynchronous JavaScript .js file loading.
+Nes::Obj::location - Redirect to page.
 
 =head1 SYNOPSIS
 
-    {: include ('{: * cfg_obj_top_dir :}/Nes/ajax/include_js.nhtml',
-                'js_file.js',
-                'name',
-                 timer
-               )         
+    {: include ('{: * cfg_obj_top_dir :}/location.nhtml', 
+                 URL,
+                 [STATUS] 
+               ) 
     :}
 
 =head1 DESCRIPTION
 
-Asynchronous inclusion for js files, without blocking browser. Dynamic 
-version of tag: "<script src=file.js>"
+Redirect to especific page.
 
 =head1 PARAMETERS
 
 =over 2
 
-=item js_file.js
+=item URL
 
-Js file to include.
+URL to redirect.
 
-=item name
+=item STATUS
 
-Name for create JavaScript variables.
-
-=item timer
-
-Millisecond, delay to load. Some browsers requires js load by setTimeout JS 
-function with a value greater than 10 milliseconds for not blocking. Default
-is 0.
+HTTP status, default is "302 Found"
 
 =back
+
+=head1 Samples
+
+Redirect to index by "302 Found" HTTP status:
+
+    {: include ('{: * cfg_obj_top_dir :}/location.nhtml', 
+                './'
+               ) 
+    :}
+
+Redirect to http//example.com/ by "301 Moved Permanently":
+
+    {: include ('{: * cfg_obj_top_dir :}/go_language.nhtml', 
+                'http//example.com/',
+                '301 Moved Permanently'
+               )
+    :}  
 
 =head1 AUTHOR
 
@@ -81,7 +90,7 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>, L<Nes::Tutorial>, L<Nes::nes.cfg>
+L<Nes>, L<Nes::Tutorial>, Sample to use Nes; L<http://nes.sourceforge.net/>
 
 =cut
 

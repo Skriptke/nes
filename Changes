@@ -1,5 +1,6 @@
 Revision history for Nes
 
+
         fix can't locate object method "_burst_multipart_buffer"
         added pseudo_ajax.nhtml object
         added include_js.nhtml object

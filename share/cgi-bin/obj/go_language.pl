@@ -1,26 +1,25 @@
 #!/usr/bin/perl
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
-#  NES by - Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón
+#  Nes by Skriptke
+#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
 #  Licensed under the GNU GPL.
-#  http://sourceforge.net/projects/nes/
+#
+#  CPAN:
+#  http://search.cpan.org/dist/Nes/
+#
+#  Sample:
+#  http://nes.sourceforge.net/
+#
+#  Repository:
+#  http://github.com/Skriptke/nes
 # 
-#  Version 0.8 beta
+#  Version 1.03
 #
-#  go_language.pl 
+#  go_language.pl
 #
-#    {: include ('{: * cfg_obj_top_dir :}/go_language.nhtml', 
-#                'es_ES: http//example.com/es_ES',
-#                'es:    http//example.com/es_generic',
-#                'en_US: http//example.com/en_US',
-#                ...
-#                ':      http//example.com/default'
-#                )
-#    :}
-#
-# ---------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
   use Nes;
   my $nes = Nes::Singleton->new('./go_language.nhtml');

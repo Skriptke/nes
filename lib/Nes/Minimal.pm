@@ -7,7 +7,7 @@
 #  Licensed under the GNU GPL.
 #  http://nes.sourceforge.net/
 # 
-#  NES Version 1.00_01 
+#  NES Version 1.03
 #
 #  Minimal.pm
 #
@@ -39,7 +39,7 @@ $Nes::Minimal::_ERROR_max_upload        = 0;
 $Nes::Minimal::_ERROR_max_post          = 0;
 $Nes::Minimal::              = undef;
 
-$Nes::Minimal::VERSION = "1.2901";
+$Nes::Minimal::VERSION = "1.2902";
 
 if (exists ($ENV{'MOD_PERL'}) && (0 == $Nes::Minimal::_mod_perl)) {
   local	$| = 1;

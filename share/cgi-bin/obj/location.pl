@@ -1,26 +1,35 @@
 #!/usr/bin/perl
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
-#  NES by - Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón
+#  Nes by Skriptke
+#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
 #  Licensed under the GNU GPL.
-#  http://sourceforge.net/projects/nes/
+#
+#  CPAN:
+#  http://search.cpan.org/dist/Nes/
+#
+#  Sample:
+#  http://nes.sourceforge.net/
+#
+#  Repository:
+#  http://github.com/Skriptke/nes
 # 
-#  Version 0.7 beta
+#  Version 1.03
 #
-#  location.pl 
-#   {: include ('{: * cfg_obj_top_dir :}/location.nhtml', URL, [STATUS] ) :}
+#  location.pl
 #
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
-use Nes;
-my $nes = Nes::Singleton->new('./location.nhtml');
-my $url = $nes->{'query'}->{'q'}{'location_param_1'};
-my $sta = $nes->{'query'}->{'q'}{'location_param_2'} || "302 Found";
+  use Nes;
+  my $nes = Nes::Singleton->new('./location.nhtml');
+  my $url = $nes->{'query'}->{'q'}{'location_param_1'};
+  my $sta = $nes->{'query'}->{'q'}{'location_param_2'} || "302 Found";
+  
+  my %tags;
+  $tags{'status'} = $sta;
+  $nes->out(%tags);
+  
+  $nes->{'container'}->{'content_obj'}->location( $url, $sta );
 
-my %tags;
-$tags{'status'} = $sta;
-$nes->out(%tags);
-
-$nes->{'container'}->{'content_obj'}->location( $url, $sta );
+1;

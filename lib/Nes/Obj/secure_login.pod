@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-secure_login.nhtml - Secure Login Nes Object.
+Nes::Obj::secure_login - Secure Login Nes Object.
 
 =head1 SYNOPSIS
 
@@ -357,11 +357,11 @@ Template for options.
 
 =head1 AUTHOR
 
-Skriptke: Enrique F. Castanon
+Skriptke: Enrique Castañón
 
 =head1 VERSION
 
-Version 1.00 Febrero 2010
+Version 1.03 April 2010
 
 =head1 COPYRIGHT
 

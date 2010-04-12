@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-multi_step.nhtml - Secure Multi Step Form.
+Nes::Obj::multi_step - Secure Multi Step Form.
 
 =head1 SYNOPSIS
 
@@ -363,11 +363,11 @@ Not support "multiple select".
 
 =head1 AUTHOR
 
-Skriptke: Enrique F. Castanon
+Skriptke: Enrique Castañón
 
 =head1 VERSION
 
-Version 1.00 Febrero 2010
+Version 1.03 April 2010
 
 =head1 COPYRIGHT
 

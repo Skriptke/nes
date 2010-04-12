@@ -1,50 +1,25 @@
 #!/usr/bin/perl
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
-#  NES by - Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón
+#  Nes by Skriptke
+#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
 #  Licensed under the GNU GPL.
-#  http://sourceforge.net/projects/nes/
+#
+#  CPAN:
+#  http://search.cpan.org/dist/Nes/
+#
+#  Sample:
+#  http://nes.sourceforge.net/
+#
+#  Repository:
+#  http://github.com/Skriptke/nes
 # 
-#  Version 0.8 beta
+#  Version 1.03
 #
-#  lwp.pl 
+#  lwp.pl
 #
-#  {: include ('{: * cfg_obj_top_dir :}/lwp.nhtml',
-#               URL,
-#               extrac,  {: # default: content      |
-#                                      status       |
-#                                      Content-Type |
-#                                      title        |
-#                                      head         |
-#                                      body         |
-#                                      star:-:end   | 
-#                                      :-:star:-:end:-:
-#                         :}
-#               method,   {: # default: GET | POST :}
-#               query,    {: # query: 'name=Jose&email=jose@sample.com' :}
-#               charset,  {: # default: no change | ISO | UTF-8 :}
-#               useragent {: # default: Nes/0.8  :}
-#               email     {: # user agent email. default: $ENV{'SERVER_ADMIN'}  :}
-#             ) 
-#  :}
-#
-#  extrac:
-#    <tag>:-:</tag>       Return title tag content without tags: '<tag></tag>'
-#    :-:<tag>:-:</tag>:-: Return title tag and include tags: '<tag></tag>'
-#
-#  Defined:
-#    {: $ status :}        # Status response
-#    {: $ request :}       # request send
-#    {: $ Content-Type :}  # Content type
-#    {: $ content :}       # All HTML content
-#    {: $ title :}         # Title Tag content
-#    {: $ head :}          # Head Tag content
-#    {: $ body :}          # Body Tag content
-#    {: $ extrac :}        # extrac return value
-#
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
   use Nes;
   my $nes     = Nes::Singleton->new('./lwp.nhtml');
@@ -54,7 +29,7 @@
   my $method  = $nes->{'query'}->{'q'}{$obj.'_param_3'} || 'GET';
   my $query   = $nes->{'query'}->{'q'}{$obj.'_param_4'};
   my $charset = $nes->{'query'}->{'q'}{$obj.'_param_5'};
-  my $uagent  = $nes->{'query'}->{'q'}{$obj.'_param_6'} || 'Nes/0.8';
+  my $uagent  = $nes->{'query'}->{'q'}{$obj.'_param_6'} || 'Nes/1.0';
   my $uamail  = $nes->{'query'}->{'q'}{$obj.'_param_6'} || $ENV{'SERVER_ADMIN'};
   $uamail = 'no-mail@example.com' if $uamail !~ /[^@]?+\@[^@]?+\..?+/;
   my %tags;

@@ -1,39 +1,31 @@
 
 =head1 NAME
 
-Nes::Obj::include_js - Asynchronous JavaScript .js file loading.
+Nes::Obj::date_time - Get date and time.
 
 =head1 SYNOPSIS
 
-    {: include ('{: * cfg_obj_top_dir :}/Nes/ajax/include_js.nhtml',
-                'js_file.js',
-                'name',
-                 timer
-               )         
+    {: include ( '{: * cfg_obj_top_dir :}/date_time.html', 
+                 'gmt',                  {: # local o gmt :}
+                 '%A %e %B %Y %H:%M:%S'  {: # format :}
+               ) 
     :}
 
 =head1 DESCRIPTION
 
-Asynchronous inclusion for js files, without blocking browser. Dynamic 
-version of tag: "<script src=file.js>"
+Get date and time in POSIX strftime format.
 
 =head1 PARAMETERS
 
 =over 2
 
-=item js_file.js
+=item local o gmt
 
-Js file to include.
+Get local or gmt.
 
-=item name
+=item format
 
-Name for create JavaScript variables.
-
-=item timer
-
-Millisecond, delay to load. Some browsers requires js load by setTimeout JS 
-function with a value greater than 10 milliseconds for not blocking. Default
-is 0.
+POSIX strftime format 
 
 =back
 
@@ -47,7 +39,7 @@ Version 1.03 April 2010
 
 =head1 COPYRIGHT
 
-Copyright (c) Enrique F. Castanon Barbero. All rights reserved.
+Copyright (c) Enrique Castanon. All rights reserved.
 
 =head1 LICENSE
 
@@ -81,7 +73,7 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>, L<Nes::Tutorial>, L<Nes::nes.cfg>
+L<Nes>, L<Nes::Tutorial>, Sample to use Nes; L<http://nes.sourceforge.net/>
 
 =cut
 

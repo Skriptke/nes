@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-pseudo_ajax.nhtml - cross-domain pseudo-AJAX requests.
+Nes::Obj::pseudo_ajax - cross-domain pseudo-AJAX requests.
 
 =head1 SYNOPSIS
 
@@ -117,11 +117,11 @@ Variable to pass in GET to js file, is a JS variable, interpreted by JavaScript.
 
 =head1 AUTHOR
 
-Skriptke: Enrique F. Castanon
+Skriptke: Enrique Castañón
 
 =head1 VERSION
 
-Version 1.00 Febrero 2010
+Version 1.03 April 2010
 
 =head1 COPYRIGHT
 
