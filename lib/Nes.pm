@@ -1718,7 +1718,8 @@ use Nes::Singleton;
     print $self->{'cookies'}->out;
     print "X-Powered-By: $self->{'X-Powered-By'}\n";
 #    print "Status: $self->{'HTTP-status'}\n" if !$self->{'tags'}{'HTTP-headers'};
-    print $self->{'TAG_HTTP-headers'} || $self->{'Content-type'}."\n\n";
+#    print $self->{'TAG_HTTP-headers'} || $self->{'Content-type'}."\n\n";
+    print $self->{'HTTP-headers'}."\n\n" if !$self->{'TAG_HTTP-headers'};
     print $self->{'out'};
 
   }

@@ -24,6 +24,7 @@ lib/Nes/Obj/go_language.pod
 lib/Nes/Obj/location.pod
 lib/Nes/Obj/lwp.pod
 lib/Nes/Obj/session.pod
+lib/Nes/Plugin/API.pod
 share/examples/hello_nes/.htaccess
 share/examples/hello_nes/hello.cgi
 share/examples/hello_nes/.nes.cfg

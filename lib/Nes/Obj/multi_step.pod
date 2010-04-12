@@ -90,6 +90,12 @@ Update data directly to the database:
 Create a form with one or more steps, with a captcha at the end. Data can be 
 sent over a script handler or directly to the database.
 
+For a better understanding of this object see live sample: 
+http://nes.sourceforge.net or install 'nesblog' and see scripts and 
+templates, with set_nes_site utility:
+
+    set_nes_site --from_exam=nesblog --to_exam=/full-path/root-www/nesblog
+
 =head1 PARAMETERS
 
 =over 2
@@ -100,11 +106,29 @@ The script that contains the "function_handler"
 
 =item function_handler
 
-Function that receives the form data.
+Function that receives the form data. Receives the form fields in a 
+hash reference. Must return none if successful, scalar if error or 
+hash reference if fields errors. Sample:
+
+    sub function_handler {
+        my $data = shift;
+        my $error_fields = {};
+        my $error;
+        ...
+        if ( ! $data->{'name'} ) {
+            $error_fields->{'name'} = 'Name is required';
+        }
+        ...
+        return $error_fields if $error_fields;
+        return 'Error in DB' if $DB->{'error'};
+        return;
+     }
+
+See live sample: L<http://nes.sourceforge.net/miniblog/en/?action=register>
 
 =item script_NES
 
-Perl script to execute.
+Perl script to execute. Default none.
 
 =item to_database
 
@@ -126,7 +150,80 @@ LIMIT clause in sql sentence in UPDATE mode.
 
 Correspondence from the fields of the database to form. If it begins with 
 two points, is a function sql. Sample: date => ':NOW()'
-   
+
+=item DB_base
+
+Database name. Usually DB_... must be previously defined in its nes.cfg, 
+multi_step take these defaults. But if you need to consult another 
+database, can DB_... as parameters.
+
+Not a good idea to include passwords in files html:
+
+    BAD:
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/multi_step.nhtml',
+                "
+                  to_database        => 'INSERT',
+                  to_table           => 'table',
+                  DB_base            => 'basename',
+                  DB_user            => 'baseuser',
+                  DB_pass            => 'sakjuje7ey',                  
+                  ...
+                "
+               )         
+    :}    
+
+Declare them as variables in their nes.cfg:
+
+    # primary database
+    DB_base    = basename
+    DB_user    = username
+    DB_pass    = password
+    DB_driver  = mysql
+    DB_host    = localhost
+    DB_port    = 3306
+
+    # alternative database
+    form1_DB_base    = otherbasename
+    form1_DB_user    = username
+    form1_DB_pass    = password
+    form1_DB_driver  = mysql
+    form1_DB_host    = localhost
+    form1_DB_port    = 3306
+
+And so:
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/multi_step.nhtml',
+                "
+                  to_database        => 'INSERT',
+                  to_table           => 'table',
+                  DB_base            => '{: * cfg_form1_DB_base :}',
+                  DB_user            => '{: * cfg_form1_DB_user :}',
+                  DB_pass            => '{: * cfg_form1_DB_pass :}',            
+                  ...
+                "
+               )         
+    :}  
+
+=item DB_user
+
+Database user.
+
+=item DB_pass
+
+Database password.
+
+=item DB_driver
+
+Database driver.
+
+=item DB_host
+
+Database host.
+
+=item DB_port
+
+Database port.
+
 =item msg_error_data
 
 Text to show if error data.
@@ -405,7 +502,8 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>, L<Nes::Tutorial>, L<Nes::nes.cfg>
+L<Nes>, L<Nes::Tutorial>, L<Nes::nes.cfg>, 
+Sample to use Nes; L<http://nes.sourceforge.net/>
 
 =cut
 
