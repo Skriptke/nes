@@ -410,7 +410,7 @@ script.pl:
 
     use Nes;
 
-    my $nes = Nes::Singleton->new('archivo.nhtml');
+    my $nes = Nes::Singleton->new('template.nhtml');
     my $nes_tags = {};
 
     $nes_tags->{'var_name'} = 'Hello!';

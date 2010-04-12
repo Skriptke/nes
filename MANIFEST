@@ -112,6 +112,7 @@ share/examples/tutorial/script_03.pl
 share/examples/tutorial/script_07.pl
 share/examples/tutorial/template.nhtml
 share/examples/tutorial/debug_info.txt
+share/examples/nesblog/samples.html
 share/examples/nesblog/css/style.css
 share/examples/nesblog/debug_info.txt
 share/examples/nesblog/en/add_comment.nhtml
