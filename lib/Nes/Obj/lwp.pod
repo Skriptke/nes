@@ -63,10 +63,12 @@ Page body tag.
 
 user-defined delimiter.
 
-Return tag content without tags: '<tag></tag>'
+Return tag content without tags: <tag></tag>
+
     <tag>:-:</tag>
 
-Return tag and include tags: '<tag></tag>'
+Return tag and include tags: <tag></tag>
+
     :-:<tag>:-:</tag>:-: 
 
 =back

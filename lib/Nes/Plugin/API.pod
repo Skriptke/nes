@@ -15,6 +15,7 @@ API for create Nes Plugins.
 
 =head1 
 
+*** Unimplemented **** much work and little time, sorry :-)
 
 =head1 AUTHOR
 
