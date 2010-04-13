@@ -218,11 +218,11 @@ Then you can access:
     my $nes    = Nes::Singleton->new('template.nhtml');
     my $config = $nes->{'CFG'};
 
-    my $var  = $nes->{'myscript_var1'};
-    my $pkey = $nes->{'private_key'};
+    my $var  = $config->{'myscript_var1'};
+    my $pkey = $config->{'private_key'};
 
     # Global configuration
-    my $pdir = $nes->{'plugin_top_dir'};
+    my $pdir = $config->{'plugin_top_dir'};
 
 =head1 Session
 
