@@ -1,7 +1,9 @@
 
+=encoding utf8
+
 =head1 NAME
 
-Nes::Tutorial.es - Tutorial Nes paso a paso. (Español)
+Nes::Tutorial.es - Tutorial Nes paso a paso. (Spanish)
 
 =head1 Instalar Nes
 
@@ -697,7 +699,7 @@ Puedes instalar este tutorial con el siguiente comando:
 
 =head1 AUTHOR
 
-Skriptke: Enrique F. Castanon
+Skriptke: Enrique F. Castañón
 
 =head1 VERSION
 
@@ -705,7 +707,7 @@ Version 1.03 April 2010
 
 =head1 COPYRIGHT
 
-Copyright (c) Enrique F. Castanon Barbero. All rights reserved.
+Copyright (c) Enrique F. Castañón Barbero. All rights reserved.
 
 =head1 LICENSE
 
@@ -739,7 +741,6 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>, L<Nes::Singleton>, L<Nes::nes.cfg>, 
-Sample to use Nes; L<http://nes.sourceforge.net/>
+L<Nes>, L<Nes::Singleton>, L<Nes::nes.cfg>, L<Nes|http://nes.sourceforge.net/>,
 
 =cut
