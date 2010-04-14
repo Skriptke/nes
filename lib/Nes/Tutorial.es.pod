@@ -743,4 +743,6 @@ POSSIBILITY OF SUCH DAMAGE
 
 L<Nes>, L<Nes::Singleton>, L<Nes::nes.cfg>, L<Nes|http://nes.sourceforge.net/>,
 
+L<<a href="http://www.perl.org/">http://www.perl.org/</a>>
+
 =cut
