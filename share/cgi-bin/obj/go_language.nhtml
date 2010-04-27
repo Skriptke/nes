@@ -2,7 +2,7 @@
 {: #
   -----------------------------------------------------------------------------
     
-  Nes 1.03 by Skriptke
+  Nes 1.04 by Skriptke
   Copyright 2009 - 2010 Enrique Castanon
   Licensed under the GNU GPL.
 
@@ -21,3 +21,4 @@
   -----------------------------------------------------------------------------
 :}
 <b>302 Found</b><br>
+The document has moved: <a href="{: $ url :}">{: $ url :}</a>

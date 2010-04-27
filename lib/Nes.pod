@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-Nes - A powerful template system for HTML and the Web.
+Nes - The ultimate template system for HTML, the Web and Perl
 
 =head1 SYNOPSIS
 
@@ -48,11 +48,19 @@ hours, not weeks or months as in other systems.
 Transparent management of code injection and cross-site scripting. Plugins 
 for creating secure forms, Forms and Captcha.
 
+Live sample: http://nes.sourceforge.net/miniblog/en/?action=login
+
 =item Objects
 
 Object-oriented paradigm which enables you to reuse your code or use 
 third-party libraries. Objects are the main feature that makes Nes 
 different from other systems. 
+
+=item Debugger
+
+Full Debug for templates, customizable through templates Nes.
+
+Live sample: http://nes.sourceforge.net/hello_nes/tests/index.nhtml
 
 =item HTML oriented
 
@@ -83,7 +91,9 @@ use by third parties.
 Insert parts of PHP code in Nes only have to type a tag, Nes allow the 
 inclusion in your script templates in other languages other than Perl 
 without writing a single line of Perl code. Moreover, most of them 
-can contain Tags Nes. 
+can contain Tags Nes.
+
+Live sample: http://nes.sourceforge.net/miniblog/en/?action=item&item=Include%20PHP%20and%20others
 
 =item SQL
 

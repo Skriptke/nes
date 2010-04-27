@@ -2,7 +2,7 @@
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
-#  Copyright 2009 - 2010 Enrique Castañón
+#  Copyright 2009 - 2010 Enrique F. Castañón Barbero
 #  Licensed under the GNU GPL.
 #
 #  CPAN:
@@ -14,7 +14,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.03
+#  Version 1.04
 #
 #  Nes.pm
 #
@@ -26,19 +26,22 @@ use strict;
 # cgi environment no defined in command line
 no warnings 'uninitialized';
 
-our $VERSION          = '1.03';
+
+our $VERSION          = '1.03.2_0';
 our $CRLF             = "\015\012";
-our $MAX_INTERACTIONS = 500;
+our $MAX_INTERACTIONS = 900;
+our $MAX_SCRIPTS      = 900;
 our $MOD_PERL         = $ENV{'MOD_PERL'} || 0;
 our $MOD_PERL1        = $MOD_PERL =~ /mod_perl\/1/ || 0;
 our $MOD_PERL2        = $MOD_PERL =~ /mod_perl\/2/ || 0;
 
+use Nes::Tags;
 use Nes::Setting;
 use Nes::Singleton;
 
 {
 
-  package Nes;
+  package Nes; 
 
   my %instance;
 
@@ -47,8 +50,27 @@ use Nes::Singleton;
     my $self  = bless {}, $class;
     $self->{'previous'} = $class->get_obj();
     $instance{$class}   = $self;
-  
-#    utl::cleanup(\%instance) if $ENV{'MOD_PERL'};
+
+    $self->{'tag_start'} = $Nes::Tags::start;
+    $self->{'tag_end'}   = $Nes::Tags::end;
+    $self->{'pre_start'} = $Nes::Tags::pre_start;
+    $self->{'pre_end'}   = $Nes::Tags::pre_end;    
+    
+    $self->{'tag_nes'}   = $Nes::Tags::nes;
+
+    $self->{'tag_var'}     = $Nes::Tags::var;
+    $self->{'tag_env'}     = $Nes::Tags::env ;
+    $self->{'tag_expre'}   = $Nes::Tags::expre;
+    $self->{'tag_tpl'}     = $Nes::Tags::tpl;
+    $self->{'tag_sql'}     = $Nes::Tags::sql;
+    $self->{'tag_hash'}    = $Nes::Tags::hash;
+    $self->{'tag_field'}   = $Nes::Tags::field;
+    $self->{'tag_include'} = $Nes::Tags::include;
+    $self->{'tag_comment'} = $Nes::Tags::comment;
+    $self->{'tag_plugin'}  = $Nes::Tags::plugin;
+    
+    $self->{'pre_subs_start'} = $Nes::Tags::pre_subs_start;
+    $self->{'pre_subs_end'}   = $Nes::Tags::pre_subs_end;
   
     $self->{'top_container'}    = nes_top_container->get_obj();
     $self->{'CFG'}              = Nes::Setting->get_obj();
@@ -57,11 +79,16 @@ use Nes::Singleton;
     $self->{'query'}            = nes_query->get_obj();    
     $self->{'container'}        = nes_container->get_obj();
     $self->{'register'}         = nes_register->get_obj();
-    $self->{'nes'}              = $self;
+    $self->{'nes'}              = $instance{'nes_top_container'} || $self;
     $self->{'MAX_INTERACTIONS'} = $MAX_INTERACTIONS;
+    $self->{'MAX_SCRIPTS'}      = $MAX_SCRIPTS;
     
     return $self;
   }
+  
+  sub VERSION {
+    return $VERSION;
+  }  
   
   sub get_obj {
     my $self  = shift;
@@ -87,7 +114,7 @@ use Nes::Singleton;
 
     my @kletters = @{ $self->{'CFG'}{'kletters'} };
     my @kletnum  = @{ $self->{'CFG'}{'kletnum'} };
-
+  
     # siempre comienza por letra por si se usa como nombre de variable o campo
     my $key = $kletters[ int( rand( $#kletters + 1 ) ) ];
     for ( 1 .. ( $max - 1 ) ) {
@@ -95,6 +122,13 @@ use Nes::Singleton;
     }
 
     return $key;
+  }
+  
+  sub cleanup {
+    my $self  = shift;
+    
+    utl::cleanup(\%instance) if $ENV{'MOD_PERL'};
+    
   }
   
 }
@@ -108,12 +142,12 @@ use Nes::Singleton;
 
   sub new {
     my $class = shift;
-    my ($suffix,$name) = @_;
+    my ($suffix,$name,$id) = @_;
     my $self  = $class->SUPER::new();
 
     $self->{'suffix'}     = $suffix;
     $self->{'tmp_suffix'} = $self->{'CFG'}{'tmp_suffix'};
-    $self->{'name'}       = $self->get_name($name);
+    $self->{'name'}       = $self->get_name($name,$id);
     $self->{'tmp_dir'}    = $self->{'CFG'}{'tmp_dir'};
     $self->{'file'}       = $self->{'tmp_dir'}.'/'.$self->{'name'};
     $self->{'expired'}    = utl::expires_time($self->{'CFG'}{'tmp_clear'});
@@ -210,12 +244,14 @@ use Nes::Singleton;
   
   sub get_name {
     my $self  = shift;
-    my ($name) = @_;
+    my ($name,$id) = @_;
 
-    my $remote = $ENV{'REMOTE_ADDR'};
-    $remote = $ENV{'HTTP_X_REMOTE_ADDR'} if $ENV{'HTTP_X_REMOTE_ADDR'} && ( !$remote || $remote =~ /^(127|192)\./);
+    if ( !$id ) {
+      $id = $ENV{'REMOTE_ADDR'};
+      $id = $ENV{'HTTP_X_REMOTE_ADDR'} if $ENV{'HTTP_X_REMOTE_ADDR'} && ( !$id || $id =~ /^(127|192)\./);
+    }
 
-    $name  .= '.ip.'.$remote.$self->{'suffix'}.$self->{'tmp_suffix'};
+    $name .= '.id.'.$id.$self->{'suffix'}.$self->{'tmp_suffix'};
     
     return $name;
   }   
@@ -237,18 +273,18 @@ use Nes::Singleton;
 
   sub set_data {
     my $self  = shift;
-    my ($class, $name, $data) = @_;
+    my ($class, $name, $type, $data) = @_;
 
-    $self->{'data'}{$class}{$name} = $data;
-      
+    $self->{'data'}{$class}{$name}{$type} = $data;
+
     return;
   }  
   
   sub get_data {
     my $self  = shift;
-    my ($class, $name, $data) = @_;
-      
-    return $self->{'data'}{$class}{$name};
+    my ($class, $name, $type) = @_;
+    
+    return $self->{'data'}{$class}{$name}{$type};
   }    
   
   sub tag {
@@ -272,15 +308,24 @@ use Nes::Singleton;
   
   sub add_obj {
     my $self  = shift;
-    my ($class, $name, $obj) = @_;
+    my ($class, $name, $obj, $cfg_file) = @_;
 
-    my $cfg_file = $self->{'CFG'}{'plugin_top_dir'}.'/.'.$class.'.nes.cfg';
+    $cfg_file ||= $self->{'CFG'}{'plugin_top_dir'}.'/.'.$class.'.nes.cfg';
     Nes::Setting->load_cfg($cfg_file);  
 
     $self->{'obj'}{$class}{$name} = $obj;
 
     return $self;
   }
+  
+  sub set_obj {
+    my $self  = shift;
+    my ($class, $name, $obj) = @_;
+
+    $self->{'obj'}{$class}{$name} = $obj;
+
+    return $self;
+  }  
   
   sub get {
     my $self  = shift;
@@ -597,8 +642,9 @@ use Nes::Singleton;
   sub new {
     my $class = shift;
     my $self  = $class->SUPER::new();
+    my ($session_prefix) = @_;
     
-    $self->{'session_prefix'} = $self->{'CFG'}{'session_prefix'};
+    $self->{'session_prefix'} = $session_prefix || $self->{'CFG'}{'session_prefix'};
     $self->{'session_ok'}     = 0;
     $self->{'user'}           = '';
     $self->get;
@@ -835,7 +881,10 @@ use Nes::Singleton;
     my ($file,$dir) = @_;
 
     # maximo de interactiones, para evitar un bucle infinito.
-    $self->{'max_inter'} = $MAX_INTERACTIONS;
+    $self->{'max_inter'}   = $MAX_INTERACTIONS;
+    $self->{'max_scripts'} = $MAX_SCRIPTS;
+    $self->{'nes'}->{'debug_info'}{'is_load'} = 0;
+    $self->{'nes'}->{'debug_info'}{'obj'} = undef;
     
     $self->init($file,$dir) if $file;
 
@@ -845,6 +894,8 @@ use Nes::Singleton;
   sub init {
     my $self  = shift;
     my ($file,$dir) = @_;
+    
+    $self->cleanup;
     
     $self->{'url'}  = '';
     $self->{'dir'}  = $dir;   
@@ -857,10 +908,10 @@ use Nes::Singleton;
     
     $self->{'php_wrapper'} = 1 if $self->{'file'} =~ /php$/i;
 
+    $self->{'register'}  = nes_register->new();
     $self->{'query'}     = nes_query->new();
     $self->{'cookies'}   = nes_cookie->new();
     $self->{'session'}   = nes_session->new();
-    $self->{'register'}  = nes_register->new();
    
     $self->init_nes_env();
     $self->init_cgi_env();
@@ -959,8 +1010,8 @@ use Nes::Singleton;
     foreach my $key ( keys %{ $self->{'CFG'} } ) {
       my $name_env = 'cfg_' . $key;
       my $value = $self->{'CFG'}->{$key};
-      $value = "@{$self->{'CFG'}->{$key}}" if ref $self->{'CFG'}->{$key} eq 'ARRAY';
-      $value = keys %{$self->{'CFG'}->{$key}} if ref $self->{'CFG'}->{$key} eq 'HASH';
+#      $value = "@{$self->{'CFG'}->{$key}}" if ref $self->{'CFG'}->{$key} eq 'ARRAY';
+#      $value = keys %{$self->{'CFG'}->{$key}} if ref $self->{'CFG'}->{$key} eq 'HASH';
       $self->{'nes_env'}{$name_env} = $value;
     }
 
@@ -1018,6 +1069,20 @@ use Nes::Singleton;
     
     return;
   }
+  
+  sub get_nes_env_keys {
+    my $self  = shift;
+    my ($par) = @_;
+
+    return keys %{$self->{'nes_env'}} if !$par;
+    
+    my @keys;
+    foreach my $key ( keys %{$self->{'nes_env'}} ) {
+      push(@keys, $key) if $key =~ /^$par/;
+    }
+    
+    return @keys;
+  }  
 
 }
 
@@ -1032,6 +1097,7 @@ use Nes::Singleton;
     my $self  = $class->SUPER::new();
     my ( $file ) = @_;
 
+    $self->{'error_not_exist'} = 0;
     $self->{'file_dir'}  = $self->{'top_container'}->get_parent_dir();
     $self->{'file_name'} = $self->{'top_container'}->get_file_path($file);
     
@@ -1039,6 +1105,8 @@ use Nes::Singleton;
     
     $self->{'top_container'}->{'max_inter'}-- || die "Possible infinite loop";
     $self->{'this_inter'} = $MAX_INTERACTIONS - $self->{'top_container'}->{'max_inter'};
+    $self->{'parent'} =  $self->{'previous'}->{'container'} || $self->{'top_container'};
+    $self->{'parent_file_name'} = $self->{'previous'}->{'file_name'};
 
     $self->{'souce_types'}{'unknown'} = 'unknown';
     $self->{'souce_types'}{'html'}    = 'html,htm,nhtm,nhtml';
@@ -1110,8 +1178,9 @@ use Nes::Singleton;
       chomp $self->{'file_souce'}[$#{$self->{'file_souce'}}];
       close $fh;
     } else {
-      warn "couldn't open $self->{'file_name'}";
+      warn "Couldn't open $self->{'file_name'}\n";
       $self->{'top_container'}->set_nes_env( 'nes_error_file_not_exist', $self->{'file_name'} );
+      $self->{'error_not_exist'} = 1;
     }
 
     return;
@@ -1171,10 +1240,11 @@ use Nes::Singleton;
     my $self  = shift;
 
     $self->{'file_nes_line'} = $self->{'file_souce'}[0] 
-      if $self->{'file_souce'}[0] =~ /{:\s*NES/i || '';
+      if $self->{'file_souce'}[0] =~ /$Nes::Tags::start\s*$Nes::Tags::nes/i || '';
        
     my $interpret = nes_interpret->new();
     my @param     = $interpret->replace_NES( $self->{'file_nes_line'} );
+    chomp $self->{'file_nes_line'};
 
     if ( $param[0] ) {
       shift @{ $self->{'file_souce'} };    # eliminamos la primera linea
@@ -1200,7 +1270,7 @@ use Nes::Singleton;
 
     $self->{'content_obj'}->go();
     $self->{'top_container'}->set_parent_dir($self->{'file_dir'});
-
+    
     return;
   }
   
@@ -1221,10 +1291,12 @@ use Nes::Singleton;
   sub out {
     my $self  = shift;
 
-    if ( ! $self->{'content_obj'}->{'is_binary'} ) {
-      while ( $self->{'content_obj'}->{'out'} =~ s/{:(\s*(\$|\*|\~|sql|\%|inc|\#|\&|nes).+?):}//gsio ) 
-      { 
-        # impedir que los tags con error o no reemplazados aparezcan en la salida 
+    if ( !$self->{'nes'}->{'debug_info'}{'is_load'} ) {
+      if ( ! $self->{'content_obj'}->{'is_binary'} ) {
+        while ( $self->{'content_obj'}->{'out'} =~ s/$Nes::Tags::start(\s*($Nes::Tags::all_or).+?)$Nes::Tags::end//gsio ) 
+        { 
+          # impedir que los tags con error o no reemplazados aparezcan en la salida
+        }
       }
     }
 
@@ -1250,6 +1322,7 @@ use Nes::Singleton;
     $self->{'container'}   = $container;
     $self->{'file_script'} = $self->{'container'}->{'file_script'};
     $self->{'out'}         = $self->{'container'}->{'out'};
+    $self->{'exec'}        = 0;
 
     # default content type
     $self->{'Content-type'} = "Content-type: text/html";
@@ -1270,7 +1343,7 @@ use Nes::Singleton;
     }
     
     $self->{'TAG_HTTP-headers'} = $self->{'tags'}{'HTTP-headers'};
-    $self->{'tags'}{'HTTP-headers'} = undef;
+    $self->{'tags'}{'HTTP-headers'} = '';
 
     return;
   }
@@ -1293,6 +1366,11 @@ use Nes::Singleton;
   sub interpret {
     my $self  = shift;
     my %tags;
+
+    if ( $self->{'top_container'}->{'max_scripts'}-- <= 0 ) {
+      warn "Possible infinite loop in MAX_SCRIPTS @{ $self->{'file_script'} }";
+      exit;
+    }
 
     $self->{'interpret'} = nes_interpret->new( $self->{'out'} );
     $self->{'out'} = $self->{'interpret'}->go( %{ $self->{'tags'} } );
@@ -1340,7 +1418,9 @@ use Nes::Singleton;
 
   sub go_plugin_last {
     my $self  = shift;
-    
+
+    $self->{'exec'} = 1;
+
     my $self_file = $self->{'container'}->{'file_name'};
     my $top_file  = $self->{'top_container'}->{'file'};    
 
@@ -1366,6 +1446,16 @@ use Nes::Singleton;
     
     $self->go_plugin_first();
   
+    $self->exec_scripts();
+
+    $self->go_plugin_last();
+      
+    return;
+  }
+  
+  sub exec_scripts {
+    my $self  = shift;
+    
     foreach my $script ( @{ $self->{'file_script'} } ) {
       if ( $script eq 'none' ) {
         do {
@@ -1377,18 +1467,15 @@ use Nes::Singleton;
       if ( $script ) {   
         $self->do_script( $script ); 
       }
-    }
-   
-    $self->go_plugin_last();
-      
-    return;
+    }    
+    
   }
   
   sub do_script {
 
     my $self  = shift;
     my ($script) = @_;
-
+    
     $script = $self->{'top_container'}->get_file_path( $script );
     
     my $script_dir = $script;
@@ -1405,14 +1492,19 @@ use Nes::Singleton;
       warn "couldn't parse $script: $@" if $@;
       warn "couldn't do $script: $!" unless defined $return;
       warn "couldn't run $script" unless $return;
-    }  
+    }
 
     return;
   }
   
   sub out {
     my $self  = shift;
-   
+ 
+    if ( $self->{'nes'}->{'debug_info'}{'obj'}{'location'} ) {
+       print $self->{'out'};
+       return;
+    }
+ 
     print $self->{'cookies'}->out;
     print "X-Powered-By: $self->{'X-Powered-By'}\n";
 #    print "Status: $self->{'HTTP-status'}\n" if !$self->{'tags'}{'HTTP-headers'};
@@ -1428,9 +1520,19 @@ use Nes::Singleton;
 
     print $self->{'cookies'}->out;
     print "X-Powered-By: $self->{'X-Powered-By'}\n";
-    print "Status: $status\n";
-    print "Location: $location\n\n";
-    exit;
+    if ( $self->{'nes'}->{'debug_info'}{'is_load'} ) {
+      $self->{'nes'}->{'debug_info'}{'obj'}{'location'} = 1;
+      print "Content-type: text/html\n\n";
+      print "<h2>Location</h2>";
+      print "<h4>Please click for: <a href=\"$location\">go $location</a><br></h4>";
+      print "* Automatic location deactivated by debug_info, to enable display the debug information<br>";
+      warn "Warning: this calls to HTTP Location ( *** ignores subsequent errors *** )\n";
+    } else {
+      print "Status: $status\n";
+      print "Location: $location\n\n";
+      exit;
+    }
+
   }
 
 }
@@ -1514,7 +1616,8 @@ use Nes::Singleton;
   sub go {
     my $self  = shift;
  
-    $self->SUPER::go() if @{ $self->{'file_script'} };
+    $self->go_plugin_first();
+    $self->exec_scripts() if @{ $self->{'file_script'} };
     
     require IO::String;
     my $out;
@@ -1526,6 +1629,8 @@ use Nes::Singleton;
     select($old_fh) if defined $old_fh;
     
     $self->{'out'} = $out;
+    
+    $self->go_plugin_last();
     
     return;
 
@@ -1554,9 +1659,14 @@ use Nes::Singleton;
   sub go {
     my $self  = shift;
 
-    $self->SUPER::go() if @{ $self->{'file_script'} };
+    $self->go_plugin_first();
+    $self->exec_scripts() if @{ $self->{'file_script'} };
+    
+    warn "Not Found: ".$self->{'CFG'}{'shell_cline'} if !-e $self->{'CFG'}{'shell_cline'};
 
     if ( $MOD_PERL ) {
+      
+      $self->{'nes'}->{'debug_info'}{'obj'}->unredirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
 
       require IPC::Run;
       # IPC::Open2/Open3 no funcionan con mod_perl
@@ -1569,8 +1679,13 @@ use Nes::Singleton;
       IPC::Run::pump $h;
       IPC::Run::finish $h;
       $self->{'out'} = $reader;
+      
+      $self->{'nes'}->{'debug_info'}{'obj'}->redirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
+      warn $error if $error;
   
     } else {
+      
+      $self->{'nes'}->{'debug_info'}{'obj'}->unredirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
       
       require IPC::Open3;
       my ( $writer, $reader, $error );   
@@ -1582,9 +1697,14 @@ use Nes::Singleton;
         $self->{'out'} .= $_;
       }
       close $reader;
-      waitpid( $pid, 0 );      
+      waitpid( $pid, 0 );
+      
+      $self->{'nes'}->{'debug_info'}{'obj'}->redirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
+      warn $error if $error;      
       
     }
+    
+    $self->go_plugin_last();
     
     return;
   }
@@ -1620,10 +1740,14 @@ use Nes::Singleton;
   sub go {
     my $self  = shift;
 
-    $self->SUPER::go() if !$self->{'php_wrapper'};
+
+    $self->go_plugin_first();
+    $self->exec_scripts() if !$self->{'php_wrapper'};
 
     my $cline       = $self->{'CFG'}{'php_cline'};
     $cline          = $self->{'CFG'}{'php_cgi_cline'} if $self->{'php_wrapper'};
+    
+    warn "Not Found: ".$cline if !-e $cline;
 
     if ( $self->{'php_wrapper'} || $MOD_PERL ) {    
       # por seguridad 
@@ -1635,9 +1759,10 @@ use Nes::Singleton;
       }
     }
     
-    
     if ( $MOD_PERL ) {
       
+      $self->{'nes'}->{'debug_info'}{'obj'}->unredirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
+
       local $| = 1;
       require IPC::Run;
       
@@ -1666,9 +1791,13 @@ use Nes::Singleton;
       IPC::Run::pump $h;
       IPC::Run::finish $h;
       $self->{'out'} = $reader; 
+      
+      $self->{'nes'}->{'debug_info'}{'obj'}->redirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
       warn $error if $error; 
 
     } else {
+      
+      $self->{'nes'}->{'debug_info'}{'obj'}->unredirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
 
       require IPC::Open3;
       my ( $writer, $reader, $error, $out_error );
@@ -1700,19 +1829,30 @@ use Nes::Singleton;
       }
       close $reader;
       waitpid( $pid, 0 );
+      
+      $self->{'nes'}->{'debug_info'}{'obj'}->redirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
+      warn $error if $error;
+      
     }  
 
     if ( $self->{'php_wrapper'} ) {
       ( $self->{'HTTP-headers'}, $self->{'out'} ) = split(/$CRLF$CRLF/, $self->{'out'},2);
       $self->{'is_binary'} = $self->{'HTTP-headers'} !~ /Content-Type: text/is;
-      $self->SUPER::go() if !$self->{'is_binary'};
+      $self->exec_scripts() if !$self->{'is_binary'};
     }
+    
+    $self->go_plugin_last();
 
     return;
   }
     
   sub out {
     my $self  = shift;
+    
+    if ( $self->{'nes'}->{'debug_info'}{'obj'}{'location'} ) {
+       print $self->{'out'};
+       return;
+    }
 
     binmode STDOUT;
     print $self->{'cookies'}->out;
@@ -1749,12 +1889,17 @@ use Nes::Singleton;
   sub go {
     my $self  = shift;
 
-    $self->SUPER::go() if @{ $self->{'file_script'} };
+    $self->go_plugin_first();
+    $self->exec_scripts() if @{ $self->{'file_script'} };;
 
     my $cline = $self->{'CFG'}{'python_cline'};
     my @command = ( $cline );
+    
+    warn "Not Found: ".$cline if !-e $cline;
 
     if ( $MOD_PERL ) {
+      
+      $self->{'nes'}->{'debug_info'}{'obj'}->unredirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
 
       require IPC::Run;
       # IPC::Open2/Open3 no funcionan con mod_perl
@@ -1767,8 +1912,12 @@ use Nes::Singleton;
       IPC::Run::pump $h;
       IPC::Run::finish $h;
       $self->{'out'} = $reader;
+      
+      $self->{'nes'}->{'debug_info'}{'obj'}->redirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
 
     } else {
+      
+      $self->{'nes'}->{'debug_info'}{'obj'}->unredirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
 
       require IPC::Open2;
       my ( $reader, $writer );     
@@ -1782,7 +1931,11 @@ use Nes::Singleton;
       close $reader;
       waitpid( $pid, 0 );
       
+      $self->{'nes'}->{'debug_info'}{'obj'}->redirect_err if $self->{'nes'}->{'debug_info'}{'is_load'};
+      
     }
+    
+    $self->go_plugin_last();
     
     return;
   }
@@ -1838,35 +1991,14 @@ use Nes::Singleton;
     my ($out) = @_;
     my $self  = $class->SUPER::new();
 
-    $self->{'tag_start'} = '{:';
-    $self->{'tag_end'}   = ':}';
-    $self->{'pre_start'} = '〈';
-    $self->{'pre_end'}   = '〉';    
-    
-    $self->{'tag_nes'}   = 'NES';
-
-    $self->{'tag_var'}     = '\$';
-    $self->{'tag_env'}     = '\*';
-    $self->{'tag_expre'}   = '\~';
-    $self->{'tag_tpl'}     = '\@';
-    $self->{'tag_sql'}     = 'sql';
-    $self->{'tag_hash'}    = '\%';
-    $self->{'tag_field'}   = '\@\$';
-    $self->{'tag_include'} = 'include';
-    $self->{'tag_comment'} = '\#';
-    $self->{'tag_plugin'}  = '\&';
-    
-    $self->{'pre_subs_start'} = ':&rang;:';
-    $self->{'pre_subs_end'}   = ':&loz;:';
-
     $self->{'out'} = $out;
     $self->preformat() if $out;
 
     # banderas para eliminar de las variables código malicioso
-    $self->{'security_options'}{'no_sql'}   = 0;
-    $self->{'security_options'}{'no_html'}  = 1;
-    $self->{'security_options'}{'no_br'}    = 0;
-    $self->{'security_options'}{'no_nes'}   = 1;
+    $self->{'security_options'}{'no_sql'}     = 0;
+    $self->{'security_options'}{'no_html'}    = 1;
+    $self->{'security_options'}{'no_br'}      = 0;
+    $self->{'security_options'}{'no_nes'}     = 1;
 
     return $self;
   }
@@ -2025,7 +2157,7 @@ use Nes::Singleton;
       # cuando vuelven de la función
       # $2.$3.$4$self->replace_block($1) Sí funcionaría, curiosamente?
     }
-
+#warn "11:$self->{'out'}";
     $self->postformat2;
     return $self->{'out'};
   }
@@ -2153,8 +2285,8 @@ use Nes::Singleton;
     }
     push(@yes_tag, 'br') if !$self->{'security_options'}{'no_br'};
     
-    $value = utl::quote($value)        if $self->{'security_options'}{'no_sql'};
-    $value = utl::no_nes($value)    if $self->{'security_options'}{'no_nes'};
+    $value = utl::quote($value)  if $self->{'security_options'}{'no_sql'};
+    $value = utl::no_nes($value) if $self->{'security_options'}{'no_nes'};
     $value = utl::no_html( $value, @yes_tag ) if $self->{'security_options'}{'no_html'};
 
     $self->{'security_options'}{'no_html'} = $tmp_no_html;
@@ -2190,16 +2322,25 @@ use Nes::Singleton;
   sub replace_var {
     my $self  = shift;
     my ($var, @security_options) = @_;
+    
+    if ( $self->{'nes'}->{'debug_info'} ) {
+      warn "Warning uninitialized: $Nes::Tags::start_html $Nes::Tags::l_var $var ...\n" if !exists $self->{'tags'}{$var};
+    }    
 
     return $self->security( $self->{'tags'}{$var}, @security_options );
   }
-
+  
   sub replace_expre {
     my $self  = shift;
     my ( $code, $expre ) = @_;
+    
+    if ($expre =~ /$self->{'pre_start'}/) {
+      my $interpret = nes_interpret->new( $self->postformat($expre) );
+      $expre = $interpret->go( %{ $self->{'tags'} } );
+    }
 
-    $expre =~ s/\$/:-:var:-:/g;
-    $expre =~ s/\*/:-:env:-:/g;
+    $expre =~ s/$Nes::Tags::var/:-:var:-:/g;
+    $expre =~ s/$Nes::Tags::env/:-:env:-:/g;
 
     my $nodef = undef;
     my %vars;
@@ -2286,6 +2427,11 @@ use Nes::Singleton;
     my ( $code, $name_hash ) = @_;
     $name_hash =~ s/\s*//g;
 
+    if ( !exists $self->{'tags'}{$name_hash} ) {
+      warn "Not exists: $Nes::Tags::start_html $Nes::Tags::l_hash $name_hash in $self->{'container'}->{'file_name'}\n";
+      return;
+    }
+    
     if ( $name_hash =~ /$self->{'tag_field'}/ ) {
       $code =~ s/\s*(.+?)\.(\S*)\s*/$self->security($self->{'tags'}{$1}{$2})/egi;
       return $code;
@@ -2348,6 +2494,11 @@ use Nes::Singleton;
     $self->{'security_options'}{'no_nes'}  = 1;
     $self->{'security_options'}{'no_html'} = 1;
 
+    if ( $self->{'nes'}->{'debug_info'} ) {
+      $self->{'debug_info_count'}++;
+      $self->{'container'}->{'content_obj'}->{'tags'}{'generated_by_debug_info_sql_'.$self->{'debug_info_count'}} = \@result;
+    }
+    
     my $out_code;
     foreach my $reg (@result) {
       my $tmp_code = $code;
@@ -2366,6 +2517,10 @@ use Nes::Singleton;
   sub replace_tpl {
     my $self  = shift;
     my ( $code, $name ) = @_;
+
+    if ( $self->{'nes'}->{'debug_info'} ) {
+      warn "Warning uninitialized: $Nes::Tags::start_html $Nes::Tags::l_tpl $name ...\n" if !exists $self->{'tags'}{$name};
+    }
 
     my $out_code;
     foreach my $reg ( @{ $self->{'tags'}{$name} } ) {
@@ -2399,7 +2554,10 @@ use Nes::Singleton;
     $self->{'security_options'}{'no_html'} = 1 if $var =~ /^q_/;
     $self->{'security_options'}{'no_nes'}  = 1 if $var =~ /^q_/;
 
-    $var = $self->security( $self->{'top_container'}->get_nes_env($var), @security_options );
+    $var = $self->{'top_container'}->get_nes_env($var);
+    $var = "@{$var}"    if ref $var eq 'ARRAY';
+    $var = keys %{$var} if ref $var eq 'HASH';    
+    $var = $self->security( $var, @security_options );
 
     $self->{'security_options'}{'no_html'} = $tmp_no_html;
     $self->{'security_options'}{'no_nes'}  = $tmp_no_nes;
@@ -2425,6 +2583,8 @@ use Nes::Singleton;
         return $out;
       } 
     }
+    
+    warn "Not replaced: $Nes::Tags::start_html $Nes::Tags::l_plugin $tag in $self->{'container'}->{'file_name'}\n";
     
     return '';    
   }  
@@ -2568,21 +2728,52 @@ use Nes::Singleton;
     my ($value) = @_;
     
     return if !$value;
-    
+
     my $tags = qr/
-                    \{:
+                    $Nes::Tags::start
                     (
                     \s*
-                    (\$|\*|\~|sql|\%|inc|\#|\&|nes)
+                    ($Nes::Tags::all_or)
                     (.+?)
                     )
-                    :\}
+                    $Nes::Tags::end
                  /six;
+
+    my $tags_pre = qr/
+                    $Nes::Tags::pre_start
+                    (
+                    \s*
+                    ($Nes::Tags::all_or)
+                    (.+?)
+                    )
+                    $Nes::Tags::pre_end
+                   /six;                 
                  
-    while ( $value =~ s/$tags/&#123;:$1:&#125;/go ) {}
+    while ( $value =~ s/$tags/$Nes::Tags::start_html$1$Nes::Tags::end_html/go ) {}
+    while ( $value =~ s/$tags_pre/$Nes::Tags::pre_start_html$1$Nes::Tags::pre_end_html/go ) {}
 
     return $value;
   }
+  
+  sub no_nes_pre {
+    my ($value) = @_;
+    
+    return if !$value;
+
+    my $tags = qr/
+                    $Nes::Tags::pre_start
+                    (
+                    \s*
+                    ($Nes::Tags::all_or)
+                    (.+?)
+                    )
+                    $Nes::Tags::pre_end
+                 /six;
+                 
+    while ( $value =~ s/$tags/$Nes::Tags::pre_start_html$1$Nes::Tags::pre_end_html/go ) {}
+
+    return $value;
+  }  
 
   sub no_nes_remove {
     my ($data) = @_;
@@ -2596,6 +2787,32 @@ use Nes::Singleton;
     return;
   }  
 
+  sub clear {
+    my (@vars) = @_;
+    
+    if ( $MOD_PERL2 ) {
+      require Apache2::RequestUtil;
+      require Apache2::RequestIO;
+      require APR::Pool;
+      Apache2::RequestUtil->request->pool->clear();
+    }
+    
+    return 1;
+  }
+  
+  sub destroy {
+    my (@vars) = @_;
+    
+    if ( $MOD_PERL2 ) {
+      require Apache2::RequestUtil;
+      require Apache2::RequestIO;
+      require APR::Pool;
+      Apache2::RequestUtil->request->pool->destroy();
+    }
+    
+    return 1;
+  }  
+
   sub cleanup {
     my (@vars) = @_;
     
@@ -2604,7 +2821,6 @@ use Nes::Singleton;
       require Apache2::RequestIO;
       require APR::Pool;
       Apache2::RequestUtil->request->pool->cleanup_register(\&utl::cleanup_callback, @vars);
-
     }
       
     if ( $MOD_PERL1 ) {

@@ -15,7 +15,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.03
+#  Version 1.04
 #
 #  DOCUMENTATION:
 #  perldoc Nes::Obj::secure_login
@@ -25,10 +25,10 @@
 use Nes;
 use secure_login;
 
-my $nes     = Nes::Singleton->new();
+my $nes     = Nes::Singleton->new;
 my $vars    = secure_login->new;
 
-$nes->add(%$vars);
+$nes->out(%$vars);
 
 # don't forget to return a true value from the file
 1;

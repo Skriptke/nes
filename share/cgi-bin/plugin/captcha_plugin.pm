@@ -420,8 +420,6 @@ sub verify {
 {
 
   package nes_captcha_fonts;
-  use vars qw(@ISA);
-  @ISA = qw( nes );
 
   sub new {
     my $class = shift;

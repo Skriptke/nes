@@ -104,6 +104,8 @@ package multi_step;
     $self->{'tpl_options'}       = '';
     $self->{'msg_error_fields'}  =  $cfg->{$param{'form_name'}.'_multi_step_msg_error_fields'} 
                                  || '<img src="'.$cfg->{'img_dir'}.'/error.gif">';
+                                 
+    
                                 
     foreach my $this (keys %param) {
       $self->{$this} = $param{$this};

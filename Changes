@@ -1,5 +1,13 @@
 Revision history for Nes
 
+        new test instalation hello_nes/tests/index.nhtml
+        new plugin fc_plugin
+        new plugin clean
+        multiples fixes
+        more information in debug_info
+        new template debug_info.nhtm for debug_info
+        Expre Tags, param allows inclusion.
+
 1.03    2010/04/14
         fix can't locate object method "_burst_multipart_buffer"
         added pseudo_ajax.nhtml object

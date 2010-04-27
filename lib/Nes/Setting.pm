@@ -45,7 +45,7 @@
 
     my $self = {
       tmp_dir        => '/tmp/nes',
-      tmp_suffix     => '.nes_file_temp',
+      tmp_suffix     => '.nes_tmp',
       tmp_clear      => 0, # borrar los archivos temporales de más del tiempo indicado, si es 0 no borra
       top_dir        => $top_dir,              # document root
       nes_top_dir    => $nes_top_dir,          # nes dir install
@@ -56,6 +56,7 @@
       obj_top_dir    => $nes_top_dir . '/obj',     
       obj_form       => $nes_top_dir . '/obj/Nes/form',
       img_dir        => $nes_dir . '/images',
+      js_dir         => $nes_dir . '/js',
       time_zone      => 'Europe/Madrid',       # * sin implementar *
       locale         => '',                    # es_ES.utf8
       session_prefix => 'NESSESSION',
@@ -127,7 +128,7 @@
             $eval = '@' if ref( $self->{$key} ) eq 'ARRAY';
             $eval = '%' if ref( $self->{$key} ) eq 'HASH';
             $eval = '$' if ref( $self->{$key} ) eq 'SCALAR';
-            @{ $self->{$key} } = eval { $value } if $eval eq '@';
+            @{ $self->{$key} } = eval   $value  if $eval eq '@';
             %{ $self->{$key} } = eval { $value } if $eval eq '%';
             $self->{$key}      = eval  "$value"  if $eval eq '$';
           } elsif ( ref( $self->{$key} ) eq 'ARRAY' ) {

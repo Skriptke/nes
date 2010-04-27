@@ -1,4 +1,4 @@
-{: NES 1.0 ('./test.cgi','{: * cfg_plugin_top_dir :}/debug_info.pl') :}
+{: NES 1.0 ('./test.cgi') :}
 {: #
   ----------------------------------------------------------------------
     
@@ -18,5 +18,8 @@
   <body>
     <p><b>{: $ hello :}</b></p>
 {: include ./testi.nhtml :}
+<pre>
+Click for <a href="tests/index.nhtml">full test</a>
+</pre>
   </body>
 </html>

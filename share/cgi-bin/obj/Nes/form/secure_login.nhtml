@@ -1,8 +1,8 @@
-{: NES 1.0 ('secure_login_param.pl','{: * cfg_plugin_top_dir :}/forms_captcha.pl','secure_login.pl') :}
+{: NES 1.0 ('{: * cfg_plugin_top_dir :}/Nes/form/register_fc.pl','secure_login_param.pl','{: * cfg_plugin_top_dir :}/Nes/form/unregister_fc.pl') :}
 {: #
   -----------------------------------------------------------------------------
     
-  Nes 1.03 by Skriptke
+  Nes 1.04 by Skriptke
   Copyright 2009 - 2010 Enrique Castañon
   Licensed under the GNU GPL.
 
@@ -22,61 +22,71 @@
  
   -----------------------------------------------------------------------------
 :}
-{: ~ ( $ login_id ) 
-    {: include ( '{: * cfg_obj_top_dir :}/session.nhtml', 'create', '{: $ login_id :}', '{: $ expire_session :}' ) :}
-    {: include ( '{: * cfg_obj_top_dir :}/location.nhtml', '{: $ out_page :}' ) :}   
-:}
-{: ~ ( ! * nes_session_ok )
-    {: & form ( '{: $ form_name :}',0,'{: $ captcha_name :}','last','{: $ form_expire :}','{: $ form_exp_last :}','{: $ form_location :}','{: $ form_attempts :}','{: $ attempts :}' ) {: & check ( '{: $ form_name :}_User: {: $ min_len_name :},{: $ max_len_name :}', '{: $ form_name :}_Password: {: $ min_len_pass :},{: $ max_len_pass :}' ) :}
-        {: ~ (   $ fatal_error ) {: include ('{: $ tpl_errors :}') :} :}  
-        {: ~ ( ! $ fatal_error )<form name="{: $ form_name :}" id="{: $ id_form :}" class="{: $ class_form :}" action="" method="post">
-                <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend :}</legend> :}
-                    <table border="0">
+{: ~ !*nes_session_ok
+    {: & fc ('{: $ form_name :}', '{: $ form_expire :}', '{: $ form_exp_last :}', '{: $ form_attempts :}', '{: $ attempts :}', '{: $ form_location :}', '{: $ tpl_errors :}')
+        {: & fc_check   ( '{: $ form_name :}', '{: $ form_name :}_User', '{: $ min_len_name :}', '{: $ max_len_name :}' ) :}
+        {: & fc_check   ( '{: $ form_name :}', '{: $ form_name :}_Password', '{: $ min_len_pass :}', '{: $ max_len_pass :}' ) :}
+        {: ~ $name_atempts {: & fc_field_attempts ('{: $ form_name :}', '{: $ form_name :}_User', '{: $ name_atempts :}', 1)  :} :}
+        {: ~ $pass_atempts {: & fc_field_attempts ('{: $ form_name :}', '{: $ form_name :}_Password', '{: $ pass_atempts :}') :} :}
+        {: & fc_captcha ('{: $ form_name :}', '{: $ captcha_name :}', '{: $ captcha_last :}', '{: $ captcha_type :}', '{: $ captcha_digits :}', '{: $ captcha_noise :}','{: $ captcha_size :}','{: $ captcha_sig :}','{: $ captcha_spc :}', '{: $ captcha_key :}' )   :}
+        
+        {: ~ ( * nes_fc_plugin_self_is_ok ) 
+            {: & fc_handler ( '{: $ form_name :}', 'secure_login.pl' ) :} 
+            {: ~ ( $ login_id ) 
+                {: include ( '{: * cfg_obj_top_dir :}/session.nhtml', 'create', '{: $ login_id :}', '{: $ expire_session :}' ) :}
+                {: include ( '{: * cfg_obj_top_dir :}/location.nhtml', '{: $ out_page :}' ) :}   
+            :}
+        :}
+
+        {: ~ (   * nes_fc_plugin_self_error_field_attempts ) {: include ('{: $ tpl_errors :}') :} :}
+        {: ~ ( ! * nes_fc_plugin_self_error_field_attempts )
+        <form name="{: $ form_name :}" id="{: $ id_form :}" class="{: $ class_form :}" action="{: $ form_action :}" method="post">
+        {: & fc_begin_form :}
+            <fieldset> {: ~ $msg_legend <legend>{: $ msg_legend :}</legend> :}
+                <table border="0">
+                    <tr>
+                        <td align="right">{: $ msg_name,yes_html :}</td>
+                        <td align="left">
+                            <input type="text" size="{: $ max_len_name :}" name="{: & fc_obfuscated ('{: $ form_name :}','{: $ form_name :}_User') :}" value="{: * ('q_{: $ form_name :}_User') :}" />
+                            <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( * nes_fc_plugin_self_error_field_1 ) {: $ msg_error_name,yes_html :}:}</span>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td align="right">{: $ msg_pass,yes_html :}</td>
+                        <td align="left">
+                            <input type="password" size="{: $ max_len_pass :}" name="{: & fc_obfuscated ('{: $ form_name :}','{: $ form_name :}_Password') :}" value="{: * ('q_{: $ form_name :}_Password') :}" />
+                            <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( * nes_fc_plugin_self_error_field_2 ){: $ msg_error_pass,yes_html :}:}</span>
+                        </td> 
+                    </tr>
+                    {: ~ ( $ msg_remember )
+                    <tr>
+                        <td align="right">{: $ msg_remember,yes_html :}</td>
+                        <td align="left"><input type="checkbox" name="{: $ form_name :}_Remember" {: ~ ( '{: * ('q_{: $ form_name :}_Remember') :}' )checked="checked":} /></td> 
+                    </tr>  
+                    :}
+                    {: & fc_captcha_html ('{: $ form_name :}','{: $ captcha_name :}')
                         <tr>
-                            <td align="right">{: $ msg_name,yes_html :}</td>
+                            <td align="right">{: $ captcha_tag_start,yes_html :}{: & fc_captcha_code ('{: $ form_name :}','{: $ captcha_name :}') :}{: $ captcha_tag_end,yes_html :}</td>
                             <td align="left">
-                                <input type="text" size="{: $ max_len_name :}" name="{: & obfuscated ('{: $ form_name :}_User') :}" value="{: $ User :}" />
-                                <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( $ error_field_user ){: $ msg_error_name,yes_html :}:}</span>
+                                &nbsp;{: $ msg_captcha :}<br>
+                                &nbsp;<input {: $ this_is_captcha_field :} type="text" name="{: $ captcha_name :}" size="{: $ captcha_digits :}" />
+                                <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( * nes_fc_plugin_captcha_self_error_fatal ){: $ msg_error_captcha,yes_html :}:}</span>
                             </td> 
                         </tr>
-                        <tr>
-                            <td align="right">{: $ msg_pass,yes_html :}</td>
-                            <td align="left">
-                                <input type="password" size="{: $ max_len_pass :}" name="{: & obfuscated ('{: $ form_name :}_Password') :}" value="{: $ Password :}" />
-                                <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( $ error_field_password ){: $ msg_error_pass,yes_html :}:}</span>
-                            </td> 
-                        </tr>
-                        {: ~ ( $ msg_remember )
-                        <tr>
-                            <td align="right">{: $ msg_remember,yes_html :}</td>
-                            <td align="left"><input type="checkbox" name="{: $ form_name :}_Remember" {: $ Remember :} /></td> 
-                        </tr>  
-                        :}
-                        {: ~ ( $ last_step && $ form_max_attempts )    
-                            {: & captcha ('{: $ captcha_name :}','{: $ captcha_type :}','{: $ captcha_digits :}','{: $ captcha_noise :}','{: $ captcha_size :}','{: $ captcha_sig :}','{: $ captcha_spc :}','{: $ captcha_expire :}','{: $ captcha_atempts :}')
-                                <tr>
-                                    <td align="right">{: $ captcha_tag_start,yes_html :}{: & captcha_code :}{: $ captcha_tag_end,yes_html :}</td>
-                                    <td align="left">
-                                        &nbsp;{: $ msg_captcha :}<br>
-                                        &nbsp;<input {: $ this_is_captcha_field :} type="text" name="{: $ captcha_name :}" size="{: $ captcha_digits :}" />
-                                        <span name="{: $ form_name :}_user_span" id="{: $ form_name :}_user_id_span">{: ~ ( $ captcha_error_fatal ){: $ msg_error_captcha,yes_html :}:}</span>
-                                    </td> 
-                                </tr>
-                            :}                        
-                        :}        
-                        <tr>
-                            <td align="right"></td>
-                            <td align="left">
-                                {: ~ ( $ error_user_pass ) {: $ msg_error_form,yes_html :} :}
-                                <input type="submit" name="{: $ form_name :}_send" value="{: $ msg_login :}" />
-                            </td> 
-                        </tr>             
-                    </table>
-                    {: ~ ( $ tpl_options ) {: include ('{: $ tpl_options :}')  :}  :}
-                </fieldset>
-            </form>
+                    :}      
+                    <tr>
+                        <td align="right"></td>
+                        <td align="left">
+                            {: ~ ( $ error_user_pass ) {: $ msg_error_form,yes_html :} :}
+                            <input type="submit" name="{: $ form_name :}_send" value="{: $ msg_login :}" />
+                            <input type="hidden" name="{: $ form_name :}_send" value="{: $ msg_login :}" /> {: # IE no envia algunas veces el valor de los botones submit :}
+                        </td> 
+                    </tr>             
+                </table>
+                {: ~ ( $ tpl_options ) {: include ('{: $ tpl_options :}')  :}  :}
+            </fieldset>
+        {: & fc_end_form :}
+        </form>
         :}
     :}
 :}
-
-

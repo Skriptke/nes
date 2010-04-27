@@ -22,7 +22,6 @@ my $out = $container->get_out_content();
 
 $out =~ s/ Nes / <b><blink>Nes<\/blink><\/b> /g;
 
-
 #$container->set_out_content( "-BeGiN-".$out."-eND-" );
 $container->set_out_content( $out );
 

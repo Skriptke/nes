@@ -1,0 +1,261 @@
+{: ~ ( $ first_time )
+<script src="http://{: $ NES_env_SERVER_NAME :}{: $ NES_cfg_js_dir :}/tabber/tabber-minimized.js" type="text/javascript"></script>
+<link rel="stylesheet" href="http://{: $ NES_env_SERVER_NAME :}{: $ NES_cfg_js_dir :}/tabber/tabber.css" TYPE="text/css">
+</style>
+
+<div class="tabber">
+:}
+
+<div class="tabbertab" title="{: $ object_no_ext :}">
+    <div class="tabber">
+    
+    <div class="tabbertab" title=" {: $ interactions :}: {: $ object :} ">
+    <pre>
+    Template.....: <b>{: $ object_no_path :}</b>
+    Path.........: {: $ object_path :}
+    Parent.......: {: $ parent :}
+    Type.........: {: $ type :}
+    Interactions.: {: $ interactions :}
+    Scripts......: {: $ scripts :}
+    Benchmark....: {: $ benchmark :}
+    </pre>
+    </div>
+
+    <div class="tabbertab" title="NES env">
+    <pre>{: @ (env_nes) 
+    {: @$ env_nes.key :} = [{: @$ env_nes.value,no_br :}] :}</pre></div>
+    
+    </div>
+    
+    <div class="tabber">
+        
+    {: ~ ($ STDERR) <div class="tabbertab" title="STDERR"><pre>{: $ STDERR,no_br :}</pre></div>  :}
+    <div class="tabbertab" title="Tags"><pre>{: $ dumper_tags,no_br :}</pre></div>
+    <div class="tabbertab" title="Source"><pre>{: $ source,no_br :}</pre></div>
+    <div class="tabbertab" title="Out"><pre>{: $ out,no_br :}</pre></div>
+    <div class="tabbertab" title="Nes::Singleton">
+        <div class="tabber">
+            <div class="tabbertab" title="Top"><pre>Dumper of: <b>Nes::Singleton->{'top_container'}</b></pre><pre>{: $ dumper_top,no_br :}</pre></div>      
+            <div class="tabbertab" title="Container"><pre>Dumper of: <b>Nes::Singleton->{'container'}</b></pre><pre>{: $ dumper_container,no_br :}</pre></div>
+            <div class="tabbertab" title="Template"><pre>Dumper of: <b>Nes::Singleton->{'container'}->{'content_obj'}</b><pre>{: $ dumper_template,no_br :}</pre></div>
+            <div class="tabbertab" title="Cookies"><pre>Dumper of: <b>Nes::Singleton->{'cookies'}</b></pre><pre>{: $ dumper_cookies,no_br :}</pre></div>
+            <div class="tabbertab" title="Session"><pre>Dumper of: <b>Nes::Singleton->{'session'}</b></pre><pre>{: $ dumper_session,no_br :}</pre></div> 
+            <div class="tabbertab" title="Query"><pre>Dumper of: <b>Nes::Singleton->{'query'}</b></pre><pre>{: $ dumper_query,no_br :}</pre></div>   
+            <div class="tabbertab" title="CFG"><pre>Dumper of: <b>Nes::Singleton->{'CFG'}</b></pre><pre>{: $ dumper_CFG,no_br :}</pre></div>   
+            <div class="tabbertab" title="Nes"><pre>Dumper of: <b>Nes::Singleton->{'nes'}</b></pre><pre>{: $ dumper_nes,no_br :}</pre></div>
+            <div class="tabbertab" title="Interpret"><pre>Dumper of: <b>Nes::Singleton->{'container'}->{'content_obj'}->{'interpret'}</b></pre><pre>{: $ dumper_interpret,no_br :}</pre></div>   
+            <div class="tabbertab" title="Register"><pre>Dumper of: <b>Nes::Singleton->{'register'}</b></pre><pre>{: $ dumper_register,no_br :}</pre></div>
+        </div>
+    </div>       
+    <div class="tabbertab" title="Plugin"><pre>{: $ dumper_plugin,no_br :}</pre></div>
+  
+    </div>
+
+</div>
+  
+{: ~ $top_template 
+
+<div class="tabbertab tabbertabdefault" title="Top">
+    <div class="tabber">
+    
+    <div class="tabbertab" title="Top Template">
+<pre>
+    URL..........: [<b>{: $ url :}</b>]
+    Template.....: [<b>{: $ object_no_path :}</b>]
+    Path.........: [{: $ object_path :}]
+    Headers......: [{: $ headers :}]
+    Cookies......: [{: $ cookies :}]
+    GET..........: [{: $ GET :}]
+    POST.........: [{: $ POST :}]
+    Scripts......: [{: $ scripts :}]
+    Benchmark....: [{: $ benchmark :}]
+    </pre>
+    </div>
+
+    <div class="tabbertab" title="CFG vars">
+    <pre>{: @ (cfg) 
+    {: @$ cfg.key :} = [{: @$ cfg.value,no_br :}] :}</pre></div>
+    <div class="tabbertab" title="CGI env">
+    <pre>{: @ (env_cgi) 
+    {: @$ env_cgi.key :} = [{: @$ env_cgi.value,no_br :}] :}</pre></div> 
+    <div class="tabbertab" title="NES env">
+    <pre>{: @ (env_nes) 
+    {: @$ env_nes.key :} = [{: @$ env_nes.value,no_br :}] :}</pre></div>   
+
+    <div class="tabbertab" title="Nes: {: $ NES_nes_ver :} {: $ NES_env_MOD_PERL :}">
+    <pre>
+    Nes version..: {: $ NES_nes_ver :}
+    ModPerl......: {: $ NES_env_MOD_PERL :}
+    You IP.......: {: $ NES_nes_remote_ip :}
+    
+    debug_info_template......: {: $ NES_debug_info_template :}
+    debug_info_only_from_ip..: {: $ NES_debug_info_only_from_ip :}
+    debug_info_save_to_log...: {: $ NES_debug_info_save_to_log :}
+    debug_info_show_in_out...: {: $ NES_debug_info_show_in_out :}    
+    debug_info_show_up.......: {: $ NES_debug_info_show_up :}
+    debug_info_exclude.......: {: $ NES_debug_info_exclude :}
+    debug_info_tail_files....: {: $ NES_debug_info_tail_files :}
+    </pre>
+    </div>     
+
+    <div class="tabbertab" title="Tail files">
+        <div class="tabber">
+        {: @ tail 
+        <div class="tabbertab" title="{: @$ tail.name,no_br :}">
+            <pre><b>Showing: {: @$ tail.file,no_br :}</b><br><br>{: @$ tail.tail,no_br :}
+            </pre>
+        </div>
+        :}
+        </div>
+    </div>
+    
+    </div>
+    
+    <div class="tabber">
+     
+    <div class="tabbertab" title="Tree"><pre>{: $ tree,yes_html :}</pre></div> 
+    <div class="tabbertab" title="Tags"><pre>{: $ dumper_tags,no_br :}</pre></div>
+    <div class="tabbertab" title="Source"><pre>{: $ source,no_br :}</pre></div>
+    <div class="tabbertab" title="Out">
+        <div class="tabber">
+            <div class="tabbertab" title="Out"><pre>{: $ out,no_br :}</pre></div>
+            {: ~ ($ normalize_out) <div class="tabbertab" title="Normalize"><pre>{: $ normalize_out,no_br :}</pre></div>  :}
+            {: ~ ($ clean_out) <div class="tabbertab" title="Clean"><pre>{: $ clean_out,no_br :}</pre></div>  :}  
+        </div>
+    </div>
+    <div class="tabbertab" title="Nes::Singleton">
+        <div class="tabber">
+            <div class="tabbertab" title="Top"><pre>Dumper of: <b>Nes::Singleton->{'top_container'}</b></pre><pre>{: $ dumper_top,no_br :}</pre></div>      
+            <div class="tabbertab" title="Container"><pre>Dumper of: <b>Nes::Singleton->{'container'}</b></pre><pre>{: $ dumper_container,no_br :}</pre></div>
+            <div class="tabbertab" title="Template"><pre>Dumper of: <b>Nes::Singleton->{'container'}->{'content_obj'}</b><pre>{: $ dumper_template,no_br :}</pre></div>
+            <div class="tabbertab" title="Cookies"><pre>Dumper of: <b>Nes::Singleton->{'cookies'}</b></pre><pre>{: $ dumper_cookies,no_br :}</pre></div>
+            <div class="tabbertab" title="Session"><pre>Dumper of: <b>Nes::Singleton->{'session'}</b></pre><pre>{: $ dumper_session,no_br :}</pre></div> 
+            <div class="tabbertab" title="Query"><pre>Dumper of: <b>Nes::Singleton->{'query'}</b></pre><pre>{: $ dumper_query,no_br :}</pre></div>   
+            <div class="tabbertab" title="CFG"><pre>Dumper of: <b>Nes::Singleton->{'CFG'}</b></pre><pre>{: $ dumper_CFG,no_br :}</pre></div>   
+            <div class="tabbertab" title="Nes"><pre>Dumper of: <b>Nes::Singleton->{'nes'}</b></pre><pre>{: $ dumper_nes,no_br :}</pre></div>
+            <div class="tabbertab" title="Interpret"><pre>Dumper of: <b>Nes::Singleton->{'container'}->{'content_obj'}->{'interpret'}</b></pre><pre>{: $ dumper_interpret,no_br :}</pre></div>   
+            <div class="tabbertab" title="Register"><pre>Dumper of: <b>Nes::Singleton->{'register'}</b></pre><pre>{: $ dumper_register,no_br :}</pre></div>
+        </div>
+    </div>    
+    <div class="tabbertab" title="Plugin"><pre>{: $ dumper_plugin,no_br :}</pre></div>
+    {: ~ ($ STDERR) <div class="tabbertab" title="STDERR"><pre>{: $ STDERR,no_br :}</pre></div>  :}
+
+    </div>
+
+</div>
+
+<div class="tabbertab" title="Help">
+    <div class="tabber">
+    
+    <div class="tabbertab" title="About Debug Info">
+    <pre>
+
+      debug_info by Skriptke
+      Copyright 2009 - 2010 Enrique F. Castañón Barbero
+      Licensed under the GNU GPL.
+      Nes version: {: $ NES_nes_ver :}
+    
+      CPAN:
+      <a href="http://search.cpan.org/dist/Nes/">http://search.cpan.org/dist/Nes/</a>
+    
+      Sample:
+      <a href="http://nes.sourceforge.net/">http://nes.sourceforge.net/</a>
+    
+      Repository:
+      <a href="http://github.com/Skriptke/nes">http://github.com/Skriptke/nes</a>
+      
+      This template of debug_info uses tabber.js v 1.9:
+      by Patrick Fitzgerald pat@barelyfitz.com
+      <a href="http://www.barelyfitz.com/projects/tabber/">http://www.barelyfitz.com/projects/tabber/</a>
+      License (http://www.opensource.org/licenses/mit-license.php)
+      Copyright (c) 2006 Patrick Fitzgerald      
+  
+    </pre>
+    </div>
+
+    <div class="tabbertab" title="Help">
+    <pre>
+    The first tab shows each template included. Top represents the template for the URL.
+    
+    +--------------------------------------+
+    |            Top Template              |->Top
+    |  http://example.com/template.nhtml   |  
+    |+----------------------------------+  |  
+    ||HTTP HEADER:                      |  |  
+    ||  POST and GET ------------------------>POST and GET in Top
+    ||  Cookie ------------------------------>Cookies in Top
+    |+----------------------------------+  |
+    |+----------------------------------+  |
+    ||HTML CONTENT:                     |---->Each first tab
+    ||&lt;html&gt;                            |  |  
+    ||...                               |  | 
+    || +-----------------------------+  |  |
+    || |&#123;: include ('obj1.nhtml') :&#125; |  |  |  
+    || |                             |------->Each first tab.
+    || |                             |  |  | 
+    || +-----------------------------+  |  |
+    ||...                               |  | 
+    || +-----------------------------+  |  |
+    || |&#123;: include ('obj2.nhtml') :&#125; |  |  |
+    || |                             |------->Each first tab.
+    || |                             |  |  | 
+    || +-----------------------------+  |  |  
+    ||...                               |  |  
+    ||&lt;/html&gt;                           |  |
+    |+----------------------------------+  |
+    +--------------------------------------+    
+
+    Sub-tabs:
+        * /path/file
+            Info for this template.
+        * CFG vars
+            Nes CFG Variables for this template.
+        * CGI env
+            CGI Environment Variables.
+        * Nes env
+            Nes Environment Variables this template.
+        * Top
+            Dumper Data of Nes Top Container Object. 
+        * Tags
+            Dumper Data of Tag defined by the script of this template or inherited from the parent.
+        * Source
+            Source of this template.
+        * Out
+            Out of this template.
+        * Container
+            Dumper Data of Nes Container Object.
+        * Template
+            Dumper Data of Nes template Object.
+        * Cookies
+            Dumper Data of Nes Cookie Object.
+        * Session
+            Dumper Data of Nes Session Object.
+        * Query
+            Dumper Data of Nes Query Object.
+        * CFG
+            Dumper Data of Nes Setting Object. (.nes.cfg file)
+        * Nes
+            Dumper Data of Nes Top Object.
+        * Interpret
+            Dumper Data of Nes Interpret Object.
+        * Register
+            Dumper Data of Nes Register Object.
+        * Plugin 
+            Dumper Data of Plugin loaded for this template.          
+    </pre>
+    </div>
+
+    
+    </div>
+    
+
+</div>
+
+
+
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+:}
+

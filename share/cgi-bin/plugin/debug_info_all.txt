@@ -48,6 +48,20 @@ Dumper Contaniner
 =================
 {: $ dumper_container,no_br :}
 
+=================
+Dumper  Interpret
+=================
+{: $ dumper_interpret,no_br :}
+
+=================
+ Dumper Register
+=================
+{: $ dumper_register,no_br :}
+
+=================
+  Dumper Plugin
+=================
+{: $ dumper_plugin,no_br :}
 {: ~ $top_template 
 ==========================================
  Top Template: {: $ object_no_path :}

@@ -15,7 +15,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.03
+#  Version 1.04
 #
 #  location.pl
 #

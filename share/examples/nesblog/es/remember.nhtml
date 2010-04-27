@@ -20,7 +20,7 @@
 <a name="form_remember"></a>
 <div id="cuadro2">
 <center>{: ~ ( ! * nes_session_ok ) 
-    {: include ('{: * cfg_obj_form :}/multi_step.nhtml',
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/multi_step.nhtml',
                 "
                   msg_legend       => '&nbsp;&#8226; Recordar Contraseña &#8226;&nbsp;',
                   form_name        => 'fnb_reme',

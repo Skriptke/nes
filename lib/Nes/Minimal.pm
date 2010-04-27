@@ -37,7 +37,7 @@ $Nes::Minimal::_save_BUFFER             = undef;
 $Nes::Minimal::_save_BUFFER_String      = undef;
 $Nes::Minimal::_ERROR_max_upload        = 0;
 $Nes::Minimal::_ERROR_max_post          = 0;
-$Nes::Minimal::              = undef;
+#$Nes::Minimal::              = undef;
 
 $Nes::Minimal::VERSION = "1.2902";
 

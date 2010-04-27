@@ -62,7 +62,7 @@ Scripts......: [{: $ scripts :}]
 {: # $ dumper_query :}
 {: # $ dumper_CFG :}
 {: # $ dumper_nes :}
-
-
-
+{: # $ dumper_interpret :}
+{: # $ dumper_register :}
+{: # $ dumper_plugin :}
 

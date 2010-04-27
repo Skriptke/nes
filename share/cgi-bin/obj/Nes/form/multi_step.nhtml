@@ -1,8 +1,8 @@
-{: NES 1.0 ('multi_step.pl','{: $ exec_script_NES :}') :}
+{: NES 1.0 ('multi_step.pl','{: $ script_NES :}') :}
 {: #
   -----------------------------------------------------------------------------
     
-  Nes 1.03 by Skriptke
+  Nes 1.04 by Skriptke
   Copyright 2009 - 2010 Enrique Castanon
   Licensed under the GNU GPL.
 

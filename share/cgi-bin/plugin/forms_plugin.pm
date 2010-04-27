@@ -20,7 +20,7 @@
 #
 # -----------------------------------------------------------------------------
 
-
+# despues de tanto parche, esto hay que volver a escribirlo.
 package forms_plugin;
 
 use strict;
@@ -78,6 +78,7 @@ use strict;
     $self->{'auto_submit'} = 1 if $self->{'auto_submit'} ne '0';
 
     $self->{'form'}{ $self->{'name'} } = nes_forms->new( $code, $self->{'name'}, @param );
+    $self->{'form'}{ $self->{'name'} }->replace_form();
 
     return $self->{'form'}{ $self->{'name'} }->out();
   }
@@ -99,8 +100,17 @@ use strict;
       $self->{'tags'}{$tag} = $self->{'container'}->{'content_obj'}->{'tags'}{$tag};
     }    
 
+#    $self->{'plugin'} = nes_plugin->get_obj('forms_plugin');
+#    $self->{'plugin'}->add_obj( $name, $self );
+    
+    
     $self->{'plugin'} = nes_plugin->get_obj('forms_plugin');
-    $self->{'plugin'}->add_obj( $name, $self );
+    if ($self->{'plugin'} =~ /nes_plugin/) {
+      # antiguo método, obsoleto
+      $self->{'plugin'}->add_obj( $name, $self );
+    }
+    # nevo método
+    $self->{'plugin'} = $self->{'register'}->add_obj('forms_plugin', $name, $self);    
     
     $self->{'attempts_for_captcha'} = $attempts_for_captcha;
 
@@ -135,16 +145,12 @@ use strict;
     $self->{'form_is_finish'} = 0;
     $self->{'form_is_finish'} = 1 if $self->{'form_finish'} eq $self->{'name'};
 
-    $self->{'expire'}      = $expire || $self->{'CFG'}{'forms_plugin_expire'};
+    $self->{'expire'}      = $expire      || $self->{'CFG'}{'forms_plugin_expire'};
     $self->{'expire_last'} = $expire_last || $self->{'CFG'}{'forms_plugin_expire_last'};
-    
-    if ( $self->{'form_is_start'} && !$self->{'form_finish'} ) {
-      $self->{'expire'} = $self->{'expire_last'};
-    }
 
     $self->{'is_ok'} = 0;
 
-    $self->replace_form();
+#    $self->replace_form();
 
     return $self;
   }
@@ -350,6 +356,7 @@ use strict;
       $js_code =
         '<script>' . $js_var . ' = unescape(\'' . utl::escape($js_code) . '\');document.write(' . $js_var . ');' . $self->{'auto_submit_field'} . '</script>';
       $self->{'out'} =~ s/(\<\/form\>)/$self->{'form_finish_field'}$js_code\n$1/;
+      $self->{'expired'} = ( ( $self->{'time_cookie'} + utl::expires_time( $self->{'expire_last'} ) ) < time );
     }
 
     return;
@@ -505,7 +512,11 @@ use strict;
     }
     $self->{'generated_hash'} = md5_hex($pass);
     $self->{'load_hash'}      = $hash;
-    $self->{'expired'}        = ( ( $time + utl::expires_time( $self->{'expire'} ) ) < time );
+    $self->{'time_cookie'}    = $time;
+    $self->{'expired'} = ( ( $self->{'time_cookie'} + utl::expires_time( $self->{'expire'} ) ) < time );
+
+#$self->{'plugin'}->add_env( 'forms_plugin', 'pp', 'expired', $self->{'expire'} );
+#    $self->{'expired'}        = ( ( $time + utl::expires_time( $self->{'expire'} ) ) < time );
 
     foreach my $key ( keys %obfuscated ) {
       my $key_value = $self->{'query'}->get($key);

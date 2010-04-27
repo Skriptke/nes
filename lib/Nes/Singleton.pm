@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 
 # -----------------------------------------------------------------------------
 #
@@ -15,7 +14,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.03
+#  Version 1.04
 #
 #  Singleton.pm
 #
@@ -80,6 +79,7 @@
 
     $self->{'container'}->go(); 
     $self->{'top_container'}->{'container'}->out();
+    $self->{'container'}->forget();
 
     return;
   }
@@ -104,14 +104,20 @@
 
     return;
   }
-  
+   
   sub start {
     my $class = shift;
     
     utl::cleanup(\$instance) if $ENV{'MOD_PERL'};
 
     return $class->new();
-  }   
+  }
+  
+  sub instance {
+    my $class = shift;
+    
+    return $instance;
+  }     
 
 }
 

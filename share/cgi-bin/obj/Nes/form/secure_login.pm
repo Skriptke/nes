@@ -15,7 +15,7 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.03
+#  Version 1.04
 #
 #  DOCUMENTATION:
 #  perldoc Nes::Obj::secure_login
@@ -47,7 +47,10 @@ package secure_login;
     $self->{'from_pass_field'}     = undef;
     $self->{'from_user_function'}  = undef;
     $self->{'from_pass_function'}  = undef;    
-    
+
+    $self->{'User'}                = '';
+    $self->{'Password'}            = '';
+
     $self->{'min_len_name'}      = 2;
     $self->{'max_len_name'}      = 15;
     $self->{'min_len_pass'}      = 2;
@@ -58,6 +61,7 @@ package secure_login;
     $self->{'form_exp_last'}     = '1m';
     $self->{'form_expire'}       = '10m';
     $self->{'form_name'}         = 'secure_login';
+    $self->{'form_action'}       = '';
     $self->{'captcha_name'}      = 'secure_login';
     $self->{'captcha_type'}      = 'ascii';
     $self->{'captcha_digits'}    = 6;
@@ -65,8 +69,6 @@ package secure_login;
     $self->{'captcha_noise'}     = 3;
     $self->{'captcha_sig'}       = '';
     $self->{'captcha_spc'}       = ' ';
-    $self->{'captcha_expire'}    = '1m';
-    $self->{'captcha_atempts'}   = '10/5';
     $self->{'captcha_tag_start'} = '<pre style="font-size:2px; line-height:1.0;">';
     $self->{'captcha_tag_start'} = '' if $param{'captcha_size'} ne 'none';
     $self->{'captcha_tag_end'}   = '<br></pre>';
@@ -89,11 +91,19 @@ package secure_login;
     $self->{'tpl_errors'}        = 'secure_login_errors.nhtml';
     $self->{'tpl_options'}       = '';
     
+    # add in ver Version 1.04
+    $self->{'captcha_last'}      = 'last';
+    $self->{'captcha_key'}       = '';
+    
+    # obsolete in ver 1.04, no se usan
+    $self->{'captcha_expire'}    = '1m';
+    $self->{'captcha_atempts'}   = '10/5';
+
     
     foreach my $this (keys %param) {
       $self->{$this} = $param{$this};
     }
-    
+
     $self->{'expire_session'} = $self->{'expire_session_re'} if $nes->{'query'}->{'q'}{'l_Remember'};                                      
     
     return $self;    

@@ -9,6 +9,7 @@ Headers......: [{: $ headers :}]
 Cookies......: [{: $ cookies :}]
 GET..........: [{: $ GET :}]
 POST.........: [{: $ POST :}]
+ERRORS.......: [{: $ STDERR,no_br :}]
 :}
 Template.....: [{: $ object :}]
 Parent.......: [{: $ parent :}]
@@ -19,6 +20,8 @@ Type.........: [{: $ type :}]
 Interaction..: [{: $ interactions :}]
 Scripts......: [{: $ scripts :}]
 Unknown tags.: [{: $ unknown_tags :}]
+ERRORS.......: [{: $ STDERR,no_br :}]
 Out..........: [{: $ out :}]
+
 </pre>
 
