@@ -48,7 +48,7 @@ hours, not weeks or months as in other systems.
 Transparent management of code injection and cross-site scripting. Plugins 
 for creating secure forms, Forms and Captcha.
 
-Live sample: http://nes.sourceforge.net/miniblog/en/?action=login
+Live sample: L<http://nes.sourceforge.net/miniblog/en/?action=login>
 
 =item Objects
 
@@ -60,7 +60,7 @@ different from other systems.
 
 Full Debug for templates, customizable through templates Nes.
 
-Live sample: http://nes.sourceforge.net/hello_nes/tests/index.nhtml
+Live sample: L<http://nes.sourceforge.net/hello_nes/tests/index.nhtml>
 
 =item HTML oriented
 
@@ -93,7 +93,7 @@ inclusion in your script templates in other languages other than Perl
 without writing a single line of Perl code. Moreover, most of them 
 can contain Tags Nes.
 
-Live sample: http://nes.sourceforge.net/miniblog/en/?action=item&item=Include%20PHP%20and%20others
+Live sample: L<http://nes.sourceforge.net/miniblog/en/?action=item&item=Include%20PHP%20and%20others>
 
 =item SQL
 
@@ -961,10 +961,11 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
+Sample to use Nes; L<http://nes.sourceforge.net/>, 
 L<Template::Toolkit>, L<HTML::Template>, L<HTML::Mason>, 
 L<HCKit::Template>, L<Catalyst>, L<CGI::Framework>, 
-L<CGI::Application>, L<CGI::Application::Framework>, L<mod_perl>, 
-Sample to use Nes; L<http://nes.sourceforge.net/>
+L<CGI::Application>, L<CGI::Application::Framework>, L<mod_perl>
+
 
 =cut
 
