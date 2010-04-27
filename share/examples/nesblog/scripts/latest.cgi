@@ -21,15 +21,14 @@
 #
 # -----------------------------------------------------------------------------
 
-use Nes;
-my $nes = Nes::Singleton->new();
-my $nes_tags = {};
-
-require 'lib.cgi';
-
-@{ $nes_tags->{'articles'} } = latest(10);
-
-$nes->out(%$nes_tags);
-
+  use Nes;
+  my $nes = Nes::Singleton->new();
+  my $nes_tags = {};
+  
+  require 'lib.cgi';
+  
+  @{ $nes_tags->{'articles'} } = latest(10);
+  
+  $nes->out(%$nes_tags);
 
 1;
