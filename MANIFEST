@@ -123,8 +123,12 @@ share/cgi-bin/images/error_i.gif
 share/cgi-bin/images/error_w_i.gif
 share/cgi-bin/images/f_loading_g.gif
 share/cgi-bin/images/f_loading.gif
+share/cgi-bin/images/error_b_i_s.gif
 share/cgi-bin/js/.htaccess
 share/cgi-bin/js/nes.js
+share/cgi-bin/js/tabber/tabber-minimized.js
+share/cgi-bin/js/tabber/tabber.css
+share/cgi-bin/js/tabber/tabber.js
 share/examples/tutorial/.htaccess
 share/examples/tutorial/index.html
 share/examples/tutorial/lucky_01.nhtml
