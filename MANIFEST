@@ -28,7 +28,7 @@ lib/Nes/Obj/lwp.pod
 lib/Nes/Obj/session.pod
 lib/Nes/Plugin/API.pod
 lib/Nes/Plugin/clean.pod
-lib/Nes/Plugin/debub_info.pod
+lib/Nes/Plugin/debug_info.pod
 lib/Nes/Plugin/fc_plugin.pod
 share/examples/hello_nes/.htaccess
 share/examples/hello_nes/hello.cgi

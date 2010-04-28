@@ -175,7 +175,8 @@
 
     <div class="tabbertab" title="Help">
     <pre>
-    The first tab shows each template included. Top represents the template for the URL.
+    The first tab shows each template included. 
+    Top represents the template for the URL.
     
     +--------------------------------------+
     |            Top Template              |->Top
@@ -205,43 +206,7 @@
     |+----------------------------------+  |
     +--------------------------------------+    
 
-    Sub-tabs:
-        * /path/file
-            Info for this template.
-        * CFG vars
-            Nes CFG Variables for this template.
-        * CGI env
-            CGI Environment Variables.
-        * Nes env
-            Nes Environment Variables this template.
-        * Top
-            Dumper Data of Nes Top Container Object. 
-        * Tags
-            Dumper Data of Tag defined by the script of this template or inherited from the parent.
-        * Source
-            Source of this template.
-        * Out
-            Out of this template.
-        * Container
-            Dumper Data of Nes Container Object.
-        * Template
-            Dumper Data of Nes template Object.
-        * Cookies
-            Dumper Data of Nes Cookie Object.
-        * Session
-            Dumper Data of Nes Session Object.
-        * Query
-            Dumper Data of Nes Query Object.
-        * CFG
-            Dumper Data of Nes Setting Object. (.nes.cfg file)
-        * Nes
-            Dumper Data of Nes Top Object.
-        * Interpret
-            Dumper Data of Nes Interpret Object.
-        * Register
-            Dumper Data of Nes Register Object.
-        * Plugin 
-            Dumper Data of Plugin loaded for this template.
+    See: perldoc Nes::Plugin::debug_info
             
     </pre>
     </div>
