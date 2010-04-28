@@ -31,6 +31,7 @@
                   'Crypt::Blowfish',
                   'IO::String',
                   'IO::File',
+                  'IO::Scalar',
                   'Env::C',
                   'IPC::Run',
                   'DBI',
@@ -44,7 +45,7 @@
                   'JavaScript::Packer',
                   'Benchmark',
                   'Time::HiRes',
-                  'IO::Scalar',
+                  'Data::Dumper'
                 );
                 
   my $count = 0;

@@ -320,7 +320,7 @@ use Benchmark qw(:all :hireswallclock);
       $tail->{'tail'} = qx(tail --lines=$lines $file) || ' *** file empty or error on read ***';
       $object->{'tail'}[$i] = $tail; 
     }
-    
+     
     return;
   }  
   
@@ -402,10 +402,6 @@ use Benchmark qw(:all :hireswallclock);
 #      $object->{'clean_out'} = $object->{'out'};
 #      HTML::Packer::minify( \$object->{'clean_out'}, { remove_comments => 1, remove_newlines => 1 });      
 #    };    
-#    if ( $@ ) {
-#      $object->{'clean_out'} = '';
-#    }
-
 
     $self->env();   
     

@@ -1,0 +1,204 @@
+
+=head1 NAME
+
+Nes::Plugin::debug_info - Nes Debugger.
+
+=head1 SYNOPSIS
+
+In your .nes.cfg file:
+
+    auto_load_plugin_all_first = {: * cfg_plugin_top_dir :}/debug_info.pl
+    auto_load_plugin_all_last  = {: * cfg_plugin_top_dir :}/debug_info.pl
+
+=head1 DESCRIPTION
+
+Add debug information at the bottom or top of your template. The plugin 
+should be loaded at the begin of the all templates.
+
+Live sample: L<http://nes.sourceforge.net/hello_nes/tests/index.nhtml>
+
+=head1 .nes.cfg
+
+Displays debug information for only specified IP or range:
+    
+    debug_info_only_from_ip =
+
+Samples:
+
+    debug_info_only_from_ip = 192.168.1.10
+    debug_info_only_from_ip = 192.168
+
+Add a file the debug information, default is none:
+
+    debug_info_save_to_log  = /full/path/to-file
+
+If false debug information is not displayed in the output, default is true:
+    
+    debug_info_show_in_out  = 1
+
+If true shows debug information in the top of the output, if false bottom,
+default is false:
+
+    debug_info_show_up      = 0
+
+List of templates to exclude debugging:
+
+    debug_info_exclude     @= ()
+
+Sample:
+
+    debug_info_exclude     @= ('template.nsj','template.nhtml')
+
+List of to tail, you can display a log of errors or any other file in the 
+debug information: (requires tail unix command)
+
+    debug_info_tail_files  @= ()
+
+The number of lines displayed in tail files, in the same order:
+
+    debug_info_tail_lines  @= ()
+
+Samples: 
+
+    debug_info_tail_files  @= ('mifile1','/path/to/apache/error.log')
+    debug_info_tail_lines  @= ( 100, 100 )
+
+The above example will surely not work, the web server log typically have 
+root permissions.
+
+One trick to make these files available, as root forwarded the file error 
+output to another file with read permissions for the Web server user:
+
+    tail -f /path/to/apache/error.log > /path/to/home/user/error.log &
+
+and then:
+
+    debug_info_tail_files  @= ('/path/to/home/user/error.log')
+
+so you'll have available Web server errors in the debug information.
+
+
+The template that displays debug information:
+
+    debug_info_template     = {: * cfg_plugin_top_dir :}/debug_info.nhtml
+
+By default is:
+
+    {: * cfg_plugin_top_dir :}/debug_info.nhtml
+
+Others available:
+
+    {: * cfg_plugin_top_dir :}/debug_info_all.txt
+    {: * cfg_plugin_top_dir :}/debug_info_res.txt
+    {: * cfg_plugin_top_dir :}/debug_info_top.txt
+    {: * cfg_plugin_top_dir :}/debug_info.txt
+
+Or you can create your own template. The variables that define debug_info 
+and you're available to include in your template are:
+
+    {: $ tree :}
+    {: $ object :}
+    {: $ object_no_path :}
+    {: $ object_no_path :}
+    {: $ object_no_ext :}
+    {: $ object_no_ext :}
+    {: $ object_path :}
+    {: $ object_path :}
+    {: $ object_path :}
+    {: $ headers :}
+    {: $ cookies :}
+    {: $ GET :}
+    {: $ POST :}
+    {: $ benchmark :}
+    {: $ parent :}
+    {: $ parent_no_path :}
+    {: $ parent_no_path :}
+    {: $ type :}
+    {: $ top_container_obj :}
+    {: $ container_obj :}
+    {: $ content_obj :}
+    {: $ interactions :}
+    {: $ scripts :}
+    {: $ source :}
+    {: $ out :}
+    {: $ normalize_out :}
+    {: $ clean_out :}
+    {: $ STDERR :}
+    {: $ dumper_tags :}
+    {: $ dumper_top :}
+    {: $ dumper_container :}
+    {: $ dumper_template :}
+    {: $ dumper_cookies :}
+    {: $ dumper_session :}
+    {: $ dumper_query :}
+    {: $ dumper_CFG :}
+    {: $ dumper_nes :}
+    {: $ dumper_interpret :}
+    {: $ dumper_register :}
+    {: $ dumper_plugin :}
+
+There is a peculiarity with the templates 'debug_info', the plugin loads your 
+template in a space other than the CGI environment to avoid interference with 
+the application to debug. So the Nes environment variables are not available.
+
+These variables are redefined as:
+
+    {: $ NES_... :}
+
+Sample:
+
+    {: * nes_ver :}        <- not work
+    {: $ NES_nes_ver :}    <- Ok
+    {: * cfg_plugin_dir :} <- not work
+    {: $ NES_plugin_dir :} <- Ok
+    ...
+
+=head1 AUTHOR
+
+Skriptke: Enrique Castanon
+
+=head1 VERSION
+
+Version 1.03 April 2010
+
+=head1 COPYRIGHT
+
+Copyright (c) Enrique F. Castanon Barbero. All rights reserved.
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it
+and/or modify it under the same terms and conditions as
+GNU Public License (GPL).
+
+This means that you can, at your option, redistribute it and/or 
+modify it under either the terms the GNU Public License (GPL), 
+or under the Perl Artistic License.
+
+See http://dev.perl.org/licenses/
+
+=head1 DISCLAIMER
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS
+OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Use of this software in any way or in any form, source or binary,
+is not allowed in any country which prohibits disclaimers of any
+implied warranties of merchantability or fitness for a particular
+purpose or any disclaimers of a similar nature.
+
+IN NO EVENT SHALL I BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT,
+SPECIAL, INCIDENTAL,  OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+USE OF THIS SOFTWARE AND ITS DOCUMENTATION (INCLUDING, BUT NOT
+LIMITED TO, LOST PROFITS) EVEN IF I HAVE BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE
+
+=head1 SEE ALSO
+
+L<Nes>. L<Nes::Tutorial>, L<Nes::Singleton>, 
+Sample to use Nes; L<http://nes.sourceforge.net/>
+
+=cut
+
