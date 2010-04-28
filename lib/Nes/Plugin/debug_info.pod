@@ -147,10 +147,10 @@ These variables are redefined as:
 
 Sample:
 
-    {: * nes_ver :}        <- not work
-    {: $ NES_nes_ver :}    <- Ok
-    {: * cfg_plugin_dir :} <- not work
-    {: $ NES_plugin_dir :} <- Ok
+    {: * nes_ver :}            <- not work
+    {: $ NES_nes_ver :}        <- Ok
+    {: * cfg_plugin_dir :}     <- not work
+    {: $ NES_cfg_plugin_dir :} <- Ok
     ...
 
 =head1 AUTHOR
