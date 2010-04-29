@@ -157,7 +157,7 @@ Nes::Singleton Request:
                         |
                         v
     .-------------------------------------------.
-    |          /cgi-bin/dispatch.cgi            |
+    |        /cgi-bin/nes/dispatch.cgi          |
     '-------------------------------------------'
                         |
                         v
