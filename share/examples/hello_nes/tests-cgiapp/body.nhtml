@@ -1,0 +1,64 @@
+{: NES 1.0 none :}
+{: #
+    -----------------------------------------------------------------------------
+      
+    Nes 1.04 by Skriptke
+    Copyright 2009 - 2010 Enrique F. Castañón Barbero
+    Licensed under the GNU GPL.
+  
+    Sample:
+    http://nes.sourceforge.net/
+  
+    CPAN:
+    http://search.cpan.org/dist/Nes/
+  
+    Repository:
+    http://github.com/Skriptke/nes
+  
+    -----------------------------------------------------------------------------
+:}
+    <h3><a href="?action=Modules">Installed Modules</a></h3>
+    <p>
+    {: ~ ( * q_action eq 'Modules' )
+        {: include modules.nhtml :}
+    :}
+    </p>
+    <h3><a href="?action=Inludes">Includes</a></h3>
+    <p>
+    {: ~ ( * q_action eq 'Inludes' )
+        {: include includes.nhtml :}
+    :}
+    </p>
+    <h3><a href="?action=Objects">Objects</a></h3>
+    <p>
+    {: ~ ( * q_action eq 'Objects' )
+        {: include objects.nhtml :}
+    :}
+    </p>    
+    <h3><a href="?action=Sql">SQL</a></h3>
+    <p>
+    {: ~ ( * q_action eq 'Sql' )
+        {: include sql.nhtml :}
+    :}
+    </p>  
+    <h3><a href="?action=others">others</a></h3>
+    <p>
+    {: ~ ( * q_action eq 'others' )
+        {: include others.nhtml :}
+    :}
+    </p>  
+    <p>
+    {: ~ ( ! * q_action )
+        <p>Click <a href="?action=Modules">Modules</a>, 
+                 <a href="?action=Inludes">Includes</a>, 
+                 <a href="?action=Objects">Objects</a>, 
+                 <a href="?action=Sql">SQL</a>, 
+                 <a href="?action=others">others</a>. 
+        </p>
+    :}
+    {: ~ (   * q_action )
+        <p><a href="?">Index</a></p>
+    :}
+    </p> 
+
+ 

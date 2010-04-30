@@ -1,4 +1,3 @@
-
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
@@ -28,7 +27,7 @@
   sub new {
     my $class = shift;
     my $self  = $instance || bless {}, $class;
-    my ( $file ) = @_;
+    my ( $file, $nes_top_dir, $nes_dir ) = @_;
     
     if ( $instance ) {
       $self->{'container'} = nes_container->get_obj();
@@ -49,7 +48,7 @@
   
     die "No template defined: $@" if !$self->{'file'};
 
-    $self->{'CFG'}           = Nes::Setting->new();
+    $self->{'CFG'}           = Nes::Setting->new( $nes_top_dir, $nes_dir  );
     $self->{'top_container'} = nes_top_container->new( $self->{'file'}, $dir );
     $self->{'container'}     = nes_container->get_obj();
     $self->{'cookies'}       = nes_cookie->get_obj();

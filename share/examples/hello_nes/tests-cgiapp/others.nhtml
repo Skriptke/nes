@@ -1,0 +1,76 @@
+{: NES 1.0 index.cgi :}
+{: #
+    -----------------------------------------------------------------------------
+      
+    Nes 1.04 by Skriptke
+    Copyright 2009 - 2010 Enrique F. Castañón Barbero
+    Licensed under the GNU GPL.
+  
+    Sample:
+    http://nes.sourceforge.net/
+  
+    CPAN:
+    http://search.cpan.org/dist/Nes/
+  
+    Repository:
+    http://github.com/Skriptke/nes
+  
+    -----------------------------------------------------------------------------
+:}
+    <h4>Nes Environment Variables</h4>
+      <pre>
+      Nes Version          : {: * nes_ver :}
+      This Template        : {: * nes_this_file :}
+      test_var in .nes.cfg : {: * cfg_test_var :} 
+      HTTP_HOST            : {: * env_HTTP_HOST :}
+      QUERY_STRING         : {: * env_QUERY_STRING :}
+      Var action in GET    : {: * q_action :}
+      Remote Ip            : {: * nes_remote_ip :}
+      </pre>
+    <h4>Tag % Hash</h4>
+    <div id="caja">
+    <table width="100%" border="1" cellspacing="1" cellpadding="1">
+    {: % (spanish_numbers)
+      <tr>
+        <td>{: @$ spanish_numbers._name  :}</td>
+        <td>{: @$ spanish_numbers._value  :}</td>
+      </tr>
+    :}
+    </table>
+    <br>
+    <small>* This Tag (% hash) is undocumented by future changes, do not use it for your templates.</small>
+    </div> 
+    <h4>Tag @ Table</h4>
+    <div id="caja">
+    <table width="100%" border="1" cellspacing="1" cellpadding="1">
+    {: @ (users)
+      <tr>
+        <td> {: @$ users.name  :} </td>
+        <td> {: @$ users.email :} </td>
+      </tr>
+    :}
+    </table>
+    </div>
+    <h4>Tag ~ Conditional Replacement</h4>
+    <div id="caja">
+    {: ~ ( * q_action eq 'others' ) q_action is 'others' :}
+    </div>
+    <h4>Debug Info Errors</h4>
+    <div id="caja">
+    * View the debug information below
+    {: # --------------------------------------------- :}
+    {: # intentionally generated error, for test debug :}
+              {: include get_a_error :}
+              {: & plugin_get_a_error :}
+              {: $ var_get_a_error :}
+              {: @ table_get_a_error :}
+    {: # --------------------------------------------- :}
+    </div>    
+
+
+    
+    
+    
+    
+    
+    

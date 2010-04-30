@@ -20,6 +20,8 @@
 #
 # -----------------------------------------------------------------------------
 
+package Nes;
+
 use strict;
 #use warnings;
 
@@ -27,7 +29,7 @@ use strict;
 no warnings 'uninitialized';
 
 
-our $VERSION          = '1.03.2_2';
+our $VERSION          = '1.03.3_0';
 our $CRLF             = "\015\012";
 our $MAX_INTERACTIONS = 900;
 our $MAX_SCRIPTS      = 900;
@@ -713,9 +715,9 @@ use Nes::Singleton;
     my $clength = $ENV{'CONTENT_LENGTH'} || 0;
     $self->{'save_buffer'} = 0;
 
-    return $self if !$clength && !$ENV{'QUERY_STRING'};
+#    return $self if !$clength && !$ENV{'QUERY_STRING'};
 
-    require Nes::Minimal;    
+    use Nes::Minimal;    
     $self->{'save_buffer'} = 1 if $self->{'top_container'}->{'php_wrapper'} && 
                                   $clength > ($self->{'CFG'}{'tmp_upload'}*1024) &&
                                   $self->{'CFG'}{'tmp_upload'};      
@@ -745,8 +747,28 @@ use Nes::Singleton;
     my $self  = shift;
     my ($param) = @_;
 
+    return if !$self->{'CGI'};
+    
     return $self->{'CGI'}->param($param);
-  }  
+  }
+
+  sub by_CGI {
+    my $self  = shift;
+
+    # no upload inplemented
+    require CGI;
+    $self->{'q_CGI'} = CGI->new( $self->{'q'} );
+    
+    return $self->{'q_CGI'};
+  }
+
+  sub header {
+    my $self  = shift;
+
+    return if !$self->{'q_CGI'};
+
+    return $self->{'q_CGI'}->header(@_);
+  }   
   
 #  sub get_upload {
 #    my $self  = shift;
@@ -885,6 +907,7 @@ use Nes::Singleton;
     $self->{'max_scripts'} = $MAX_SCRIPTS;
     $self->{'nes'}->{'debug_info'}{'is_load'} = 0;
     $self->{'nes'}->{'debug_info'}{'obj'} = undef;
+    $self->{'nes'}->{'print_out'} = 1;
     
     $self->init($file,$dir) if $file;
 
@@ -1019,7 +1042,7 @@ use Nes::Singleton;
     $self->{'nes_env'}{'nes_dir_self'}  = $self->{'dir'};
     $self->{'nes_env'}{'nes_this_dir'}  = $self->{'dir'};
     $self->{'nes_env'}{'nes_this_file'} = $self->{'file'};
-    $self->{'nes_env'}{'nes_ver'}       = $VERSION;
+    $self->{'nes_env'}{'nes_ver'}       = $self->VERSION;
     $self->{'nes_env'}{'nes_remote_ip'} = $ENV{'REMOTE_ADDR'};
     $self->{'nes_env'}{'nes_remote_ip'} = $ENV{'HTTP_X_REMOTE_ADDR'} 
       if $ENV{'HTTP_X_REMOTE_ADDR'} && ( !$ENV{'REMOTE_ADDR'} || $ENV{'REMOTE_ADDR'} =~ /^(127|192|169|10)\./);
@@ -1300,7 +1323,7 @@ use Nes::Singleton;
       }
     }
 
-    $self->{'content_obj'}->out();
+    $self->{'content_obj'}->out() if $self->{'nes'}->{'print_out'};
 
     return;
   }

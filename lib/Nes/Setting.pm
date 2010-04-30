@@ -29,14 +29,16 @@
 
   sub new {
     my $class = shift;
-    
+    my ( $ntop, $ndir ) = @_;
+
     utl::cleanup(\$instance) if $ENV{'MOD_PERL'};
     return $instance if $instance;
 
     my $level       = utl::get_file_dir();
     my $file_name   = '.nes.cfg';
-    my $nes_dir     = $ENV{'SCRIPT_NAME'} || '/cgi-bin/nes';  # default: /cgi-bin/nes
-    my $nes_top_dir = $ENV{'SCRIPT_FILENAME'} || ''; 
+    $ndir           = '/cgi-bin/nes' if $ntop && !$ndir;
+    my $nes_dir     = $ndir || $ENV{'SCRIPT_NAME'} || '/cgi-bin/nes';  # default: /cgi-bin/nes
+    my $nes_top_dir = $ntop || $ENV{'SCRIPT_FILENAME'} || ''; 
     $nes_dir        =~ s/\/[^\/]*\.cgi|pl$//;
     $nes_top_dir    =~ s/\/[^\/]*\.cgi|pl$//;
 

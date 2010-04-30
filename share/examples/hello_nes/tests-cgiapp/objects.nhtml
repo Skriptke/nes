@@ -1,0 +1,69 @@
+{: NES 1.0 none :}
+{: #
+    -----------------------------------------------------------------------------
+      
+    Nes 1.04 by Skriptke
+    Copyright 2009 - 2010 Enrique F. Castañón Barbero
+    Licensed under the GNU GPL.
+  
+    Sample:
+    http://nes.sourceforge.net/
+  
+    CPAN:
+    http://search.cpan.org/dist/Nes/
+  
+    Repository:
+    http://github.com/Skriptke/nes
+  
+    -----------------------------------------------------------------------------
+:}
+    <h4>Date Time</h4>
+    <p id="caja">
+    {: include ( '{: * cfg_obj_top_dir :}/date_time.html', 
+                 'local',                {: # local o gmt :}
+                 '%A %e %B %Y %H:%M:%S'  {: # format :}
+               ) 
+    :}
+    </p>
+    <a name="secure_login"></a>
+    <h4>Secure Login</h4>
+    <div id="caja">
+    <center>
+    Any user, password: 1234<br><br>
+    {: include ('{: * cfg_obj_top_dir :}/Nes/form/secure_login.nhtml',
+                "
+                  script_handler   => 'test_script_handler.pl',
+                  function_handler => 'test_function_handler',
+                  form_name        => 'test_form_1',
+                  form_action      => '#secure_login',
+                "
+               )         
+    :}
+    {: ~ ( * nes_session_ok ) 
+        The session is Ok
+    :}
+    </center>
+    </div>
+    <h4>Session</h4>
+    <div id="caja">Session user:
+    {: include ( '{: * cfg_obj_top_dir :}/session.nhtml', get ) :}
+    {: ~ ( * nes_session_ok ) 
+        <br><br>Click for: <a href="?action=Objects&session=delete">delete session</a> 
+    :}
+    {: ~ ( * q_action eq 'Objects' && * q_session eq 'delete' )
+        <br>
+        {: include ( '{: * cfg_obj_top_dir :}/session.nhtml', del ) :}
+        {: include ( '{: * cfg_obj_top_dir :}/location.nhtml', '?action=Objects' ) :} 
+    :}
+    </div>   
+    <h4>Location</h4>
+    <div id="caja">Go <a href="?action=Objects&location=location">index</a> by location.
+    {: ~ ( * q_action eq 'Objects' && * q_location eq 'location' )
+        <br>
+        {: include ('{: * cfg_obj_top_dir :}/location.nhtml', '?' ) :}
+    :}
+    </div>
+    
+    
+    
+    

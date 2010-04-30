@@ -5,22 +5,18 @@ Nes::Plugin::fc_plugin - Secure form
 
 =head1 SYNOPSIS
 
- {: & fc (form_name, form_expire, form_exp_last, form_attempts, attempts_captcha, form_location, tpl_errors)
+    {: & fc (form_name, form_expire, form_exp_last, form_attempts, attempts_captcha, form_location, tpl_errors)
         {: & fc_check          (form_name, field_name, min_len, max_len, type) :}
         {: & fc_field_attempts (form_name, field_name, field_attemps, case)    :}
         {: & fc_captcha        (form_name, captcha_name, captcha_last, captcha_type, captcha_digits, captcha_noise, captcha_size, captcha_sig, captcha_spc, captcha_key )   :}
         {: & fc_handler        (form_name, script_handler) :} 
-
         <form>
         {: & fc_begin_form :}
-        
         ...
-
                     {: & fc_captcha_html ('{: $ form_name :}','{: $ captcha_name :}')
                         {: & fc_captcha_code ('{: $ form_name :}','{: $ captcha_name :}') :}{: $ captcha_tag_end,yes_html :}</td>
-                    :}      
+                    :}
         ...
-        
         {: & fc_end_form :}
         </form>
         :}
