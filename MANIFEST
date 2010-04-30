@@ -114,6 +114,8 @@ share/cgi-bin/obj/Nes/form/file_upload.pl
 share/cgi-bin/obj/Nes/ajax/include_js.nhtml
 share/cgi-bin/obj/Nes/ajax/pseudo_ajax.nhtml
 share/cgi-bin/obj/Nes/ajax/pseudo_ajax.pl
+share/cgi-bin/obj/Nes/ajax/ajax.nhtml
+share/cgi-bin/obj/Nes/ajax/ajax.pl
 share/cgi-bin/images/error.gif
 share/cgi-bin/images/error_b.gif
 share/cgi-bin/images/error_w.gif
