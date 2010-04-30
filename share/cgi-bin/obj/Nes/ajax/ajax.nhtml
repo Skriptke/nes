@@ -1,0 +1,67 @@
+{: NES 1.0 ('./ajax.pl') :}
+{: #
+  -----------------------------------------------------------------------------
+    
+  Nes 1.03 by Skriptke
+  Copyright 2009 - 2010 Enrique Castanon
+  Licensed under the GNU GPL.
+
+  Sample:
+  http://nes.sourceforge.net/
+
+  CPAN:
+  http://search.cpan.org/dist/Nes/
+
+  Repository:
+  http://github.com/Skriptke/nes
+   
+  DOCUMENTATION:
+  perldoc Nes::Obj::ajax
+ 
+  -----------------------------------------------------------------------------
+:}
+
+    
+    <script type="text/javascript">
+    function init_ajax() {
+        var httpRequest;
+        if (window.XMLHttpRequest)
+        {
+            httpRequest = new XMLHttpRequest();
+        } 
+        else if (window.ActiveXObject)
+        {
+            try {
+                httpRequest = new ActiveXObject("MSXML2.XMLHTTP");
+            } catch (e) {
+                try {
+                    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (e) {}
+            }
+        }
+        if (!httpRequest)
+        {
+            return;
+        }
+        return httpRequest;
+    }
+      
+    {: @ events 
+    {: ~ ( '{: @$ events.by :}' =~ /^field/i )el_{: @$ events.idname :} = document.getElementsByName('{: @$ events.idname :}')[0]; :}{:#
+  :}{: ~ ( '{: @$ events.by :}' =~ /^name/i  )el_{: @$ events.idname :} = document.getElementsByName('{: @$ events.idname :}'); :}{:#
+  :}{: ~ ( '{: @$ events.by :}' =~ /^tag/i   )el_{: @$ events.idname :} = document.getElementsByTagName('{: @$ events.idname :}')[0]; :}{:#
+  :}{: ~ ( '{: @$ events.by :}' =~ /^id/i    )el_{: @$ events.idname :} = document.getElementById('{: @$ events.idname :}'); :}
+    var ev = el_{: @$ events.idname :}.getAttribute("{: @$ events.event :}"); if (!ev) {ev='';};
+    el_{: @$ events.idname :}.setAttribute("{: @$ events.event :}", "{: @$ events.idname :}_go();"+ev, 0);
+    function {: @$ events.idname :}_go() {
+       {: @$ events.idname :}_cx = init_ajax();
+       {: @$ events.preload,yes_html :};
+       {: @$ events.idname :}_cx.open("{: @$ events.method :}","{: @$ events.open :}",true);
+       {: @$ events.idname :}_cx.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+       {: @$ events.idname :}_cx.send("{: $ params :}{: @$ events.params :}");
+       {: @$ events.idname :}_cx.onreadystatechange = function () { if ({: @$ events.idname :}_cx.readyState == 4 ) { {: @$ events.afterload,yes_html :}({: @$ events.idname :}_cx); } }
+    }
+   :}{: $ script,yes_html :}{: ~ ( $ script_tpl  ) {: include ('{: $ script_tpl :}')  :}  :}
+   </script>    
+
+
