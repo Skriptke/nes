@@ -99,11 +99,7 @@ and you're available to include in your template are:
     {: $ tree :}
     {: $ object :}
     {: $ object_no_path :}
-    {: $ object_no_path :}
     {: $ object_no_ext :}
-    {: $ object_no_ext :}
-    {: $ object_path :}
-    {: $ object_path :}
     {: $ object_path :}
     {: $ headers :}
     {: $ cookies :}
@@ -111,7 +107,6 @@ and you're available to include in your template are:
     {: $ POST :}
     {: $ benchmark :}
     {: $ parent :}
-    {: $ parent_no_path :}
     {: $ parent_no_path :}
     {: $ type :}
     {: $ top_container_obj :}
@@ -159,7 +154,7 @@ Skriptke: Enrique Castanon
 
 =head1 VERSION
 
-Version 1.03 April 2010
+Version 1.04
 
 =head1 COPYRIGHT
 
@@ -197,8 +192,9 @@ POSSIBILITY OF SUCH DAMAGE
 
 =head1 SEE ALSO
 
-L<Nes>. L<Nes::Tutorial>, L<Nes::Singleton>, 
-Sample to use Nes; L<http://nes.sourceforge.net/>
+Sample to use Nes; L<http://nes.sourceforge.net/>,
+L<Nes>, L<Nes::Tutorial>, L<Nes::Singleton>
+
 
 =cut
 
