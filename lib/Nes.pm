@@ -1381,7 +1381,8 @@ use Nes::Singleton;
     }
     
     $self->{'TAG_HTTP-headers'} = $self->{'tags'}{'HTTP-headers'};
-    $self->{'tags'}{'HTTP-headers'} = undef;    
+    $self->{'tags'}{'_HTTP_headers_'} = $self->{'tags'}{'HTTP-headers'} if $self->{'tags'}{'HTTP-headers'};
+    delete $self->{'tags'}{'HTTP-headers'};    
 
     return;
   }
