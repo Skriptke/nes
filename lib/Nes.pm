@@ -29,7 +29,7 @@ use strict;
 no warnings 'uninitialized';
 
 
-our $VERSION          = '1.03.3_1';
+our $VERSION          = '1.03.3_2';
 our $CRLF             = "\015\012";
 our $MAX_INTERACTIONS = 900;
 our $MAX_SCRIPTS      = 900;

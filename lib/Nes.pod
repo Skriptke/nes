@@ -103,7 +103,7 @@ different from other systems.
 
 Full Debug for templates, customizable through templates Nes.
 
-Live sample: L<http://nes.sourceforge.net/hello_nes/tests/index.nhtml>
+Live sample: L<http://nes.sourceforge.net/hello_nes/tests/?action=others>
 
 =item HTML oriented
 
