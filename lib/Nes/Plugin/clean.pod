@@ -42,9 +42,9 @@ Clean the CSS if true:
 
 =head1 Requires
 
-    L<HTML::Packer>
-    L<CSS::Packer>
-    L<JavaScript::Packer>
+L<HTML::Packer>
+L<CSS::Packer>
+L<JavaScript::Packer>
 
 =head1 AUTHOR
 
