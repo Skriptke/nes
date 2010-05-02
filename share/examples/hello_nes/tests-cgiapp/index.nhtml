@@ -22,7 +22,8 @@
   <head>
     <title>Test CGI::Application::Plugin::Nes</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="expires" content="-1" >
+    <meta http-equiv="Pragma" content="no-cache" >    
     <style type="text/css">
     #caja { 
         padding: 15px 15px 15px 15px; 
