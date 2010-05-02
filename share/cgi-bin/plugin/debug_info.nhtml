@@ -85,6 +85,7 @@
     <div class="tabbertab" title="Nes: {: $ NES_nes_ver :} {: $ NES_env_MOD_PERL :}">
     <pre>
     Nes version..: {: $ NES_nes_ver :}
+    Perl version.: {: $ NES_nes_perl_ver :}
     ModPerl......: {: $ NES_env_MOD_PERL :}
     You IP.......: {: $ NES_nes_remote_ip :}
     
@@ -311,6 +312,27 @@
     |  Nes Object Library  |  |  My App Perl Library  |  |    CPAN    |
     |                      |  |                       |  |            |
     '----------------------'  '-----------------------'  '------------'
+
+    Nes Data Flow:
+
+    .------------.        .-----------------------.
+    |            |        |                       |
+    |    DATA    |------->|  My App Perl Library  |
+    |            |        |                       |
+    '------------'        '-----------------------'
+           |                                |
+           '--------------------------.     |
+    .---------------------------------|-----|-----.
+    |                | Nes Object |   |     |     |
+    |                '------------'   v     v     |
+    | .------------------.    .-----------------. |
+    | |  template.nhtml  |<---|    script.pl    | |
+    | '------------------'    '-----------------' |
+    '----------|----------------------------------'
+               v
+    .---------------------.
+    |         OUT         |
+    '---------------------'
 
     See: perldoc Nes::Singleton
     </pre>
