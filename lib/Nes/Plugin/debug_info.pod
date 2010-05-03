@@ -147,6 +147,10 @@ Sample:
     {: $ NES_cfg_plugin_dir :} <- Ok
     ...
 
+=head1 BUGS
+
+High memory consumption, especially with mod_perl.
+
 =head1 AUTHOR
 
 Skriptke: Enrique Castanon

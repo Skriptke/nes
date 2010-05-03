@@ -16,6 +16,7 @@
     Type.........: {: $ type :}
     Interactions.: {: $ interactions :}
     Scripts......: {: $ scripts :}
+    Benchmark....: [{: $ benchmark :}]
     </pre>
     </div>
 
@@ -38,7 +39,7 @@
     
     <div class="tabbertab" title=" {: $ object :} ">
 <pre>
-    URL..........: [http://{: $ url :}]
+    URL..........: [{: $ url :}]
     Template.....: [{: $ object_no_path :}]
     Path.........: [{: $ object_path :}]
     Headers......: [{: $ headers :}]
@@ -46,6 +47,7 @@
     GET..........: [{: $ GET :}]
     POST.........: [{: $ POST :}]
     Scripts......: [{: $ scripts :}]
+    Benchmark....: [{: $ benchmark :}]
     </pre>
     </div>
 
@@ -54,6 +56,7 @@
     <div class="tabbertab" title="Nes: {: $ NES_nes_ver :} {: $ NES_env_MOD_PERL :}">
     <pre>
     Nes version..: {: $ NES_nes_ver :}
+    Perl version.: {: $ NES_nes_perl_ver :}
     ModPerl......: {: $ NES_env_MOD_PERL :}
     You IP.......: {: $ NES_nes_remote_ip :}
     
@@ -97,7 +100,7 @@
       Nes version: {: $ NES_nes_ver :}
       
       debug_info Sample:
-      <a href="http://nes.sourceforge.net/hello_nes/tests/index.nhtml">http://nes.sourceforge.net/hello_nes/tests/index.nhtml</a>
+      <a href="http://nes.sourceforge.net/hello_nes/tests/?action=others">http://nes.sourceforge.net/hello_nes/tests/</a>
     
       CPAN:
       <a href="http://search.cpan.org/dist/Nes/">http://search.cpan.org/dist/Nes/</a>
@@ -155,6 +158,9 @@
 
     <div class="tabbertab" title="Nes::Singleton">
     <pre>
+    
+    Nes Request:
+    
     .-------------------------------------------.
     |         GET or POST HTTP Request          |
     |     http://example.com/template.nhtml     |
@@ -216,6 +222,63 @@
     | print HTTP Headers                        |
     | print the out                             |
     '-------------------------------------------'  
+
+    Nes Object:
+
+    .------------------------------------------------------------------------------------.
+    |                                 | Nes Object |                                     |
+    |                                 '------------'                                     |
+    | .-----------------------------------.    .---------------------------------------. |
+    | |          template.nhtml           |    |              script.pl                | |
+    | |-----------------------------------|    |---------------------------------------| |
+    | |                                   |--->|                                       | |
+    | |    &#123;: Nes 1.0 ('script.pl') :&#125;    |    | Nes::Singleton->new('template.nhtml') | |
+    | |                                   |<---|                                       | |
+    | '-----------------------------------'    '---------------------------------------' |
+    '------------------------------------------------------------------------------------'
+
+    Nes Model:
+
+    .----------------------------------------------.
+    |                 | Nes Object |               |
+    |                 '------------'               |
+    | .-------------------.    .-----------------. |
+    | |  template.nhtml   |    |    script.pl    | |
+    | |-------------------|    |-----------------| |
+    | |        _          |--->|    _       _    | |
+    | |        |          |<---|    |       |    | |
+    | '--------|----------'    '----|-------|----' |
+    '----------|--------------------|-------|------'
+               |                    |       |
+               |                    |       '------------------.
+               |                    |                          |
+               v                    v                          v
+    .----------------------.  .-----------------------.  .------------.
+    |                      |  |                       |  |            |
+    |  Nes Object Library  |  |  My App Perl Library  |  |    CPAN    |
+    |                      |  |                       |  |            |
+    '----------------------'  '-----------------------'  '------------'
+
+    Nes Data Flow:
+
+    .------------.        .-----------------------.
+    |            |        |                       |
+    |    DATA    |------->|  My App Perl Library  |
+    |            |        |                       |
+    '------------'        '-----------------------'
+           |                                |
+           '--------------------------.     |
+    .---------------------------------|-----|-----.
+    |                | Nes Object |   |     |     |
+    |                '------------'   v     v     |
+    | .------------------.    .-----------------. |
+    | |  template.nhtml  |<---|    script.pl    | |
+    | '------------------'    '-----------------' |
+    '----------|----------------------------------'
+               v
+    .---------------------.
+    |         OUT         |
+    '---------------------'
 
     See: perldoc Nes::Singleton
     </pre>
