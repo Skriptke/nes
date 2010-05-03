@@ -176,6 +176,8 @@ share/examples/nesblog/en/items/Help.nhtml
 'share/examples/nesblog/en/items/Include PHP and others.nhtml'
 share/examples/nesblog/en/items/Installation.nhtml
 share/examples/nesblog/en/items/Nes-1.00.nhtml
+share/examples/nesblog/en/items/Nes-1.04.nhtml
+share/examples/nesblog/en/items/Diagrams.nhtml
 share/examples/nesblog/en/items/Singleton.nhtml
 'share/examples/nesblog/en/items/Nes configuration file.nhtml'
 share/examples/nesblog/en/items.nhtml
@@ -214,6 +216,7 @@ share/examples/nesblog/es/items/Instalación.nhtml
 'share/examples/nesblog/es/items/Logo de nes.nhtml'
 share/examples/nesblog/es/items/mod_perl.nhtml
 share/examples/nesblog/es/items/Nes-1.00.nhtml
+share/examples/nesblog/es/items/Nes-1.04.nhtml
 'share/examples/nesblog/es/items/Nes como Wrapper.nhtml'
 'share/examples/nesblog/es/items/Nes Tags.nhtml'
 share/examples/nesblog/es/items.nhtml
