@@ -2,8 +2,7 @@
 
 # -----------------------------------------------------------------------------
 #
-#  Nes by Skriptke
-#  Copyright 2009 - 2010 Enrique F. Castañón
+#  Copyright 2010 Luis Romero del Campo.
 #  Licensed under the GNU GPL.
 #
 #  CPAN:
@@ -17,7 +16,7 @@
 # 
 #  Version 1.03
 #
-#  pseudo_ajax.pl
+#  ajax.pl
 #
 # -----------------------------------------------------------------------------
 
@@ -49,7 +48,7 @@
   }
   
 #  $vars{'params'} =~ s/\&$//;
-  
+
   $nes->out(%vars);
 
 1;

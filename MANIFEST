@@ -26,6 +26,7 @@ lib/Nes/Obj/go_language.pod
 lib/Nes/Obj/location.pod
 lib/Nes/Obj/lwp.pod
 lib/Nes/Obj/session.pod
+lib/Nes/Obj/ajax.pod
 lib/Nes/Plugin/API.pod
 lib/Nes/Plugin/clean.pod
 lib/Nes/Plugin/debug_info.pod

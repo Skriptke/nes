@@ -1,0 +1,240 @@
+=head1 NAME
+
+Nes::Obj::ajax - Nes Perl Ajax.
+
+=head1 SYNOPSIS
+
+Send and retrieve data without refresh or reload page:
+
+    {: include ('{: * cfg_obj_top_dir :}/Nes/ajax/ajax.nhtml',
+                "
+                  script             => '
+                                          function res (conex) { 
+                                             document.getElementById(\"log_res\").innerHTML = conex.responseText;
+                                          }
+                                          ',
+                  script_tpl         => '',
+                              
+                       
+                  events  => 
+                        [    
+                          {  
+                            open      => 'myconnectiontarget.html',
+                            method    => 'POST',
+                            event     => 'onMouseDown', 
+                            by        => 'field',
+                            idname    => 'last_name',
+                            preload   => 'document.getElementById(\"log_res\").innerHTML = \"\";document.getElementById(\"log_res\").className = \"ajax-loading\";',
+                            afterload => 'res',
+                            vparam    => 
+                                     {
+                                        last_name => 'last_name.value',
+                                     },                                     
+                          },
+                          {  
+                            open      => 'mytarget.html',
+                            method    => 'POST',
+                            event     => 'onMouseDown', 
+                            by        => 'field',
+                            idname    => 'Nombre',
+                            preload   => 'document.getElementById(\"log_res\").innerHTML = \"\";document.getElementById(\"log_res\").className = \"ajax-loading\";',
+                            afterload => 'res',
+                            lparam    => 
+                                     {
+                                        mytext	=> 'I write text',
+                                     },                                 
+                            vparam    => 
+                                     {
+                                        name	=> 'name.value',
+                                        name2	=> 'name.value+\" is my name\"',
+                                     },                                     
+                          },                          
+                          {  
+                            open      => 'submit_ajax.html',
+                            method    => 'GET',
+                            synchro   => 'false',
+                            event     => 'onSubmit', 
+                            by        => 'id',
+                            idname    => 'form1',
+                            preload   => 'document.getElementById(\"log_res\").innerHTML = \"\";document.getElementById(\"log_res\").className = \"ajax-loading\";',
+                            afterload => 'res',
+                            lparam    => 
+                                     {
+                                        mytext	=> 'Lorem ipsum dolor sit amet',
+                                     },                               
+                            vparam    => 
+                                     {
+                                        Name	=> 'form1.Name.value',
+                                        Lastn	=> 'form1.Lastn.value',
+                                        Perl	=> 'form1.Perl.value',
+                                        Foros	=> 'form1.Foros.value',
+                                        e_mail	=> 'form1.e_mail.value',
+                                        
+									 },                                     
+                          },                          
+                        ],
+                "
+               )    
+    :}       
+
+
+
+=head1 DESCRIPTION
+
+Create a connection (ajax) to send data and retrieve answer using XMLHttpRequest.
+In this way we can update page content without reload or refresh it.
+
+For a better understanding of this object see live sample: 
+http://nes.sourceforge.net or install 'nesblog' and see scripts and 
+templates, with set_nes_site utility:
+
+    set_nes_site --from_exam=nesblog --to_exam=/full-path/root-www/nesblog
+
+=head1 PARAMETERS
+
+=over 2
+
+=item script
+
+The script which contains function definition for "preload" and/or "afterload" params.
+Default none.
+
+=item script_tpl
+
+File which contains function definition for "preload" and/or "afterload" params. 
+Default none.
+
+=head1 EVENTS PARAMETERS
+
+=over 2
+
+=item open
+
+Target for Ajax connection 
+
+=item method
+
+'POST' (default) or 'GET'
+
+=item synchro
+
+Connection in Synchronous mode 'true'(default) or 'false'.
+Default 'false' (connection in Asynchronous mode).
+
+=item event
+
+Event to be processed (onclick, onchange, onsubmit, onblur, ...)
+
+=item by
+
+Object with the event to be processed by: 'field'/'name', 'tag' or 'id'.
+
+=item idname
+
+field/name, tag or id (defined in 'by') of the object.
+
+=item preload
+
+Javascript code to be processed when ajax request begins.
+We can write down code, or use a function defined in param 'script', or into file defined in param 'script.tpl'.
+See sample in afterload param.
+
+=item afterload
+
+Javascript code to be processed when ajax ends.
+This function receives as param the connection object created.
+We can write down code, or use a function defined in param 'script', or into file defined in param 'script.tpl'.
+Samples:
+
+	script		=> 'function myafterload (conex) { alert(conex.responseText);}',
+	script_tpl	=> 'myfile.js',				JS file with function myafterloaddefinition inside
+	...
+	
+	afterload 	=> 'myafterload'			*** notice: we only put function name defined in 'script' ***
+	
+	or:
+	
+	afterload	=> 'myafterloaddefinition'	(now using function defined in myfile.js, again only with function name)
+
+	or:
+	
+	afterload	=> 'function myafterload (conex) { alert(conex.responseText);}'
+
+
+=head1 LPARAM PARAMETERS
+
+=over 2
+
+=item literal_field
+
+Literal params (with fixed value) to be send thru Ajax connection.
+
+	mytext => 'this is my fixed text'
+	myname => 'I will put my first name'
+	...
+
+
+=head1 VPARAM PARAMETERS
+
+=over 2
+
+=item variable_field
+
+Variable params (with Javascript variable values) to be send thru Ajax connection.
+
+	myfield		=> 'myform.myfield_name.value'
+	my_lastname	=> 'lastname.value+\" is my last name\"'
+	...
+
+=back
+
+=head1 AUTHOR
+
+Luis Romero del Campo.
+
+=head1 VERSION
+
+Version 1.04
+
+=head1 COPYRIGHT
+
+Copyright (c) Luis Romero del Campo. All rights reserved.
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it
+and/or modify it under the same terms and conditions as
+GNU Public License (GPL).
+
+This means that you can, at your option, redistribute it and/or 
+modify it under either the terms the GNU Public License (GPL), 
+or under the Perl Artistic License.
+
+See http://dev.perl.org/licenses/
+
+=head1 DISCLAIMER
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS
+OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Use of this software in any way or in any form, source or binary,
+is not allowed in any country which prohibits disclaimers of any
+implied warranties of merchantability or fitness for a particular
+purpose or any disclaimers of a similar nature.
+
+IN NO EVENT SHALL I BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT,
+SPECIAL, INCIDENTAL,  OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+USE OF THIS SOFTWARE AND ITS DOCUMENTATION (INCLUDING, BUT NOT
+LIMITED TO, LOST PROFITS) EVEN IF I HAVE BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE
+
+=head1 SEE ALSO
+
+L<Nes>, L<Nes::Tutorial>, L<Nes::nes.cfg>, 
+Sample to use Nes; L<http://nes.sourceforge.net/>
+
+=cut
+
+

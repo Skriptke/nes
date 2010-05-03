@@ -82,9 +82,9 @@ Nes Data Flow:
 
 =item Simplicity
 
-Nes has only ten Tags to include in the HTML, and a single object with a 
-single method to instantiate in Perl. You can start working with Nes in 
-hours, not weeks or months as in other systems.
+Nes has only ten Tags to include in the HTML, and a single object to 
+instantiate in Perl. You can start working with Nes in hours, not weeks 
+or months as in other systems.
 
 =item Security
 
