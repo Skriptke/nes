@@ -1772,7 +1772,7 @@ use Nes::Singleton;
     my $cline       = $self->{'CFG'}{'php_cline'};
     $cline          = $self->{'CFG'}{'php_cgi_cline'} if $self->{'php_wrapper'};
     
-    warn "Not Found: ".$cline if !-e $cline;
+#    warn "Not Found: ".$cline if !-e $cline;
 
     if ( $self->{'php_wrapper'} || $MOD_PERL ) {    
       # por seguridad 
@@ -1920,7 +1920,7 @@ use Nes::Singleton;
     my $cline = $self->{'CFG'}{'python_cline'};
     my @command = ( $cline );
     
-    warn "Not Found: ".$cline if !-e $cline;
+#    warn "Not Found: ".$cline if !-e $cline;
 
     if ( $MOD_PERL ) {
       
