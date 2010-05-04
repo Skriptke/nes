@@ -184,6 +184,7 @@ share/examples/nesblog/en/items.nhtml
 share/examples/nesblog/en/items/Security.nhtml
 share/examples/nesblog/en/items/Sessions.nhtml
 share/examples/nesblog/en/items/Tutorial.nhtml
+share/examples/nesblog/en/items/ajax.nhtml
 share/examples/nesblog/en/latest_articles.nhtml
 share/examples/nesblog/en/latest_comments.nhtml
 share/examples/nesblog/en/login.nhtml
@@ -270,6 +271,9 @@ share/examples/nesblog/scripts/examples/python.py
 share/examples/nesblog/scripts/examples/solo_html.html
 share/examples/nesblog/scripts/examples/suerte.cgi
 share/examples/nesblog/scripts/examples/suerte.html
+share/examples/nesblog/scripts/examples/rajax.pl
+share/examples/nesblog/scripts/examples/rajax.njs
+share/examples/nesblog/scripts/examples/rajax.nhtml
 share/examples/nesblog/scripts/.htaccess
 share/examples/nesblog/scripts/index.cgi
 share/examples/nesblog/scripts/items.cgi

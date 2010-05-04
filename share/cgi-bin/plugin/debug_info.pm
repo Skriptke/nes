@@ -38,6 +38,8 @@ use Benchmark qw(:all :hireswallclock);
     my $self   = $instance || $class->SUPER::new();
     my ($template) = @_;
     
+#    $self->{'session'} = nes_session->new('NES-DEBUG-INFO');
+    
     $self->{'inter'} = $template->{'this_inter'}; 
     $self->{'first_time'} = 1;
     $self->init($template) if !$instance;

@@ -1,8 +1,8 @@
-{: NES 1.0 ('./ajax.pl') :}
+{: NES 1.0 ('ajax.pl') :}
 {: #
   -----------------------------------------------------------------------------
     
-  Copyright 2010 Luis Romero del Campo.
+  Copyright 2010 Luis Romero del Campo
   Licensed under the GNU GPL.
 
   Sample:
@@ -20,11 +20,8 @@
   -----------------------------------------------------------------------------
 :}
 
-    
     <script type="text/javascript">
-        
     function init_ajax() {
-        var httpRequest;
         if (window.XMLHttpRequest)
         {
             httpRequest = new XMLHttpRequest();
@@ -32,11 +29,11 @@
         else if (window.ActiveXObject)
         {
             try {
-                httpRequest = new ActiveXObject("MSXML2.XMLHTTP");
+                httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
             } catch (e) {
-                try {
-                    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-                } catch (e) {}
+                  try {
+                    httpRequest = new ActiveXObject("MSXML2.XMLHTTP");
+                } catch (e) {};
             }
         }
         if (!httpRequest)
@@ -45,47 +42,41 @@
         }
         return httpRequest;
     }
-      
     {: @ events 
-    {: ~ ( '{: @$ events.by :}' =~ /^field/i )el_{: @$ events.idname :} = document.getElementsByName('{: @$ events.idname :}')[0]; :}{:#
-  :}{: ~ ( '{: @$ events.by :}' =~ /^name/i  )el_{: @$ events.idname :} = document.getElementsByName('{: @$ events.idname :}'); :}{:#
-  :}{: ~ ( '{: @$ events.by :}' =~ /^tag/i   )el_{: @$ events.idname :} = document.getElementsByTagName('{: @$ events.idname :}')[0]; :}{:#
-  :}{: ~ ( '{: @$ events.by :}' =~ /^id/i    )el_{: @$ events.idname :} = document.getElementById('{: @$ events.idname :}'); :}
-    var ev = el_{: @$ events.idname :}.getAttribute("{: @$ events.event :}"); if (!ev) {ev='';};
-    el_{: @$ events.idname :}.setAttribute("{: @$ events.event :}", "{: @$ events.idname :}_go();"+ev, 0);
-    
-    
-    
-    
-    
-    
-    function {: @$ events.idname :}_go() {
-       {: @$ events.idname :}_cx= init_ajax();
-       {: @$ events.preload,yes_html :}
-       
-               
-            {: ~ ('{: @$ events.method  :}' =~ /post/i)           
-                      {: @$ events.idname :}_cx.open("POST","{: @$ events.open :}",{: ~ (!'{: @$ events.synchro  :}')true:}{: ~ ('{: @$ events.synchro  :}' =~ /true/i)false:}{: ~ ('{: @$ events.synchro  :}' =~ /false/i)true:});
-                      {: @$ events.idname :}_cx.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-                      {: @$ events.idname :}_cx.send("{: $ params :}{: @$ events.params :}");
-             :} 
-             {: ~ ('{: @$ events.method  :}' =~ /get/i)
-                      {: @$ events.idname :}_cx.open("GET","{: @$ events.open :}"+"?"+"{: $ params :}{: @$ events.params :}",{: ~ (!'{: @$ events.synchro  :}')true:}{: ~ ('{: @$ events.synchro  :}' =~ /true/i)false:}{: ~ ('{: @$ events.synchro  :}' =~ /false/i)true:});
-                      {: @$ events.idname :}_cx.send(null);
-             :}                  
-        
-       {: ~ (!'{: @$ events.synchro  :}')
-                  {: @$ events.idname :}_cx.onreadystatechange = function () { if ({: @$ events.idname :}_cx.readyState == 4 ) { {: @$ events.afterload,yes_html :}({: @$ events.idname :}_cx); } }
-       :}
-       {: ~ ('{: @$ events.synchro  :}' =~ /false/i)
-                  {: @$ events.idname :}_cx.onreadystatechange = function () { if ({: @$ events.idname :}_cx.readyState == 4 ) { {: @$ events.afterload,yes_html :}({: @$ events.idname :}_cx); } }
-       :}
-       {: ~ ('{: @$ events.synchro  :}' =~ /true/i)
-                  {: @$ events.afterload,yes_html :}({: @$ events.idname :}_cx);
-       :}
+    {: ~ ( '{: @$ events.by :}' =~ /^collection/i )el_{: @$ events.idname :}_{: @$ events.event :} = document.getElementsByName('{: @$ events.idname :}'){: @$ events.item :}; :}{: #
+  :}{: ~ ( '{: @$ events.by :}' =~ /^name/i       )el_{: @$ events.idname :}_{: @$ events.event :} = document.getElementsByName('{: @$ events.idname :}')[0]; :}{: #
+  :}{: ~ ( '{: @$ events.by :}' =~ /^tag/i        )el_{: @$ events.idname :}_{: @$ events.event :} = document.getElementsByTagName('{: @$ events.idname :}')[0]; :}{: #
+  :}{: ~ ( '{: @$ events.by :}' =~ /^id/i         )el_{: @$ events.idname :}_{: @$ events.event :} = document.getElementById('{: @$ events.idname :}'); :}   
+    previous_event_{: @$ events.idname :}_{: @$ events.event :} = el_{: @$ events.idname :}_{: @$ events.event :}.{: @$ events.event :};
+    el_{: @$ events.idname :}_{: @$ events.event :}.{: @$ events.event :} = {: @$ events.idname :}_{: @$ events.event :}_go;
+    {: @$ events.idname :}_{: @$ events.event :}_cx = false;
+    function {: @$ events.idname :}_{: @$ events.event :}_go() { {:#
+  :}{: ~ (!'{: @$ events.js_file :}')
+       previous_{: @$ events.idname :}_{: @$ events.event :}_cx = {: @$ events.idname :}_{: @$ events.event :}_cx;
+       {: @$ events.idname :}_{: @$ events.event :}_cx= init_ajax();
+       {: @$ events.preload,yes_html :}({: @$ events.idname :}_{: @$ events.event :}_cx,previous_{: @$ events.idname :}_{: @$ events.event :}_cx); {:#
+  :}{: ~ ('{: @$ events.method :}' =~ /POST/i)           
+       {: @$ events.idname :}_{: @$ events.event :}_cx.open("POST","{: @$ events.open :}", {: @$ events.synchro  :});
+       {: @$ events.set_headers :}
+       {: @$ events.idname :}_{: @$ events.event :}_cx.send("{: $ params :}{: @$ events.params :}"); :}{: # 
+  :}{: ~ ('{: @$ events.method :}' =~ /GET/i)
+       {: @$ events.idname :}_{: @$ events.event :}_cx.open("GET","{: @$ events.open :}"+"?"+"{: $ params :}{: @$ events.params :}",{: @$ events.synchro  :});
+       {: @$ events.idname :}_{: @$ events.event :}_cx.send(null); :}{: #             
+  :}{: ~ ( '{: @$ events.synchro :}' =~ /true/i )
+       {: @$ events.idname :}_{: @$ events.event :}_cx.onreadystatechange = function () { if ({: @$ events.idname :}_{: @$ events.event :}_cx.readyState == 4 ) { {: @$ events.afterload,yes_html :}({: @$ events.idname :}_{: @$ events.event :}_cx, previous_{: @$ events.idname :}_{: @$ events.event :}_cx);  } } :} {: #
+  :}{: ~ ( '{: @$ events.synchro :}' =~ /false/i )
+       {: @$ events.afterload,yes_html :}({: @$ events.idname :}_{: @$ events.event :}_cx); :} :} {: #
+  :}{: ~ ('{: @$ events.js_file :}')
+        js_{: @$ events.idname :}_{: @$ events.event :} = document.createElement("script");
+        js_{: @$ events.idname :}_{: @$ events.event :}.type = "text/javascript";               
+        js_{: @$ events.idname :}_{: @$ events.event :}.src = "{: @$ events.open :}?{: $ params :}{: @$ events.params :}";
+        js_{: @$ events.idname :}_{: @$ events.event :}.onload = function () { {: @$ events.afterload,yes_html :}(false,false); };
+        js_{: @$ events.idname :}_{: @$ events.event :}.onreadystatechange = function () { if (js_{: @$ events.idname :}_{: @$ events.event :}.readyState == 'loaded' || js_{: @$ events.idname :}_{: @$ events.event :}.readyState == 'complete' ) { {: @$ events.afterload,yes_html :}(false,false); } }
+        {: @$ events.preload,yes_html :}(false,false); 
+        document.getElementsByTagName('head')[0].appendChild(js_{: @$ events.idname :}_{: @$ events.event :}); :}       
+       if (previous_event_{: @$ events.idname :}_{: @$ events.event :} != 'undefined' && previous_event_{: @$ events.idname :}_{: @$ events.event :}) {
+            return previous_event_{: @$ events.idname :}_{: @$ events.event :}();
+       }    
     }
    :}{: $ script,yes_html :}{: ~ ( $ script_tpl  ) {: include ('{: $ script_tpl :}')  :}  :}
-   
-   </script>    
-
-
+   </script>

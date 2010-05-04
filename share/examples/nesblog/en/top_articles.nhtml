@@ -23,7 +23,6 @@
                 <li><a href="./?action=item&item=Diagrams">Diagrams</a></li>
                 <li><a href="./?action=item&item=Installation">Installation</a></li>
                 <li><a href="./?action=item&item=Nes configuration file">Configuration</a></li>
-                <li><a href="./?action=item&item=Hello World">Hello World</a></li>
                 <li><a href="./?action=item&item=Security">Security</a></li>
                 <li><a href="./?action=item&item=Include PHP and others">Include PHP and others</a></li>
             </ul>           

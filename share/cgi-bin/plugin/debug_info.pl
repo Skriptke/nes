@@ -30,10 +30,14 @@
   my $container = $nes->{'container'};
   my $template  = $nes->{'container'}->{'content_obj'};
   my $config    = $nes->{'CFG'};
+  my $remote    = $nes->{'top_container'}->get_nes_env('nes_remote_ip');
+  my $in_top    = ( $nes->{'container'} eq $nes->{'top_container'}->{'container'} );
   
-  return 1 if $nes->{'top_container'}->get_nes_env('nes_remote_ip') !~ /^$config->{'debug_info_only_from_ip'}/;
+  return 1 if $remote !~ /^$config->{'debug_info_only_from_ip'}/;
+
   $nes->{'nes'}->{'debug_info'}{'is_load'}     = 1;
   $nes->{'nes'}->{'debug_info'}{'obj'} = $info if !$nes->{'nes'}->{'debug_info'}{'obj'};
+  
   return 1 if $container->{'error_not_exist'};
 
   if ( !$template->{'exec'} ) {
@@ -50,7 +54,7 @@
 
   my $exclude = '\/'.join('$|\/',@{$config->{'debug_info_exclude'}}).'$';
 
-  if ( $nes->{'container'} eq $nes->{'top_container'}->{'container'} && $config->{'debug_info_show_in_out'} ) {
+  if ( $in_top && $config->{'debug_info_show_in_out'} ) {
 
     $nes->{'nes'}->{'debug_info'}{'is_load'} = 0;
     return 1 if $nes->{'this_template_name'} =~ /$exclude/;

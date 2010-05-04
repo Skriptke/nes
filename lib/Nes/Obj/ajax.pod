@@ -1,108 +1,90 @@
 =head1 NAME
 
-Nes::Obj::ajax - Nes Perl Ajax.
+Nes::Obj::ajax - Nes Perl Ajax and Cross-domain pseudo Ajax requests.
 
 =head1 SYNOPSIS
 
-Send and retrieve data without refresh or reload page:
-
     {: include ('{: * cfg_obj_top_dir :}/Nes/ajax/ajax.nhtml',
                 "
-                  script             => '
-                                          function res (conex) { 
-                                             document.getElementById(\"log_res\").innerHTML = conex.responseText;
-                                          }
-                                          ',
-                  script_tpl         => '',
-                              
-                       
+                  script             => '/* Js script */',
+                  script_tpl         => 'js-script.nhtml',
+                  lparam             => 
+                         {
+                            param_name => 'literal_value',
+                            {: # more literal params... :}
+                         },           
+                  vparam             => 
+                         {
+                            param_name => 'js_evalue',
+                            {: # more evaluate Js params... :}
+                         },                    
                   events  => 
                         [    
                           {  
-                            open      => 'myconnectiontarget.html',
+                            open      => 'URL',
                             method    => 'POST',
-                            event     => 'onMouseDown', 
-                            by        => 'field',
-                            idname    => 'last_name',
-                            preload   => 'document.getElementById(\"log_res\").innerHTML = \"\";document.getElementById(\"log_res\").className = \"ajax-loading\";',
-                            afterload => 'res',
+                            event     => 'js_event', 
+                            by        => 'type',
+                            idname    => 'name_by_type',
+                            preload   => 'js_function_name',
+                            afterload => 'js_function_name',
+                            lparam    => 
+                                     {
+                                        param_name => 'literal_value',
+                                        {: # more literal params... :}
+                                     },           
                             vparam    => 
                                      {
-                                        last_name => 'last_name.value',
-                                     },                                     
+                                        param_name => 'js_evalue',
+                                        {: # more Js evaluable params... :}
+                                     },                                                                 
                           },
-                          {  
-                            open      => 'mytarget.html',
-                            method    => 'POST',
-                            event     => 'onMouseDown', 
-                            by        => 'field',
-                            idname    => 'Nombre',
-                            preload   => 'document.getElementById(\"log_res\").innerHTML = \"\";document.getElementById(\"log_res\").className = \"ajax-loading\";',
-                            afterload => 'res',
-                            lparam    => 
-                                     {
-                                        mytext	=> 'I write text',
-                                     },                                 
-                            vparam    => 
-                                     {
-                                        name	=> 'name.value',
-                                        name2	=> 'name.value+\" is my name\"',
-                                     },                                     
-                          },                          
-                          {  
-                            open      => 'submit_ajax.html',
-                            method    => 'GET',
-                            synchro   => 'false',
-                            event     => 'onSubmit', 
-                            by        => 'id',
-                            idname    => 'form1',
-                            preload   => 'document.getElementById(\"log_res\").innerHTML = \"\";document.getElementById(\"log_res\").className = \"ajax-loading\";',
-                            afterload => 'res',
-                            lparam    => 
-                                     {
-                                        mytext	=> 'Lorem ipsum dolor sit amet',
-                                     },                               
-                            vparam    => 
-                                     {
-                                        Name	=> 'form1.Name.value',
-                                        Lastn	=> 'form1.Lastn.value',
-                                        Perl	=> 'form1.Perl.value',
-                                        Foros	=> 'form1.Foros.value',
-                                        e_mail	=> 'form1.e_mail.value',
-                                        
-									 },                                     
-                          },                          
-                        ],
+                            {: # more events... :}
+                        ]
                 "
                )    
     :}       
 
-
-
 =head1 DESCRIPTION
-
-Create a connection (ajax) to send data and retrieve answer using XMLHttpRequest.
+ 
+Create a connection (Ajax) to send data and retrieve answer using XMLHttpRequest.
 In this way we can update page content without reload or refresh it.
 
-For a better understanding of this object see live sample: 
-http://nes.sourceforge.net or install 'nesblog' and see scripts and 
-templates, with set_nes_site utility:
+Alternatively you can make pseudo-Ajax Cross-domain requests on Js files, see 
+js_file parameter.
 
-    set_nes_site --from_exam=nesblog --to_exam=/full-path/root-www/nesblog
+Live sample: L<http://nes.sourceforge.net/miniblog/en/?action=item&item=Ajax>
 
 =head1 PARAMETERS
 
 =over 2
 
 =item script
-
-The script which contains function definition for "preload" and/or "afterload" params.
-Default none.
+ 
+The Js script to embedded in object. Default none.
 
 =item script_tpl
+ 
+Nes template file which Js script to embedded in object. Default none.
 
-File which contains function definition for "preload" and/or "afterload" params. 
-Default none.
+=item lparam/vparam
+
+The first group of lparam/vparam are assigned to all connections.
+
+=item lparam
+
+Parameter to pass in GET or POST Ajax, is a literal value, does not interpreted 
+by JavaScript:
+
+    param_name => 'literal value',
+   
+=item vparam
+
+Parameter to pass in GET or POST Ajax, interpreted by JavaScript:
+
+    param_name => 'document.myform.myfield_name.value'
+
+=back
 
 =head1 EVENTS PARAMETERS
 
@@ -110,87 +92,148 @@ Default none.
 
 =item open
 
-Target for Ajax connection 
+URL for POST or GET Ajax connection 
 
 =item method
 
-'POST' (default) or 'GET'
+'POST'(default) or 'GET'
 
 =item synchro
 
-Connection in Synchronous mode 'true'(default) or 'false'.
+Connection in Synchronous mode true 1 or false 0.
 Default 'false' (connection in Asynchronous mode).
 
 =item event
 
-Event to be processed (onclick, onchange, onsubmit, onblur, ...)
+JavaScript event to active Ajax connection.
 
 =item by
 
-Object with the event to be processed by: 'field'/'name', 'tag' or 'id'.
+We can get the element you set the event by: 'collection', 'name', 'tag' or 
+'id'. 'collection' is Js collection object, 'name' is a name property of 
+element, 'tag' is a HTML Tag name, 'id' is ID property of element.
+
+In 'collection' requires 'item' for get specific item.
 
 =item idname
 
-field/name, tag or id (defined in 'by') of the object.
+The name or id (defined in 'by') of the element to set event:
+
+Set event onClick to field "user":
+
+    event     => 'onClick', 
+    by        => 'name',
+    idname    => 'user',
+    ...
+
+Set event onClick to radio "colors" item 1:
+
+    event     => 'onClick', 
+    by        => 'collection',
+    item      => '[1]',
+    idname    => 'colors',
+    ...
+
+
+Set event onUnload to Tag <body>:
+
+    event     => 'onUnload', 
+    by        => 'tag',
+    idname    => 'body',
+    ...
+
+Set event onSubmit to form ID 'myform':
+
+    event     => 'onUnload', 
+    by        => 'id',
+    idname    => 'myform',
+    ...
 
 =item preload
 
-Javascript code to be processed when ajax request begins.
-We can write down code, or use a function defined in param 'script', or into file defined in param 'script.tpl'.
-See sample in afterload param.
+Javascript name function (without parentheses) to be processed when ajax request 
+begins. Receives as parameter the ajax connection, and the previous ajax 
+connection. This function can be defined in another part of the page, in a Js 
+file or a Js utility. You can also use the parameter 'script' or 'script_tpl' 
+to define it:
+
+    preload   => 'mypreload'
+    
+Call to JavaScript function: mypreload(conex, previous_conex)
+
+    function myafterload (conex, previous_conex) { 
+        previous_conex.abort();
+        alert('preload');
+    }
 
 =item afterload
 
-Javascript code to be processed when ajax ends.
-This function receives as param the connection object created.
-We can write down code, or use a function defined in param 'script', or into file defined in param 'script.tpl'.
-Samples:
+Javascript function (without parentheses) to be processed when ajax ends.
+Receives as parameter the ajax connection, and the previous ajax 
+connection. This function can be defined in another part of the page, in a Js 
+file or a Js utility. You can also use the parameter 'script' or 'script_tpl' 
+to define it:
 
-	script		=> 'function myafterload (conex) { alert(conex.responseText);}',
-	script_tpl	=> 'myfile.js',				JS file with function myafterloaddefinition inside
-	...
-	
-	afterload 	=> 'myafterload'			*** notice: we only put function name defined in 'script' ***
-	
-	or:
-	
-	afterload	=> 'myafterloaddefinition'	(now using function defined in myfile.js, again only with function name)
+    afterload   => 'myafterload'
+    
+Call to JavaScript function: myafterload(conex, previous_conex)
 
-	or:
-	
-	afterload	=> 'function myafterload (conex) { alert(conex.responseText);}'
+Sample function:
 
+    function myafterload (conex, previous_conex) { 
+        alert(conex.responseText);
+    }
 
-=head1 LPARAM PARAMETERS
+=item header_...
 
-=over 2
+By default it sends the 'Content-Type' as:
 
-=item literal_field
+    'header_Content-Type' => 'application/x-www-form-urlencoded',
 
-Literal params (with fixed value) to be send thru Ajax connection.
+You can set this or another header in the format:
 
-	mytext => 'this is my fixed text'
-	myname => 'I will put my first name'
-	...
+    'header_HEADER-NAME' => 'VALUE',
 
+* attention to the quotes.
 
-=head1 VPARAM PARAMETERS
+=item lparam/vparam
 
-=over 2
+This group of lparam/vparam are assigned in each event.
 
-=item variable_field
+=item lparam
 
-Variable params (with Javascript variable values) to be send thru Ajax connection.
+Parameter to pass in GET or POST Ajax, is a literal value, does not interpreted 
+by JavaScript:
 
-	myfield		=> 'myform.myfield_name.value'
-	my_lastname	=> 'lastname.value+\" is my last name\"'
-	...
+    param_name => 'literal value',
+   
+=item vparam
+
+Parameter to pass in GET or POST Ajax, interpreted by JavaScript:
+
+    param_name1 => 'myform.myfield_name.value'
+
+=item js_file
+
+if set js_file to 1, emulate AJAX requests on a JS file. Can be only GETs on 
+js files, the parameter 'method' is not requires. JS file can be generated 
+with Nes (njs files). Its only advantage is that you can do cross domain:
+
+    js_file   => 1,
+    open      => 'http://any-domain/file.js',
+    event     => 'onclick', 
+    by        => 'id',
+    idname    => 'the_id',
+    preload   => 'js_function_name',
+    afterload => 'js_function_name',
+    vparam    => ...
+    ...
 
 =back
 
 =head1 AUTHOR
 
-Luis Romero del Campo.
+Luis Romero del Campo. (Aunque ha tirado muchas veces la pelota...)
 
 =head1 VERSION
 
@@ -236,5 +279,6 @@ L<Nes>, L<Nes::Tutorial>, L<Nes::nes.cfg>,
 Sample to use Nes; L<http://nes.sourceforge.net/>
 
 =cut
+
 
 

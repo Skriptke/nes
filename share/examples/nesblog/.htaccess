@@ -9,7 +9,10 @@ AddHandler cgi-script .cgi .pl
 # Nes nhtml files
 AddHandler perl-nes .nhtml
 AddHandler perl-nes .nhtm
-  
+
+# NSJ files
+AddHandler perl-nes .nsj
+
 # HTML Wrapper
 AddHandler perl-nes .html
 AddHandler perl-nes .htm

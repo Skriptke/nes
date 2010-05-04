@@ -36,7 +36,7 @@ $nes_tags->{'HTTP-headers'} .= "Expires: Mon, 1 Jan 1900 00:00:00 GMT\n";
 $nes_tags->{'HTTP-headers'} .= "Content-type: text/html; charset=utf-8\n\n";
 
 $nes_tags->{'item_name'}        = $item;
-$nes_tags->{'title'}            = 'Sample to use Nes; A powerful template system in Perl.';
+$nes_tags->{'title'}            = 'Nes, the ultimate templating system for HTML, the Web and Perl';
 $nes_tags->{'header'}           = 'header.nhtml';
 $nes_tags->{'intro'}            = 'intro.nhtml';
 $nes_tags->{'comments'}         = 'comments.nhtml';

@@ -39,6 +39,7 @@
   }
   
   foreach my $event ( @{ $vars{'events'} } ) {
+    $event->{'event'} = lc($event->{'event'});
     foreach my $param ( keys %{ $event->{'lparam'} } ) {
       $event->{'params'} .= $param.'='.$event->{'lparam'}{$param}.'&';
     }

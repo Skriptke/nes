@@ -28,7 +28,6 @@ use strict;
 # cgi environment no defined in command line
 no warnings 'uninitialized';
 
-
 our $VERSION          = '1.03.3_2';
 our $CRLF             = "\015\012";
 our $MAX_INTERACTIONS = 900;
