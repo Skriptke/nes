@@ -84,6 +84,11 @@ Parameter to pass in GET or POST Ajax, interpreted by JavaScript:
 
     param_name => 'document.myform.myfield_name.value'
 
+=item events
+
+JavaScript events to active Ajax connection. Supports multiple connections 
+in multiple events.
+
 =back
 
 =head1 EVENTS PARAMETERS
@@ -144,7 +149,7 @@ Set event onUnload to Tag <body>:
 
 Set event onSubmit to form ID 'myform':
 
-    event     => 'onUnload', 
+    event     => 'onSubmit', 
     by        => 'id',
     idname    => 'myform',
     ...
