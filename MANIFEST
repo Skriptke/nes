@@ -184,7 +184,7 @@ share/examples/nesblog/en/items.nhtml
 share/examples/nesblog/en/items/Security.nhtml
 share/examples/nesblog/en/items/Sessions.nhtml
 share/examples/nesblog/en/items/Tutorial.nhtml
-share/examples/nesblog/en/items/ajax.nhtml
+share/examples/nesblog/en/items/Ajax.nhtml
 share/examples/nesblog/en/latest_articles.nhtml
 share/examples/nesblog/en/latest_comments.nhtml
 share/examples/nesblog/en/login.nhtml
