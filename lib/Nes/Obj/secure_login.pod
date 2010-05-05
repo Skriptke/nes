@@ -36,6 +36,8 @@ Create a user session if the login is successful. Verification can be done
 with a script handle or directly from a database. The form prevents intrusion 
 by the obfuscation of the fields, limiting the number of attempts and captcha.
 
+Live sample: L<http://nes.sourceforge.net/miniblog/en/?action=login>
+
 =head1 PARAMETERS
 
 =over 2
@@ -361,7 +363,7 @@ Skriptke: Enrique Castañón
 
 =head1 VERSION
 
-Version 1.03 April 2010
+Version 1.04
 
 =head1 COPYRIGHT
 

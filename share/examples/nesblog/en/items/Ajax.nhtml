@@ -1,1 +1,221 @@
-ajax sample
+{: NES 1.0 none :}
+<h2>Demo Nes Ajax Object</h2>
+<hr><br>
+<div id="dleft" style="float: left; width: 50%;">
+<form id="form1" name="form1" method="" action="" onsubmit="return false;">
+  <p>
+    <label> One:
+      <input type="text" name="one" id="one" value="the one" />
+    </label>
+  </p>
+  <p>
+    <label> Two:
+      <input type="text" name="two" id="two" value="the two" />
+    </label>
+  </p>
+  <p>
+    <label> Colors: <br>
+      <input type="radio" name="colors" value="red" id="colors_0" />
+      red</label>
+    <br />
+    <label>
+      <input type="radio" name="colors" value="green" id="colors_1" />
+      green</label>
+    <br />
+    <label>
+      <input type="radio" name="colors" value="blue" id="colors_2" />
+      blue</label>
+    <br />
+  </p>
+  <p>
+    <input type="button" name="psajax" id="psajax" value="Send by pseudo Ajax" />
+  </p>  
+  <p>
+    <input type="submit" name="button" id="button" value="Submit" />
+  </p>
+ {: include ('{: * cfg_obj_top_dir :}/Nes/ajax/ajax.nhtml',
+            "
+              script             => '
+    function ajax_load (conex, previous_conex) {
+        if ( previous_conex ) { previous_conex.abort(); }         
+        document.getElementById(\"a_res\").innerHTML = \"\";
+        document.getElementById(\"a_res\").innerHTML = \"<img src=/cgi-bin/nes/images/f_loading.gif>\";
+    }
+    function ajax_response (conex, previous_conex) {
+        document.getElementById(\"a_res\").innerHTML = \"\";
+        document.getElementById(\"a_res\").innerHTML = conex.responseText;
+    }
+    function ajax_response_js () {
+        document.getElementById(\"a_res\").innerHTML = \"\";
+        document.getElementById(\"a_res\").innerHTML = ps_response;
+    }    
+    function getSelectedValue(flds) {
+      var i = 0; var len = flds.length;
+      while (i < len) {
+        if (flds[i].checked) {
+          return flds[i].value;
+        }
+        i++;
+      }
+      return;
+    }    
+                                    ',
+              lparam             => 
+                     {
+                        for_all  => 'This send for all requests',
+                     },           
+                  
+              events  => 
+                    [    
+                      {  
+                        open      => '../scripts/examples/rajax.nhtml',
+                        method    => 'POST',
+                        event     => 'onSubmit', 
+                        by        => 'id',
+                        idname    => 'form1',
+                        preload   => 'ajax_load',
+                        afterload => 'ajax_response',
+                        lparam    => 
+                                 {
+                                    event  => 'onSubmit form1',
+                                 },                         
+                        vparam    => 
+                                 {
+                                 
+                                    One   => 'document.form1.one.value',
+                                    Two   => 'document.form1.two.value',
+                                    Color => 'getSelectedValue(document.form1.colors)',
+
+                                 },                                                                 
+                      },
+                      {  
+                        open      => '../scripts/examples/rajax.nhtml',
+                        method    => 'POST',
+                        event     => 'onChange', 
+                        by        => 'name',
+                        idname    => 'one',
+                        preload   => 'ajax_load',
+                        afterload => 'ajax_response',
+                        lparam    => 
+                                 {
+                                    event  => 'onChange one',
+                                 },                           
+                        vparam    => 
+                                 {
+                                    One   => 'document.form1.one.value',
+                                 },                                                                 
+                      }, 
+                      {  
+                        open      => '../scripts/examples/rajax.nhtml',
+                        method    => 'POST',
+                        event     => 'onChange', 
+                        by        => 'name',
+                        idname    => 'two',
+                        preload   => 'ajax_load',
+                        afterload => 'ajax_response',
+                        lparam    => 
+                                 {
+                                    event  => 'onChange two',
+                                 },                           
+                        vparam    => 
+                                 {
+                                    Two   => 'document.form1.two.value',
+                                 },                                                                 
+                      },
+                      {  
+                        open      => '../scripts/examples/rajax.nhtml',
+                        method    => 'POST',
+                        event     => 'onClick', 
+                        by        => 'collection',
+                        idname    => 'colors',
+                        item      => '[0]',
+                        preload   => 'ajax_load',
+                        afterload => 'ajax_response',
+                        lparam    => 
+                                 {
+                                    event  => 'onClick Color',
+                                 },                           
+                        vparam    => 
+                                 {
+                                    Color  => 'getSelectedValue(document.form1.colors)',
+                                 },                                                                 
+                      },    
+                      {  
+                        open      => '../scripts/examples/rajax.nhtml',
+                        method    => 'POST',
+                        event     => 'onClick', 
+                        by        => 'collection',
+                        idname    => 'colors',
+                        item      => '[1]',
+                        preload   => 'ajax_load',
+                        afterload => 'ajax_response',
+                        lparam    => 
+                                 {
+                                    event  => 'onClick Color',
+                                 },                           
+                        vparam    => 
+                                 {
+                                    Color  => 'getSelectedValue(document.form1.colors)',
+                                 },                                                                 
+                      },
+                      {  
+                        open      => '../scripts/examples/rajax.nhtml',
+                        method    => 'POST',
+                        event     => 'onClick', 
+                        by        => 'collection',
+                        idname    => 'colors',
+                        item      => '[2]',
+                        preload   => 'ajax_load',
+                        afterload => 'ajax_response',
+                        lparam    => 
+                                 {
+                                    event  => 'onClick Color',
+                                 },                           
+                        vparam    => 
+                                 {
+                                    Color  => 'getSelectedValue(document.form1.colors)',
+                                 },                                                                 
+                      },
+                      {  
+                        js_file   => 1,
+                        open      => 'http://nes.sourceforge.net/miniblog/scripts/examples/rajax.njs',
+                        event     => 'onClick', 
+                        by        => 'id',
+                        idname    => 'psajax',
+                        preload   => 'ajax_load',
+                        afterload => 'ajax_response_js',
+                        lparam    => 
+                                 {
+                                    event  => 'onClick button by JS file',
+                                 },                         
+                        vparam    => 
+                                 {
+                                 
+                                    One   => 'document.form1.one.value',
+                                    Two   => 'document.form1.two.value',
+                                    Color => 'getSelectedValue(document.form1.colors)',
+
+                                 },                                                                 
+                      },                      
+                       
+                    ]
+            "
+           )    
+:} 
+ 
+ 
+</form>
+</div>
+<div id="dright" style="float: right; text-align: left; width: 50%;">
+<p>Ajax Response:</p>
+<div id="a_res">
+</div>
+</div>
+<div id="dright" style="clear: left;">
+</div>
+<br><hr>
+<br>
+use <a href="?action=item&item=Ajax&source=1#source">View Source</a> to see how it is made.<br>
+<br>
+<hr>
+<br>

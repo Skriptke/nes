@@ -11,7 +11,7 @@ AddHandler perl-nes .nhtml
 AddHandler perl-nes .nhtm
 
 # NSJ files
-AddHandler perl-nes .nsj
+AddHandler perl-nes .njs
 
 # HTML Wrapper
 AddHandler perl-nes .html

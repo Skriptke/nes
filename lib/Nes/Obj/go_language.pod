@@ -47,8 +47,8 @@ Redirect if user agent language begins by 'en_US':
 Combined and default page:
 
     {: include ('{: * cfg_obj_top_dir :}/go_language.nhtml', 
+                'en_US: http//example.com/en_US.html',    
                 'en_:   http//example.com/en_generic.html',
-                'en_US: http//example.com/en_US.html',
                 ':      http//example.com/en_generic.html'
                )
     :}
@@ -59,7 +59,7 @@ Skriptke: Enrique Castañón
 
 =head1 VERSION
 
-Version 1.03 April 2010
+Version 1.04
 
 =head1 COPYRIGHT
 

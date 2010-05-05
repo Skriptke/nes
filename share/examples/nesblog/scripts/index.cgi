@@ -91,7 +91,7 @@ if ( $action =~ /^login$/i ) {
 
 } elsif ( $action =~ /^item$/i ) {
   
-  $nes_tags->{'title'}         = $item;
+  $nes_tags->{'title'}         = $item.' Perl Nes';
   $nes_tags->{'show_comments'} = 0 if $item eq 'index';
   $nes_tags->{'content'} = 'items.nhtml';
 

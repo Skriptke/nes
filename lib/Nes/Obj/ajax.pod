@@ -238,7 +238,7 @@ with Nes (njs files). Its only advantage is that you can do cross domain:
 
 =head1 AUTHOR
 
-Luis Romero del Campo. (Aunque ha tirado muchas veces la pelota...)
+Luis Romero del Campo. (Aunque he tirado muchas veces la pelota...)
 
 =head1 VERSION
 
