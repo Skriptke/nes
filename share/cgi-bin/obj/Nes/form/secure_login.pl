@@ -98,7 +98,6 @@ sub from_table {
   return $user_id;
 }
 
-
 # don't forget to return a true value from the file
 1;
 

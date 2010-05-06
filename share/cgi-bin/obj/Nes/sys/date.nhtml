@@ -1,4 +1,4 @@
-{: NES 1.0 ('date_time.pl') :}
+{: NES 1.0 ('date.pl') :}
 {: #
   -----------------------------------------------------------------------------
     
@@ -16,8 +16,8 @@
   http://github.com/Skriptke/nes
    
   DOCUMENTATION:
-  perldoc Nes::Obj::date_time 
+  perldoc Nes::Obj::date_time
  
   -----------------------------------------------------------------------------
 :}
-{: $ date_time :}
+{: $ date :}

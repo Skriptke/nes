@@ -43,7 +43,6 @@ if ( $ENV{'REMOTE_ADDR'} || $ENV{'REMOTE_HOST'} || $ENV{'SCRIPT_NAME'} ) {
   print $tags->{'date_time'},"\n";
 }
 
-
 # don't forget to return a true value from the file
 1;
 

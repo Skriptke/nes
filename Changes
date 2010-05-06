@@ -1,5 +1,6 @@
 Revision history for Nes
 
+        fix "Modification of non-creatable ..." error in 1195
         Support CGI::Application by CGI::Application::Plugin::Nes
         new test instalation hello_nes/tests/index.nhtml
         new plugin fc_plugin

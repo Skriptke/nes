@@ -20,29 +20,25 @@
 #
 # -----------------------------------------------------------------------------
 
-package Nes;
+  package Nes;
 
-use strict;
-#use warnings;
-
-# cgi environment no defined in command line
-no warnings 'uninitialized';
-
-our $VERSION          = '1.03.3_3';
-our $CRLF             = "\015\012";
-our $MAX_INTERACTIONS = 900;
-our $MAX_SCRIPTS      = 900;
-our $MOD_PERL         = $ENV{'MOD_PERL'} || 0;
-our $MOD_PERL1        = $MOD_PERL =~ /mod_perl\/1/ || 0;
-our $MOD_PERL2        = $MOD_PERL =~ /mod_perl\/2/ || 0;
-
-use Nes::Tags;
-use Nes::Setting;
-use Nes::Singleton;
-
-{
-
-  package Nes; 
+  use strict;
+  #use warnings;
+  
+  # cgi environment no defined in command line
+  no warnings 'uninitialized';
+  
+  our $VERSION          = '1.03.4_1';
+  our $CRLF             = "\015\012";
+  our $MAX_INTERACTIONS = 900;
+  our $MAX_SCRIPTS      = 900;
+  our $MOD_PERL         = $ENV{'MOD_PERL'} || 0;
+  our $MOD_PERL1        = $MOD_PERL =~ /mod_perl\/1/ || 0;
+  our $MOD_PERL2        = $MOD_PERL =~ /mod_perl\/2/ || 0;
+  
+  use Nes::Tags;
+  use Nes::Setting;
+  use Nes::Singleton;
 
   my %instance;
 
@@ -132,8 +128,6 @@ use Nes::Singleton;
     
   }
   
-}
-
 
 {
 
@@ -1198,7 +1192,8 @@ use Nes::Singleton;
 
     if ( open my $fh, '<', "$self->{'file_name'}" ) {
       @{ $self->{'file_souce'} } = <$fh>;
-      chomp $self->{'file_souce'}[$#{$self->{'file_souce'}}];
+      chomp $self->{'file_souce'}[$#{$self->{'file_souce'}}] if
+        $self->{'file_souce'}[$#{$self->{'file_souce'}}];
       close $fh;
     } else {
       warn "Couldn't open $self->{'file_name'}\n";
@@ -1391,11 +1386,6 @@ use Nes::Singleton;
     my $self  = shift;
     my %tags;
 
-    if ( $self->{'top_container'}->{'max_scripts'}-- <= 0 ) {
-      warn "Possible infinite loop in MAX_SCRIPTS @{ $self->{'file_script'} }";
-      exit;
-    }
-
     $self->{'interpret'} = nes_interpret->new( $self->{'out'} );
     $self->{'out'} = $self->{'interpret'}->go( %{ $self->{'tags'} } );
 
@@ -1479,9 +1469,10 @@ use Nes::Singleton;
   
   sub exec_scripts {
     my $self  = shift;
-    
+
     foreach my $script ( @{ $self->{'file_script'} } ) {
       if ( $script eq 'none' ) {
+        $self->{'top_container'}->{'max_scripts'}-- || die "Possible infinite loop in MAX_SCRIPTS";
         do {
           my $nes_obj = Nes::Singleton->new();
           $nes_obj->out();
@@ -1496,12 +1487,13 @@ use Nes::Singleton;
   }
   
   sub do_script {
-
     my $self  = shift;
     my ($script) = @_;
     
-    $script = $self->{'top_container'}->get_file_path( $script );
+    $self->{'top_container'}->{'max_scripts'}-- || die "Possible infinite loop in MAX_SCRIPTS";
     
+    $script = $self->{'top_container'}->get_file_path( $script );
+       
     my $script_dir = $script;
     $script_dir =~ s/(.*)(\\|\/).*/$1/;
     push( @INC, $script_dir ) if !$self->{'top_container'}->{'in_inc'}->{$script_dir};

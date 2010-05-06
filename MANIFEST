@@ -17,6 +17,7 @@ lib/Nes/DB.pm
 lib/Nes/Minimal/Multipart.pm
 lib/Nes/Minimal/Misc.pm
 lib/Nes/Tags.pm
+lib/Nes/Template.pm
 lib/Nes/Obj/secure_login.pod
 lib/Nes/Obj/multi_step.pod
 lib/Nes/Obj/include_js.pod
@@ -117,6 +118,8 @@ share/cgi-bin/obj/Nes/ajax/pseudo_ajax.nhtml
 share/cgi-bin/obj/Nes/ajax/pseudo_ajax.pl
 share/cgi-bin/obj/Nes/ajax/ajax.nhtml
 share/cgi-bin/obj/Nes/ajax/ajax.pl
+share/cgi-bin/obj/Nes/sys/date.nhtml
+share/cgi-bin/obj/Nes/sys/date.pl
 share/cgi-bin/images/error.gif
 share/cgi-bin/images/error_b.gif
 share/cgi-bin/images/error_w.gif
