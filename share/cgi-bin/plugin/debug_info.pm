@@ -40,7 +40,9 @@ use Benchmark qw(:all :hireswallclock);
     
 #    $self->{'session'} = nes_session->new('NES-DEBUG-INFO');
     
-    $self->{'inter'} = $template->{'this_inter'}; 
+    $self->{'inter'}     = $template->{'this_inter'}; 
+    $self->{'file_name'} = $template->{'file_name'};
+    $self->{'template'}  = $template;
     $self->{'first_time'} = 1;
     $self->init($template) if !$instance;
     $self->{'first_time'} = 0 if $instance; 
@@ -87,6 +89,15 @@ use Benchmark qw(:all :hireswallclock);
     $self->{'redirect_err'} = 1;  
 
   }
+  
+  sub redirect_err_parent {
+    my $self = shift;
+
+    use IO::Scalar;
+    tie *STDERR, 'IO::Scalar', \$self->{'STDERR'}{$self->{'template'}->{'parent'}->{'this_inter'}};  
+    $self->{'redirect_err'} = 1;  
+
+  }  
   
   sub unredirect_err {
     my $self = shift;

@@ -46,8 +46,10 @@
     $info->benchmark_init($container);
     return 1;
   } else {
+    $info->redirect_err_parent;
     $info->benchmark_end($container);
   }
+  
 
   # no cuenta el tiempo de debug
   $info->benchmark_stop($container);
