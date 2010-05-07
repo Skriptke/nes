@@ -28,7 +28,7 @@
   # cgi environment no defined in command line
   no warnings 'uninitialized';
   
-  our $VERSION          = '1.03.4_1';
+  our $VERSION          = '1.03.4_2';
   our $CRLF             = "\015\012";
   our $MAX_INTERACTIONS = 900;
   our $MAX_SCRIPTS      = 900;

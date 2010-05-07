@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-Nes::Template - Nes templates by CGI file or traditional template call.
+Nes::Template - Nes template by CGI file or traditional template call.
 
 =head1 SYNOPSIS
 
