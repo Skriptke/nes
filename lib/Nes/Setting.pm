@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
@@ -15,15 +13,16 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.03
+#  Version 1.04
 #
 #  Setting.pm
 #
 # -----------------------------------------------------------------------------
 
-{
-
   package Nes::Setting;
+  
+  use strict;
+  use warnings;    
 
   my $instance;
 
@@ -165,7 +164,6 @@
     return $self;
   }
 
-}
 
 1;
 

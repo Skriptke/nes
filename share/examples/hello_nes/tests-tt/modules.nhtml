@@ -1,0 +1,28 @@
+{: NES 1.0 modules.pl :}
+{: #
+    -----------------------------------------------------------------------------
+      
+    Nes 1.04 by Skriptke
+    Copyright 2009 - 2010 Enrique F. Castañón Barbero
+    Licensed under the GNU GPL.
+  
+    Sample:
+    http://nes.sourceforge.net/
+  
+    CPAN:
+    http://search.cpan.org/dist/Nes/
+  
+    Repository:
+    http://github.com/Skriptke/nes
+  
+    -----------------------------------------------------------------------------
+:}
+    <div id="caja">
+    {: @ (modules)
+        <p><b><a href="http://search.cpan.org/search?mode=module&query={: @$ modules.module  :}">{: @$ modules.module  :}</a>:</b> {: @$ modules.installed  :}</p>
+    :}
+    <br>{: $ recommend :}
+    </div>
+    
+    
+    

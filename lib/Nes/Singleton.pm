@@ -19,8 +19,10 @@
 #
 # -----------------------------------------------------------------------------
 
-{
   package Nes::Singleton;
+  
+  use strict;
+  use warnings;  
   
   my $instance;
 
@@ -166,6 +168,5 @@
     return $self->{'container'};
   }
 
-}
 
 1;

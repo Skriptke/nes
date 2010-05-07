@@ -1,0 +1,36 @@
+{: NES 1.0 none :}
+{: #
+    -----------------------------------------------------------------------------
+      
+    Nes 1.04 by Skriptke
+    Copyright 2009 - 2010 Enrique F. Castañón Barbero
+    Licensed under the GNU GPL.
+  
+    Sample:
+    http://nes.sourceforge.net/
+  
+    CPAN:
+    http://search.cpan.org/dist/Nes/
+  
+    Repository:
+    http://github.com/Skriptke/nes
+  
+    -----------------------------------------------------------------------------
+:}
+    <h4>SQL SELECT</h4>
+    <div id="caja">
+    {: sql (
+              'SELECT VERSION() AS sql_version, CURRENT_DATE'
+           )
+     Version: {: @$this.sql_version :}<br>
+     Current date: {: @$this.CURRENT_DATE :}<br>
+    :}        
+    </div>
+    <small>* Requires cofigure DB in .nes.cfg DB_... vars</small>
+
+    
+
+    
+    
+    
+    
