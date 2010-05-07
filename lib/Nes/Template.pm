@@ -73,7 +73,6 @@
     return;
   }
 
-
 {
   package Nes::Template::Top;
   use vars qw(@ISA);
