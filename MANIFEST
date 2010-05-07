@@ -318,7 +318,6 @@ share/examples/hello_nes/tests-tt/index.cgi
 share/examples/hello_nes/tests-tt/includes.nhtml
 share/examples/hello_nes/tests-tt/body.nhtml
 share/examples/hello_nes/tests-tt/modules.pl
-share/examples/hello_nes/tests-tt/MANIFEST.1
 share/examples/hello_nes/tests-tt/others.nhtml
 share/examples/hello_nes/tests-tt/head.nhtml
 share/examples/hello_nes/tests-tt/footer.nhtml
