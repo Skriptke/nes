@@ -5,7 +5,7 @@ Nes::Obj::date - Get date and time.
 
 =head1 SYNOPSIS
 
-    {: include ( '{: * cfg_obj_top_dir :}/date.html', 
+    {: include ( '{: * cfg_obj_top_dir :}/date.nhtml', 
                  'gmt',                  {: # local o gmt :}
                  '%A %e %B %Y %H:%M:%S'  {: # format :}
                ) 
