@@ -1,0 +1,30 @@
+{: NES 1.0 cookies.pl :}
+
+    <h4>Nes::Framework::Controller::Cookies</h4>
+    <div id="caja">
+      <form id="form" name="form" method="post" action="">
+          Text:
+          <input name="text" type="text" value="{: $ text :}"/>
+          <hr>
+          Select: 
+          <select name="select">
+            <option value="option1" {: ~ ($ select eq 'option1')SELECTED:}>option 1</option>
+            <option value="option2" {: ~ ($ select eq 'option2')SELECTED:}>option 2</option>
+          </select>
+          <hr>
+          Checkbox:
+          <input name="checkbox" type="checkbox" value="1" {: ~ ($ checkbox)checked="checked":}/>
+          <hr>
+          <input name="radio" type="radio" value="set" checked="checked"/> Set<br>
+          <input name="radio" type="radio" value="del" /> Del<br>
+          <hr>
+          <input type="hidden" name="action" value="Cookies" />
+          <input type="submit" name="Send"   value="Send" />
+      </form>
+    </div>
+<pre id="caja">
+ Coookie text.....: {: $ text :}
+ Coookie select...: {: $ select :}
+ Coookie checkbox.: {: $ checkbox :}
+ Method...........: {: * q_radio :}</pre>
+<br>

@@ -1,0 +1,77 @@
+{: NES 1.0 model.pl :}
+
+    <h4>Nes::Framework::Model and Nes::Framework::DAL</h4>
+
+    <div id="caja">
+      <form id="zones" name="zones" method="post" action="">
+          Zone: 
+          <select name="zone" id="zone">
+            <option value="Select" SELECTED>Select:</option>
+            <option value="Africa">Africa</option>
+            <option value="America">America</option>
+            <option value="Antarctica">Antarctica</option>
+            <option value="Arctic">Arctic</option>
+            <option value="Asia">Asia</option>
+            <option value="Atlantic">Atlantic</option>
+            <option value="Australia">Australia</option>
+            <option value="Europe">Europe</option>
+            <option value="Indian">Indian</option>
+            <option value="Pacific">Pacific</option>
+            <option value="Africa">Africa</option>
+          </select>
+          <div id="a_res">
+          <hr>City: select zone first, please.
+          </div>       
+          <hr>
+<pre>
+{: @ zones Zone...: {: $ city :}
+ GMT....: {: @$ zones.gmt :}
+ Offset.: {: @$ zones.offset :} :}
+ Get....: {: $ option :}
+{: @ count Count..: {: @$ count.timezoneid :} records in DB. :}  </pre>
+
+          <hr>
+          <input name="radio" type="radio" value="gtm"    /> Get GMT<br>
+          <input name="radio" type="radio" value="offset" /> Get Offset<br>
+          <input name="radio" type="radio" value="both" checked="checked"/> Get both<br>
+          <hr>
+          <input type="hidden" name="action"  value="Model" />
+          <input type="submit" name="submit"  value="Submit" />
+
+          {: include ('{: * cfg_obj_top_dir :}/Nes/ajax/ajax.nhtml',
+                      "
+                        script             => '
+                          function ajax_load (conex, previous_conex) {
+                              if ( previous_conex ) { previous_conex.abort(); }         
+                              document.getElementById(\"a_res\").innerHTML = \"\";
+                              document.getElementById(\"a_res\").innerHTML = \"<hr>Ajax loading... <img src=/cgi-bin/nes/images/loading.gif>\";
+                          }
+                          function ajax_response (conex, previous_conex) {
+                              document.getElementById(\"a_res\").innerHTML = \"\";
+                              document.getElementById(\"a_res\").innerHTML = \"<hr>City: <select name=city>\"+conex.responseText+\"</select>\";
+                          }
+                        ',
+                        events  => 
+                              [    
+                                {  
+                                  open      => 'rajax.nhtml',
+                                  method    => 'POST',
+                                  event     => 'onChange', 
+                                  by        => 'id',
+                                  idname    => 'zone',
+                                  preload   => 'ajax_load',
+                                  afterload => 'ajax_response',
+                                  vparam    => {
+                                    zone  => 'document.zones.zone.value',
+                                  },                                                                 
+                                },
+                              ]
+                      "
+                     )    
+          :} 
+      </form>
+    </div>
+
+    
+    
+    

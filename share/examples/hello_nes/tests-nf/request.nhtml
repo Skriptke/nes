@@ -1,0 +1,31 @@
+{: NES 1.0 request.pl :}
+
+    <h4>Nes::Framework::Controller::Request</h4>
+    <div id="caja">
+      <form id="form" name="form" method="post" action="">
+          Text:
+          <input name="text" type="text" value="{: * q_text :}"/>
+          <hr>
+          Select: 
+          <select name="select">
+            <option value="option1" {: ~ (* q_select eq 'option1')SELECTED:}>option 1</option>
+            <option value="option2" {: ~ (* q_select eq 'option2')SELECTED:}>option 2</option>
+          </select>
+          <hr>
+          Checkbox:
+          <input name="checkbox" type="checkbox" value="1" {: ~ (* q_checkbox)checked="checked":}/>
+          <hr>
+          <input name="radio" type="radio" value="auto" {: ~ (* q_radio eq 'auto')checked="checked":}/> Array (auto)<br>
+          <input name="radio" type="radio" value="hash" {: ~ (* q_radio eq 'hash')checked="checked":}/> Hash<br>
+          <input name="radio" type="radio" value="call" {: ~ (* q_radio eq 'call')checked="checked":}/> Callback<br>
+          <hr>
+          <input type="hidden" name="action"  value="Request" />
+          <input type="submit" name="Send"  value="Send" />
+      </form>
+    </div>
+<pre id="caja">
+ Field text.....: {: $ text :}
+ Field select...: {: $ select :}
+ Field checkbox.: {: $ checkbox :}
+ Method.........: {: $ radio :}</pre>
+<br>

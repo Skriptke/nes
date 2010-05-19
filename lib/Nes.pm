@@ -28,7 +28,7 @@
   no warnings 'uninitialized';
   no warnings "redefine";
   
-  our $VERSION          = '1.03.4_4';
+  our $VERSION          = '1.03.4_5';
   our $CRLF             = "\015\012";
   our $MAX_INTERACTIONS = 900;
   our $MAX_SCRIPTS      = 900;

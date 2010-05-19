@@ -1,0 +1,19 @@
+{: NES 1.0 none :}
+
+    <h4>SQL SELECT</h4>
+    <div id="caja">
+    {: sql ( 'SELECT * FROM timezones WHERE 1 limit 5' )
+
+     Zone: {: @$timezones.timezoneid :}<br>
+     - GMT: {: @$timezones.GMT :} / Offset :{: @$timezones.offset :}<br>
+
+    :}        
+    </div>
+    <small>* Requires DBD::CSV </small>
+
+    
+
+    
+    
+    
+    

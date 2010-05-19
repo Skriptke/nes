@@ -1,0 +1,20 @@
+{: NES 1.0 none :}
+
+    <h4>Inlude NHTML</h4>
+    <pre id="caja">lucky number: {: include lucky.nhtml :}</pre>
+    <h4>Inlude PHP</h4>
+    <p id="caja"> {: include calendar.php :} </pre>
+    <h4>Inlude PYTHON</h4>
+    <pre id="caja">{: include python.py :}</pre>
+    <h4>Inlude SH</h4>
+    <pre id="caja">{: include cal.sh :}</pre>
+    <h4>Inlude PERL.pl</h4>
+    <pre id="caja">{: include perl.pl :}</pre>
+    <h4>Inlude HTML</h4>
+    <pre id="caja">{: include html.html :}</pre>
+    <h4>Inlude TEXT PLAIN</h4>
+    <pre id="caja">{: include plain.txt :}</pre>
+    
+    
+    
+    

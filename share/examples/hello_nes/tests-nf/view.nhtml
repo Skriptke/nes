@@ -1,0 +1,24 @@
+{: NES 1.0 view.pl :}
+
+    <h4>Nes::Framework::View and Nes::Framework::Container</h4>
+    <pre id="caja">
+    Query action .: {: $ query :}
+    Cookies ......: {: $ cookies :}
+    Session ......: {: $ session :}
+    CFG var ......: {: $ config :}</pre>
+    
+    <pre id="caja">Lucky number: {: $ var_lucky :}</pre>
+    
+    <pre id="caja">{: $ var_cal :}</pre> 
+    
+    <pre id="caja">{: $ var_perl :}</pre>
+    
+    <pre id="caja">Allowed HTML: {: $ var_container,yes_html :}<br>Not  allowed: {: $ var_container :}</pre>
+    
+    <pre id="caja">{: $ var_source :}</pre>
+    
+    <div id="caja">{: $ var_date1 :}</div>
+    
+    <div id="caja">{: $ var_date2 :}</div>
+    
+    <pre id="caja">{: $ var_add,yes_html :}</pre>

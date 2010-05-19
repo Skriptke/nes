@@ -1,0 +1,12 @@
+{: NES 1.0 modules.pl :}
+
+    <div id="caja">
+    <b>Installed Modules:</b>
+    {: @ (modules)
+        <p><b><a href="http://search.cpan.org/search?mode=module&query={: @$ modules.module  :}">{: @$ modules.module  :}</a>:</b> {: @$ modules.installed  :}</p>
+    :}
+    <br>{: $ recommend :}
+    </div>
+    
+    
+    

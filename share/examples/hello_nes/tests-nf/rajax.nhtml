@@ -1,0 +1,5 @@
+{: NES 1.0 rajax.pl :}
+{: @ options
+<option value="{: @$ options.timezoneid :}" >{: @$ options.timezoneid :}</option> :}
+    
+    

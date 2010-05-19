@@ -1,0 +1,21 @@
+{: NES 1.0 none :}
+{: #
+    -----------------------------------------------------------------------------
+      
+    Nes 1.04 by Skriptke
+    Copyright 2009 - 2010 Enrique F. Castañón Barbero
+    Licensed under the GNU GPL.
+  
+    Sample:
+    http://nes.sourceforge.net/
+  
+    CPAN:
+    http://search.cpan.org/dist/Nes/
+  
+    Repository:
+    http://github.com/Skriptke/nes
+  
+    -----------------------------------------------------------------------------
+:}
+<hr>
+<center><a href="http://nes.sourceforge.net/">Nes</a> {: * nes_ver :} {: * env_MOD_PERL :} <a href="http://search.cpan.org/dist/Nes/">CPAN</a></center> 

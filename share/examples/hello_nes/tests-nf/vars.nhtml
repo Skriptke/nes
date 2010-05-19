@@ -1,0 +1,37 @@
+{: NES 1.0 vars.pl :}
+
+    <h4>Nes::Framework::Controller::Vars</h4>
+    <div id="caja">
+    <center>
+    Any user, password: 1234<br><br>
+      <form id="form" name="form" method="post" action="">
+          <fieldset>
+             <table border="0">
+                <tr>
+                   <td align="right">User:</td>
+                   <td align="left"><input name="field_user" size="15" type="text" value="{: * q_field_user :}" /></td>
+                </tr>
+                <tr>
+                   <td align="right">Password:</td>
+                   <td align="left"><input name="field_pass" size="15" type="password" value="{: * q_field_pass :}" /> </td>
+                </tr>
+                <tr>
+                   <td align="right">
+                   </td>
+                   <td align="left">
+                   <input name="field_del" type="checkbox" value="1"> Delete Session
+                   <br>
+                   <input name="login" type="submit" value="Submit" /> 
+                   <input name="action" type="hidden" value="Vars" /></td>
+                </tr>
+             </table>
+          </fieldset>
+          <small>* requires <a href="">reload</a> page for take changes</small>
+      </form>
+    </center>
+    </div>
+    <h4>Session</h4>
+    <div id="caja">Session:
+    <b>{: * nes_session_user :}</b>
+    </div>
+<br>
