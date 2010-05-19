@@ -90,7 +90,7 @@
     while (1) {
       my $file = $level . '/' . $file_name;
        
-      $self->load_cfg($file);
+      $self->load_cfg($file,$level);
       $level =~ s/[\/\\][^\/\\]*$//;
       last if $level !~ /$self->{'top_dir'}/;
     }
@@ -103,15 +103,29 @@
   sub load_cfg {
     my $class      = shift;
     my $self       = Nes::Setting::get_obj();
-    my ($file) = @_;
+    my ($file, $level) = @_;
     
     if ( -e $file ) {
-      open( my $fh, "$file" ) || warn "couldn't open $file";
+      open( my $fh, "$file" ) || warn "couldn't open cfg $file";
       while (<$fh>) {
         chomp;
         my $line = $_;
         next if $line =~ /^#/;
         next if $line =~ /^$/;
+        
+        # no soporta path, sólo el nombre del fichero de este directorio.
+        if ($line =~ /^\=\>\s*([^\/\\]*)\s*/) {
+          my $lfile = $1;
+          next if $file eq $lfile;
+          $lfile = $level.'/'.$lfile;
+          if (!-e $lfile) {
+            warn "cfg file does not exist $lfile";
+            next;
+          }
+          $self->load_cfg($lfile,$level);
+          next;
+        }
+        
         my ( $key, $value ) = split( /=\s*/, $line, 2 );
         $key =~ s/\s*(\@|\%|\$)?$//;
         my $eval = $1 || 0;

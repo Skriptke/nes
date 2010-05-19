@@ -1,5 +1,10 @@
 Revision history for Nes
 
+        Nes::View as a replacement of Nes::Singleton
+        Nes::Singleton is obsolete
+        added Nes::Framework to debug_info
+        added Nes::Framework HMCV Framework
+        .nes.cfg include files: => .file
         fix "Modification of non-creatable ..." error in 1195
         Support CGI::Application by CGI::Application::Plugin::Nes
         new test instalation hello_nes/tests/index.nhtml

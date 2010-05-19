@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
@@ -21,20 +20,22 @@
 #
 # -----------------------------------------------------------------------------
 
-  use Nes;
+  use Nes::View;
   use strict;
   use POSIX qw(strftime);
   
-  my $nes = Nes::Singleton->new('./date.nhtml');
-  my $q   = $nes->{'query'}->{'q'};
-  my $local_gmt = $q->{'local_gmt'} || $q->{'date_time_param_1'} || shift @ARGV || 'local';
-  my $format    = $q->{'format'}    || $q->{'date_time_param_2'} || "@ARGV"     || '%a %e %b %Y %H:%M:%S';
+  my $view   = Nes::View->new('./date.nhtml');
+  my $q      = $view->{'query'}->{'q'};
+  my $params = $view->{'obj_params'};
   
-  my $tags = {};
-  $tags->{'date'} = POSIX::strftime( "$format", localtime ); # default
-  $tags->{'date'} = POSIX::strftime( "$format", gmtime ) if $local_gmt =~ /gmt/i;
+  my $local_gmt = $q->{'local_gmt'} || $params->[0] || shift @ARGV || 'local';
+  my $format    = $q->{'format'}    || $params->[1] || "@ARGV"     || '%a %e %b %Y %H:%M:%S';
   
-  $nes->out(%$tags);
+  my $vars = {};
+  $vars->{'date'} = POSIX::strftime( "$format", localtime ); # default
+  $vars->{'date'} = POSIX::strftime( "$format", gmtime ) if $local_gmt =~ /gmt/i;
+  
+  $view->fill($vars);
 
 # don't forget to return a true value from the file
 1;

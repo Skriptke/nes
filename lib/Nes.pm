@@ -1,4 +1,3 @@
-
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
@@ -23,12 +22,13 @@
   package Nes;
 
   use strict;
-  #use warnings;
+  use warnings;
   
   # cgi environment no defined in command line
   no warnings 'uninitialized';
+  no warnings "redefine";
   
-  our $VERSION          = '1.03.4_2';
+  our $VERSION          = '1.03.4_4';
   our $CRLF             = "\015\012";
   our $MAX_INTERACTIONS = 900;
   our $MAX_SCRIPTS      = 900;
@@ -39,7 +39,7 @@
   use Nes::Tags;
   use Nes::Setting;
   use Nes::Singleton;
-
+  
   my %instance;
 
   sub new {
@@ -99,7 +99,7 @@
   sub forget {
     my $self  = shift;
     my $class = ref($self);
-    
+
     $instance{$class} = $self->{'previous'};
 
     return $instance{$class};
@@ -738,11 +738,9 @@
   
   sub param {
     my $self  = shift;
-    my ($param) = @_;
 
     return if !$self->{'CGI'};
-    
-    return $self->{'CGI'}->param($param);
+    return wantarray ? ($self->{'CGI'}->param(@_)) : $self->{'CGI'}->param(@_);
   }
 
   sub by_CGI {
@@ -898,6 +896,7 @@
     # maximo de interactiones, para evitar un bucle infinito.
     $self->{'max_inter'}   = $MAX_INTERACTIONS;
     $self->{'max_scripts'} = $MAX_SCRIPTS;
+#    $self->{'nes'}->{'debug_info'}{'Nes::Framework'} = undef;
     $self->{'nes'}->{'debug_info'}{'is_load'} = 0;
     $self->{'nes'}->{'debug_info'}{'obj'} = undef;
     $self->{'nes'}->{'print_out'} = 1;
@@ -932,10 +931,18 @@
     $self->init_nes_env();
     $self->init_cgi_env();
 
-    $self->{'container'} = nes_container->new( $self->{'file'} );    
+    $self->{'container'}      = nes_container->new( $self->{'file'} );
+    $self->{'self_container'} = $self->{'container'};
 
     return;
-  }  
+  } 
+  
+  sub get_self_container {
+    my $self  = shift;
+
+#    return nes_container->get_obj();
+    return $self->{'self_container'};
+  } 
   
   sub get_out {
     my $self  = shift;
@@ -1114,9 +1121,12 @@
     my $self  = $class->SUPER::new();
     my ( $file ) = @_;
 
+    $self->{'top_container'}->{'self_container'} = $self;
+
     $self->{'error_not_exist'} = 0;
-    $self->{'file_dir'}  = $self->{'top_container'}->get_parent_dir();
-    $self->{'file_name'} = $self->{'top_container'}->get_file_path($file);
+    $self->{'file_dir'}   = $self->{'top_container'}->get_parent_dir();
+    $self->{'file_name'}  = $self->{'top_container'}->get_file_path($file);
+    $self->{'obj_params'} = [];
     
     $self->{'top_container'}->set_parent_dir($self->{'top_container'}->{'this_dir'});
     
@@ -1144,7 +1154,56 @@
 
     return $self;
   }
-   
+
+  sub forget {
+    my $self = shift;
+    $self->SUPER::forget;
+    
+    return;
+  } 
+  
+  sub set_obj_params {
+    my $self = shift;
+    my ($obj_name,$param) = @_;
+
+    $obj_name =~ s/.*\///;
+    $obj_name =~ s/\.[^\.]*$//;    
+
+    $self->{'obj_params'} = $param;
+
+    my $count = 0;
+    $self->{'top_container'}->set_nes_env( 'q_obj_param_' . $count, $obj_name );
+    $self->{'query'}->set( 'obj_param_' . $count, $obj_name );
+    foreach my $this (@$param) {
+      $count++;
+      $self->{'top_container'}->set_nes_env( 'q_' . $obj_name . '_param_' . $count, $this );
+      $self->{'query'}->set( $obj_name . '_param_' . $count, $this );
+    }
+
+    return;
+  } 
+  
+  sub del_obj_params {
+    my $self = shift;
+    my ($obj_name,$param) = @_;
+    
+    $obj_name =~ s/.*\///;
+    $obj_name =~ s/\.[^\.]*$//;    
+    
+    $self->{'obj_params'} = undef;    
+    
+    my $count = 0;
+    $self->{'top_container'}->del_nes_env( 'q_obj_param_' . $count );
+    $self->{'query'}->del( 'obj_param_' . $count );    
+    foreach my $this (@$param) {
+      $count++;
+      $self->{'top_container'}->del_nes_env( 'q_' . $obj_name . '_param_' . $count );
+      $self->{'query'}->del( $obj_name . '_param_' . $count );
+    }
+    
+    return;
+  }   
+
   sub get_type {
     my $self  = shift;
 
@@ -1216,9 +1275,7 @@
   sub add_parent_tags {
     my $self  = shift;
   
-    foreach my $tag ( keys %{ $self->{'previous'}->{'content_obj'}->{'tags'} } ) {
-      $self->{'content_obj'}->{'tags'}{$tag} = $self->{'previous'}->{'content_obj'}->{'tags'}{$tag};
-    }    
+    $self->{'content_obj'}->add_tags(%{$self->{'previous'}->{'content_obj'}->{'tags'}});
 
     return;
   }  
@@ -1341,6 +1398,7 @@
     $self->{'file_script'} = $self->{'container'}->{'file_script'};
     $self->{'out'}         = $self->{'container'}->{'out'};
     $self->{'exec'}        = 0;
+    $self->{'tags'}        = {};
 
     # default content type
     $self->{'Content-type'} = "Content-type: text/html";
@@ -1355,10 +1413,8 @@
     my $self  = shift;
     my %tags;
     (%tags) = @_;
-
-    foreach my $tag ( keys %tags ) {
-      $self->{'tags'}{$tag} = $tags{$tag};
-    }
+  
+    %{$self->{'tags'}} = ( %{$self->{'tags'}}, %tags );
     
     $self->{'TAG_HTTP-headers'} = $self->{'tags'}{'HTTP-headers'};
     $self->{'tags'}{'HTTP-headers'} = '';
@@ -1371,9 +1427,7 @@
     my %tags;
     (%tags) = @_;
 
-    foreach my $tag ( keys %tags ) {
-      $self->{'tags'}{$tag} = $tags{$tag};
-    }
+    %{$self->{'tags'}} = ( %{$self->{'tags'}}, %tags );
     
     $self->{'TAG_HTTP-headers'} = $self->{'tags'}{'HTTP-headers'};
     $self->{'tags'}{'_HTTP_headers_'} = $self->{'tags'}{'HTTP-headers'} if $self->{'tags'}{'HTTP-headers'};
@@ -1457,13 +1511,13 @@
 
   sub go {
     my $self  = shift;
-    
+
     $self->go_plugin_first();
   
     $self->exec_scripts();
 
     $self->go_plugin_last();
-      
+         
     return;
   }
   
@@ -1474,8 +1528,7 @@
       if ( $script eq 'none' ) {
         $self->{'top_container'}->{'max_scripts'}-- || die "Possible infinite loop in MAX_SCRIPTS";
         do {
-          my $nes_obj = Nes::Singleton->new();
-          $nes_obj->out();
+          $self->{'top_container'}->get_self_container->interpret();
         };
         next;
       }
@@ -2009,6 +2062,7 @@
 
     $self->{'out'} = $out;
     $self->preformat() if $out;
+    $self->{'tags'} = {};
 
     # banderas para eliminar de las variables código malicioso
     $self->{'security_options'}{'no_sql'}     = 0;
@@ -2162,9 +2216,11 @@
     my $self  = shift;
     my (%tags) = @_;
 
-    foreach my $tag ( keys %tags ) {
-      $self->{'tags'}{$tag} = $tags{$tag};
-    }
+#    foreach my $tag ( keys %tags ) {
+#      $self->{'tags'}{$tag} = $tags{$tag};
+#    }
+    
+    %{$self->{'tags'}} = ( %{$self->{'tags'}}, %tags );
 
     while ( $self->{'out'} =~ s/$self->{'blocks'}/$self->replace_block($1,($2 || ''),($3 || ''))/e ) {
 
@@ -2401,39 +2457,19 @@
     my (@param) = @_;
 
     my $file = shift @param;
-
-    my $obj_name = $file;
-    $obj_name =~ s/.*\///;
-    $obj_name =~ s/\.[^\.]*$//;
-    
+   
     unless ( $file ) {
       warn "Void include in $self->{'container'}->{'file_name'}";
       return '';
     }    
 
-    my $count = 0;
-    $self->{'top_container'}->set_nes_env( 'q_obj_param_' . $count, $obj_name );
-    $self->{'query'}->set( 'obj_param_' . $count, $obj_name );
-    foreach my $this (@param) {
-      $count++;
-      $self->{'top_container'}->set_nes_env( 'q_' . $obj_name . '_param_' . $count, $this );
-      $self->{'query'}->set( $obj_name . '_param_' . $count, $this );
-    }
-
+    $self->{'container'}->set_obj_params($file,\@param);
     my $container = nes_container->new($file);
+    $container->{'obj_params'} = \@param;
     $container->go();
-    
-    $count = 0;
-    $self->{'top_container'}->del_nes_env( 'q_obj_param_' . $count );
-    $self->{'query'}->del( 'obj_param_' . $count );    
-    foreach my $this (@param) {
-      $count++;
-      $self->{'top_container'}->del_nes_env( 'q_' . $obj_name . '_param_' . $count );
-      $self->{'query'}->del( $obj_name . '_param_' . $count );
-    }
-    
     my $out = $container->get_out();
     $container->forget();
+    $self->{'container'}->del_obj_params($file,\@param);
 
     return $out;
   }

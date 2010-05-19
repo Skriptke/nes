@@ -13,18 +13,16 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.04
-#
-#  Template.pm
-#
 # -----------------------------------------------------------------------------
 
   package Nes::Template;
   
+  our $VERSION = '0.02';
+  
   use strict;
   use warnings;
-  use Nes;  
-  
+  use Nes::View;
+   
   sub new {
     my $class = shift;
     my $self  = bless {}, $class;
@@ -62,8 +60,8 @@
     my $self = shift;
 
     return $self->{'container'}->get_out_content();
-  }  
-  
+  }
+   
   sub set_out {
     my $self = shift;
     my $out  = shift;
@@ -73,10 +71,12 @@
     return;
   }
 
-{
+
   package Nes::Template::Top;
   use vars qw(@ISA);
   @ISA = qw( Nes::Template );  
+  
+  my $Top = undef;
   
   sub new {
     my $class = shift;
@@ -94,10 +94,8 @@
   sub init {
     my $self = shift;
     $self->{'params'} = shift if @_;
-    $self->{'params'}{'no_init'} = 1; 
 
-    $self->{'nes'} = Nes::Singleton->new( $self->{'params'} );
-    $self->{'nes'}->init();
+    $self->{'nes'} = Nes::View->new_by_template( $self->{'params'} );
     
     $self->{'container'} = $self->{'nes'}->{'top_container'}->{'container'};
     $self->{'obj'} = $self->{'container'}->{'content_obj'};
@@ -105,7 +103,7 @@
     my $scripts = "@{$self->{'container'}->{'file_script'}}";
     die "Nes::Template not support script ($scripts) in top template, use 'none' " 
       if $scripts ne 'none' && $scripts ne '';
-    
+       
     return;
   }  
   
@@ -114,11 +112,14 @@
     
     $self->{'nes'}->{'query'}->by_CGI;
     
-  }  
+  }
+  
+  sub get_Top {
+    my $class = shift;
 
-}
+    return $Top;
+  }
 
-{ 
   package Nes::Template::Container;
   use vars qw(@ISA);
   @ISA = qw( Nes::Template );  
@@ -138,9 +139,8 @@
   sub init {
     my $self = shift;
     $self->{'params'} = shift if @_;
-    $self->{'params'}{'no_init'} = 1;  
 
-    warn "Requires create a Nes::Template::Top first" if !Nes::Singleton->instance();
+    warn "Requires create a Nes::Template::Top first" if !Nes::Template::Top->get_Top;
 
     $self->{'container'} = nes_container->new( $self->{'params'}{'template'} );
     $self->{'obj'} = $self->{'container'}->{'content_obj'};
@@ -148,6 +148,6 @@
     return;
   }
   
-}
+
 
 1;

@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
@@ -15,20 +14,15 @@
 #  Repository:
 #  http://github.com/Skriptke/nes
 # 
-#  Version 1.03
+#  Version 1.04
 #
 #  dispatch.cgi
 #
 # -----------------------------------------------------------------------------
 
-use strict;
-use Nes;
-
-{ 
-  
   package dispatch;
+  use strict;
+  use Nes::View;
 
-  my $nes = Nes::Singleton->start();
-  $nes->run();
+  Nes::View->new_by_dispatch->run;
   
-}

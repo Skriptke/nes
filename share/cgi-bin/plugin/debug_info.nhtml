@@ -33,18 +33,23 @@
     <div class="tabbertab" title="Tags"><pre>{: $ dumper_tags,no_br :}</pre></div>
     <div class="tabbertab" title="Source"><pre>{: $ source,no_br :}</pre></div>
     <div class="tabbertab" title="Out"><pre>{: $ out,no_br :}</pre></div>
-    <div class="tabbertab" title="Nes::Singleton">
+    
+    {: ~ ($ dumper_framework)
+    <div class="tabbertab" title="Nes::Framework"><pre>Dumper of: <b>Nes::Framework</b></pre><pre>{: $ dumper_framework,no_br :}</pre></div>
+    :}
+
+    <div class="tabbertab" title="Nes::View">
         <div class="tabber">
-            <div class="tabbertab" title="Top"><pre>Dumper of: <b>Nes::Singleton->{'top_container'}</b></pre><pre>{: $ dumper_top,no_br :}</pre></div>      
-            <div class="tabbertab" title="Container"><pre>Dumper of: <b>Nes::Singleton->{'container'}</b></pre><pre>{: $ dumper_container,no_br :}</pre></div>
-            <div class="tabbertab" title="Template"><pre>Dumper of: <b>Nes::Singleton->{'container'}->{'content_obj'}</b><pre>{: $ dumper_template,no_br :}</pre></div>
-            <div class="tabbertab" title="Cookies"><pre>Dumper of: <b>Nes::Singleton->{'cookies'}</b></pre><pre>{: $ dumper_cookies,no_br :}</pre></div>
-            <div class="tabbertab" title="Session"><pre>Dumper of: <b>Nes::Singleton->{'session'}</b></pre><pre>{: $ dumper_session,no_br :}</pre></div> 
-            <div class="tabbertab" title="Query"><pre>Dumper of: <b>Nes::Singleton->{'query'}</b></pre><pre>{: $ dumper_query,no_br :}</pre></div>   
-            <div class="tabbertab" title="CFG"><pre>Dumper of: <b>Nes::Singleton->{'CFG'}</b></pre><pre>{: $ dumper_CFG,no_br :}</pre></div>   
-            <div class="tabbertab" title="Nes"><pre>Dumper of: <b>Nes::Singleton->{'nes'}</b></pre><pre>{: $ dumper_nes,no_br :}</pre></div>
-            <div class="tabbertab" title="Interpret"><pre>Dumper of: <b>Nes::Singleton->{'container'}->{'content_obj'}->{'interpret'}</b></pre><pre>{: $ dumper_interpret,no_br :}</pre></div>   
-            <div class="tabbertab" title="Register"><pre>Dumper of: <b>Nes::Singleton->{'register'}</b></pre><pre>{: $ dumper_register,no_br :}</pre></div>
+            <div class="tabbertab" title="Top"><pre>Dumper of: <b>Nes::View->{'top_container'}</b></pre><pre>{: $ dumper_top,no_br :}</pre></div>      
+            <div class="tabbertab" title="Container"><pre>Dumper of: <b>Nes::View->{'container'}</b></pre><pre>{: $ dumper_container,no_br :}</pre></div>
+            <div class="tabbertab" title="Template"><pre>Dumper of: <b>Nes::View->{'container'}->{'content_obj'}</b><pre>{: $ dumper_template,no_br :}</pre></div>
+            <div class="tabbertab" title="Cookies"><pre>Dumper of: <b>Nes::View->{'cookies'}</b></pre><pre>{: $ dumper_cookies,no_br :}</pre></div>
+            <div class="tabbertab" title="Session"><pre>Dumper of: <b>Nes::View->{'session'}</b></pre><pre>{: $ dumper_session,no_br :}</pre></div> 
+            <div class="tabbertab" title="Query"><pre>Dumper of: <b>Nes::View->{'query'}</b></pre><pre>{: $ dumper_query,no_br :}</pre></div>   
+            <div class="tabbertab" title="CFG"><pre>Dumper of: <b>Nes::View->{'CFG'}</b></pre><pre>{: $ dumper_CFG,no_br :}</pre></div>   
+            <div class="tabbertab" title="Nes"><pre>Dumper of: <b>Nes::View->{'nes'}</b></pre><pre>{: $ dumper_nes,no_br :}</pre></div>
+            <div class="tabbertab" title="Interpret"><pre>Dumper of: <b>Nes::View->{'container'}->{'content_obj'}->{'interpret'}</b></pre><pre>{: $ dumper_interpret,no_br :}</pre></div>   
+            <div class="tabbertab" title="Register"><pre>Dumper of: <b>Nes::View->{'register'}</b></pre><pre>{: $ dumper_register,no_br :}</pre></div>
         </div>
     </div>       
     <div class="tabbertab" title="Plugin"><pre>{: $ dumper_plugin,no_br :}</pre></div>
@@ -124,18 +129,23 @@
             {: ~ ($ clean_out) <div class="tabbertab" title="Clean"><pre>{: $ clean_out,no_br :}</pre></div>  :}  
         </div>
     </div>
-    <div class="tabbertab" title="Nes::Singleton">
+    
+    {: ~ ($ dumper_framework)
+    <div class="tabbertab" title="Nes::Framework"><pre>Dumper of: <b>Nes::Framework</b></pre><pre>{: $ dumper_framework,no_br :}</pre></div>
+    :}   
+    
+    <div class="tabbertab" title="Nes::View">
         <div class="tabber">
-            <div class="tabbertab" title="Top"><pre>Dumper of: <b>Nes::Singleton->{'top_container'}</b></pre><pre>{: $ dumper_top,no_br :}</pre></div>      
-            <div class="tabbertab" title="Container"><pre>Dumper of: <b>Nes::Singleton->{'container'}</b></pre><pre>{: $ dumper_container,no_br :}</pre></div>
-            <div class="tabbertab" title="Template"><pre>Dumper of: <b>Nes::Singleton->{'container'}->{'content_obj'}</b><pre>{: $ dumper_template,no_br :}</pre></div>
-            <div class="tabbertab" title="Cookies"><pre>Dumper of: <b>Nes::Singleton->{'cookies'}</b></pre><pre>{: $ dumper_cookies,no_br :}</pre></div>
-            <div class="tabbertab" title="Session"><pre>Dumper of: <b>Nes::Singleton->{'session'}</b></pre><pre>{: $ dumper_session,no_br :}</pre></div> 
-            <div class="tabbertab" title="Query"><pre>Dumper of: <b>Nes::Singleton->{'query'}</b></pre><pre>{: $ dumper_query,no_br :}</pre></div>   
-            <div class="tabbertab" title="CFG"><pre>Dumper of: <b>Nes::Singleton->{'CFG'}</b></pre><pre>{: $ dumper_CFG,no_br :}</pre></div>   
-            <div class="tabbertab" title="Nes"><pre>Dumper of: <b>Nes::Singleton->{'nes'}</b></pre><pre>{: $ dumper_nes,no_br :}</pre></div>
-            <div class="tabbertab" title="Interpret"><pre>Dumper of: <b>Nes::Singleton->{'container'}->{'content_obj'}->{'interpret'}</b></pre><pre>{: $ dumper_interpret,no_br :}</pre></div>   
-            <div class="tabbertab" title="Register"><pre>Dumper of: <b>Nes::Singleton->{'register'}</b></pre><pre>{: $ dumper_register,no_br :}</pre></div>
+            <div class="tabbertab" title="Top"><pre>Dumper of: <b>Nes::View->{'top_container'}</b></pre><pre>{: $ dumper_top,no_br :}</pre></div>      
+            <div class="tabbertab" title="Container"><pre>Dumper of: <b>Nes::View->{'container'}</b></pre><pre>{: $ dumper_container,no_br :}</pre></div>
+            <div class="tabbertab" title="Template"><pre>Dumper of: <b>Nes::View->{'container'}->{'content_obj'}</b><pre>{: $ dumper_template,no_br :}</pre></div>
+            <div class="tabbertab" title="Cookies"><pre>Dumper of: <b>Nes::View->{'cookies'}</b></pre><pre>{: $ dumper_cookies,no_br :}</pre></div>
+            <div class="tabbertab" title="Session"><pre>Dumper of: <b>Nes::View->{'session'}</b></pre><pre>{: $ dumper_session,no_br :}</pre></div> 
+            <div class="tabbertab" title="Query"><pre>Dumper of: <b>Nes::View->{'query'}</b></pre><pre>{: $ dumper_query,no_br :}</pre></div>   
+            <div class="tabbertab" title="CFG"><pre>Dumper of: <b>Nes::View->{'CFG'}</b></pre><pre>{: $ dumper_CFG,no_br :}</pre></div>   
+            <div class="tabbertab" title="Nes"><pre>Dumper of: <b>Nes::View->{'nes'}</b></pre><pre>{: $ dumper_nes,no_br :}</pre></div>
+            <div class="tabbertab" title="Interpret"><pre>Dumper of: <b>Nes::View->{'container'}->{'content_obj'}->{'interpret'}</b></pre><pre>{: $ dumper_interpret,no_br :}</pre></div>   
+            <div class="tabbertab" title="Register"><pre>Dumper of: <b>Nes::View->{'register'}</b></pre><pre>{: $ dumper_register,no_br :}</pre></div>
         </div>
     </div>    
     <div class="tabbertab" title="Plugin"><pre>{: $ dumper_plugin,no_br :}</pre></div>
@@ -210,72 +220,68 @@
     </pre>
     </div>
     
-    <div class="tabbertab" title="Nes::Singleton">
+    <div class="tabbertab" title="Nes::View">
     <pre>
     
     Nes Request:
     
-    .-------------------------------------------.
-    |         GET or POST HTTP Request          |
-    |     http://example.com/template.nhtml     |
-    '-------------------------------------------'
-                        |
-                        v
-    .-------------------------------------------.
-    |        /cgi-bin/nes/dispatch.cgi          |
-    '-------------------------------------------'
-                        |
-                        v
-    .-------------------------------------------.
-    |              Nes::Singleton               |
-    |-------------------------------------------|
-    | new {'CFG'} for this dir                  |
-    | new {'top_container '} for template.nhtml |
-    '-------------------------------------------'
-                        |
-                        v
-    .-------------------------------------------.
-    |     Nes::Singleton->{'top_container'}     |
-    |-------------------------------------------|
-    | new {'register'}                          |
-    | new {'query'}                             |
-    | new {'cookies'}                           |
-    | new {'session'}                           |
-    | new {'container'} for template.nhtml      |
-    '-------------------------------------------'             
-                        |
-                        v
-    .-------------------------------------------.
-    |       Nes::Singleton->{'container'}       | <---.
-    |-------------------------------------------|     |
-    | get {  NES 1.0 ...  } line                |     |
-    | new {'content_obj'} for this content type |     |
-    '-------------------------------------------'     |          
-                        |                             |
-                        v                             |
-    .-------------------------------------------.     |
-    |             do Perl scripts               |     |
-    |-------------------------------------------|     |
-    | Nes::Singleton->out()                     |     |
-    '-------------------------------------------'     |
-                        |                             |
-                        v                             |
-    .-------------------------------------------.     |
-    | Nes::Singleton->{'container'}->interpret  |     |
-    '-------------------------------------------'     |
-                        |                             |
-                        v                       ( interaction )
-             .---------------------.                  |
-             | {  include  }   ?   |---[ yes ]--------'
-             '---------------------'                         
-                        |
-                      [ no ]
-                        |
-                        v
-    .-------------------------------------------.
-    | print HTTP Headers                        |
-    | print the out                             |
-    '-------------------------------------------'  
+  .-----------------------------------. .-----------------------------------.
+  |     GET or POST HTTP Request      | |   Command line: ./template.cgi    |
+  | http://example.com/template.nhtml | |  http://example.com/template.cgi  |
+  '-----------------------------------' '-----------------------------------'
+                    |                                    |
+                    v                                    v
+  .-----------------------------------. .-----------------------------------.
+  |     /cgi-bin/nes/dispatch.cgi     | |        emulate dispatch.cgi       |
+  '-----------------------------------' '-----------------------------------'
+                    |                                    |      
+                    '------------------.-----------------'      
+                                       |
+                                       v
+                   .-------------------------------------------.
+                   |   Create Top Container and environment.   |
+                   |-------------------------------------------|
+                   | new {'CFG'} for this dir                  |
+                   | new {'top_container '} for template.nhtml |
+                   | new {'register'}                          |
+                   | new {'query'}                             |
+                   | new {'cookies'}                           |
+                   | new {'session'}                           |
+                   | new {'container'} for template.nhtml      |
+                   '-------------------------------------------'             
+                                       |
+                                       v
+                   .-------------------------------------------.
+                   |      Run Container of this template       | <---.
+                   |-------------------------------------------|     |
+                   | get &#123;: NES 1.0 ... :&#125; line                |     |
+                   | new {'content_obj'} for this content type |     |
+                   '-------------------------------------------'     |          
+                                       |                             |
+                                       v                             |
+                   .-------------------------------------------.     |
+                   | do Perl scripts in line &#123;: NES 1.0 ... :&#125; |     |
+                   |               and plugins                 |     |
+                   '-------------------------------------------'     |
+                                       |                             |
+                                       v                             |
+                   .-------------------------------------------.     |
+                   |         Interpret and fill vars.          |     |
+                   '-------------------------------------------'     |
+                                       |                             |
+                                       v                       ( interaction )
+                            .---------------------.                  |
+                            | &#123;: include ... :&#125; ? |---[ yes ]--------'
+                            '---------------------'                         
+                                       |
+                                     [ no ]
+                                       |
+                                       v
+                    .-------------------------------------------.
+                    | print HTTP Headers                        |
+                    | print the out                             |
+                    '-------------------------------------------'  
+     
 
     Nes Object:
 
@@ -286,7 +292,7 @@
     | |          template.nhtml           |    |              script.pl                | |
     | |-----------------------------------|    |---------------------------------------| |
     | |                                   |--->|                                       | |
-    | |    &#123;: Nes 1.0 ('script.pl') :&#125;    |    | Nes::Singleton->new('template.nhtml') | |
+    | |    &#123;: Nes 1.0 ('script.pl') :&#125;    |    |   Nes::View->new('template.nhtml')    | |
     | |                                   |<---|                                       | |
     | '-----------------------------------'    '---------------------------------------' |
     '------------------------------------------------------------------------------------'
@@ -334,7 +340,7 @@
     |         OUT         |
     '---------------------'
 
-    See: perldoc Nes::Singleton
+    See: perldoc Nes::View
     </pre>
     </div>
 

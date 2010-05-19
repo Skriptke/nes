@@ -19,6 +19,10 @@ lib/Nes/Minimal/Misc.pm
 lib/Nes/Tags.pm
 lib/Nes/Template.pm
 lib/Nes/Template.pod
+lib/Nes/View.pm
+lib/Nes/Framework.pm
+lib/Nes/Framework/DAL.pm
+lib/Nes/Framework/DAL/DBI.pm
 lib/Nes/Obj/secure_login.pod
 lib/Nes/Obj/multi_step.pod
 lib/Nes/Obj/include_js.pod

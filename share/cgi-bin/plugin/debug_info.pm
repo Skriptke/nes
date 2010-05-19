@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
@@ -37,9 +36,7 @@ use Benchmark qw(:all :hireswallclock);
     my $class  = shift;
     my $self   = $instance || $class->SUPER::new();
     my ($template) = @_;
-    
-#    $self->{'session'} = nes_session->new('NES-DEBUG-INFO');
-    
+       
     $self->{'inter'}     = $template->{'this_inter'}; 
     $self->{'file_name'} = $template->{'file_name'};
     $self->{'template'}  = $template;
@@ -83,7 +80,9 @@ use Benchmark qw(:all :hireswallclock);
   
   sub redirect_err {
     my $self = shift;
-
+    
+    return if $self->{'CFG'}->{'debug_info_no_redirect'};
+    
     use IO::Scalar;
     tie *STDERR, 'IO::Scalar', \$self->{'STDERR'}{$self->{'inter'}};  
     $self->{'redirect_err'} = 1;  
@@ -93,6 +92,8 @@ use Benchmark qw(:all :hireswallclock);
   sub redirect_err_parent {
     my $self = shift;
 
+    return if $self->{'CFG'}->{'debug_info_no_redirect'};
+    
     use IO::Scalar;
     tie *STDERR, 'IO::Scalar', \$self->{'STDERR'}{$self->{'template'}->{'parent'}->{'this_inter'}};  
     $self->{'redirect_err'} = 1;  
@@ -102,6 +103,7 @@ use Benchmark qw(:all :hireswallclock);
   sub unredirect_err {
     my $self = shift;
 
+    return if $self->{'CFG'}->{'debug_info_no_redirect'};
     return if !$self->{'redirect_err'};
     
     untie *STDERR;
@@ -393,6 +395,8 @@ use Benchmark qw(:all :hireswallclock);
     $object->{'dumper_register'}   = $self->dumper(\$obj->{'register'},6,'REGISTER');
     $object->{'dumper_plugin'}     = $self->dumper(\$obj->{'register'}->{'obj'},9,'REGISTER_PLUGIN'); 
     $object->{'dumper_tags'}       = $self->dumper(\$obj->{'container'}->{'content_obj'}->{'tags'},8,'TAG',1);
+    $object->{'dumper_framework'}  = $self->dumper(\$obj->{'container'}{'debug_info'}{'Nes::Framework'},9,'Framework')
+      if $obj->{'container'}{'debug_info'}{'Nes::Framework'};
 
     while ( $object->{'out'} =~ /($Nes::Tags::start\s*(($Nes::Tags::all_or).+?)$Nes::Tags::end)/gsio ) 
     { 
@@ -562,8 +566,6 @@ use Benchmark qw(:all :hireswallclock);
 
 
 }
-
-
 
 
 # don't forget to return a true value from the file

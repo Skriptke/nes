@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-
 # -----------------------------------------------------------------------------
 #
 #  Nes by Skriptke
@@ -26,9 +25,10 @@
   use HTML::Packer;
   use CSS::Packer;
   use JavaScript::Packer;
-  
+
   my $nes       = Nes::Singleton->new();
   my $container = $nes->{'container'};
+
   my $cfg       = $nes->{'CFG'};
   my $cfg_file  = $cfg->{'plugin_top_dir'}.'/Nes/filter/.clean.nes.cfg';
   
